@@ -21,7 +21,9 @@ export async function userSignup(req, res, next) {
         const user = new User({ name, email, password: hashedPassword });
         await user.save();
         handleUserCookie(res, user);
-        return res.status(201).json({ message: 'OK', id: user._id.toString() });
+        return res
+            .status(201)
+            .json({ message: 'Successfully registered!', id: user._id.toString() });
     }
     catch (error) {
         console.log(error);
@@ -40,7 +42,9 @@ export async function userLogin(req, res, next) {
             return res.status(403).send('Incorrect Password!');
         }
         handleUserCookie(res, user);
-        return res.status(201).json({ message: 'OK', id: user._id.toString() });
+        return res
+            .status(201)
+            .json({ message: 'Successfully logged in!', id: user._id.toString() });
     }
     catch (error) {
         console.log(error);

@@ -1,11 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { hash, compare } from 'bcrypt';
 
-import { createToken } from '../utils/token-manager.js';
 import { handleUserCookie } from '../utils/cookie-manager.js';
 
 import User from '../models/User.js';
-import { EXPIRES_IN, COOKIE_NAME, DOMAIN, COOKIE_PATH } from '../utils/constants.js';
 
 export async function getAllUsers(req: Request, res: Response, next: NextFunction) {
   try {
@@ -33,7 +31,9 @@ export async function userSignup(req: Request, res: Response, next: NextFunction
 
     handleUserCookie(res, user);
 
-    return res.status(201).json({ message: 'OK', id: user._id.toString() });
+    return res
+      .status(201)
+      .json({ message: 'Successfully registered!', id: user._id.toString() });
   } catch (error) {
     console.log(error);
     return res.status(200).json({ message: 'Error', cause: error.message });
@@ -56,7 +56,9 @@ export async function userLogin(req: Request, res: Response, next: NextFunction)
 
     handleUserCookie(res, user);
 
-    return res.status(201).json({ message: 'OK', id: user._id.toString() });
+    return res
+      .status(201)
+      .json({ message: 'Successfully logged in!', id: user._id.toString() });
   } catch (error) {
     console.log(error);
     return res.status(200).json({ message: 'Error', cause: error.message });

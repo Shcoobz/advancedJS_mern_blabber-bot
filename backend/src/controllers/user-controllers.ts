@@ -5,7 +5,6 @@ import User from '../models/User.js';
 
 export async function getAllUsers(req: Request, res: Response, next: NextFunction) {
   try {
-    // get all users
     const users = await User.find();
 
     return res.status(200).json({ message: 'OK', users });
@@ -17,7 +16,6 @@ export async function getAllUsers(req: Request, res: Response, next: NextFunctio
 
 export async function userSignup(req: Request, res: Response, next: NextFunction) {
   try {
-    // user signup
     const { name, email, password } = req.body;
     const hashedPassword = await hash(password, 10);
 

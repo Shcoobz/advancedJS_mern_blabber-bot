@@ -2,7 +2,6 @@ import { hash } from 'bcrypt';
 import User from '../models/User.js';
 export async function getAllUsers(req, res, next) {
     try {
-        // get all users
         const users = await User.find();
         return res.status(200).json({ message: 'OK', users });
     }
@@ -13,7 +12,6 @@ export async function getAllUsers(req, res, next) {
 }
 export async function userSignup(req, res, next) {
     try {
-        // user signup
         const { name, email, password } = req.body;
         const hashedPassword = await hash(password, 10);
         const user = new User({ name, email, password: hashedPassword });

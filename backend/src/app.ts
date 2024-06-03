@@ -13,7 +13,7 @@ const corsOrigin = process.env.CORS_ORIGIN;
 const privateCookieKey = process.env.COOKIE_PRIVATE_KEY;
 
 // middlewares
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(cors({ origin: corsOrigin, credentials: true }));
 app.use(express.json());
 app.use(cookieParser(privateCookieKey));
 

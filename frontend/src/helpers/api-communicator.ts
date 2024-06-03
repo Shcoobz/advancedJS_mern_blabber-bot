@@ -11,3 +11,15 @@ export async function loginUser(email: string, password: string) {
 
   return data;
 }
+
+export async function checkAuthStatus() {
+  const res = await axios.get('/user/auth-status');
+
+  if (!(res.status === 200 || res.status === 201)) {
+    throw new Error('Unable to authenticate! ' + res.status);
+  }
+
+  const data = await res.data;
+
+  return data;
+}

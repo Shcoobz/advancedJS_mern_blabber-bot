@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
-import { loginUser } from '../helpers/api-communicator';
+import { checkAuthStatus, loginUser } from '../helpers/api-communicator';
 
 type User = {
   name: string;
@@ -22,7 +22,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // fetch if users cookies are valid, skip login
+    async function checkStatus() {
+      const data = await checkAuthStatus();
+
+      if (data) {
+        setUser({ email: data.email, name: data.name });
+        setIsLoggedIn(true);
+      }
+    }
+
+    checkStatus();
   }, []);
 
   async function login(email: string, password: string) {

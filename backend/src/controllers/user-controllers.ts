@@ -64,3 +64,24 @@ export async function userLogin(req: Request, res: Response, next: NextFunction)
     return res.status(200).json({ message: 'Error', cause: error.message });
   }
 }
+
+export async function verifyUser(req: Request, res: Response, next: NextFunction) {
+  try {
+    const user = await User.findById(res.locals.jwtData.id);
+
+    if (!user) {
+      return res.status(401).send('User not registered or token malfunction!');
+    }
+
+    if (user._id.toString() !== res.locals.jwtData.id) {
+      return res.status(401).send("Permissions didn't match!");
+    }
+
+    return res
+      .status(201)
+      .json({ message: 'User verified!', name: user.name, email: user.email });
+  } catch (error) {
+    console.log(error);
+    return res.status(200).json({ message: 'Error', cause: error.message });
+  }
+}

@@ -9,3 +9,8 @@ body {
   color: whitesmoke;
   font-family: 'Roboto Slab', sans-serif;
 }
+
+/* Logo */
+.image-inverted {
+  filter: invert(100%);
+}

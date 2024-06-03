@@ -8,7 +8,10 @@ import Signup from './pages/Signup';
 import Chat from './pages/Chat';
 import Error404 from './pages/Error404';
 
+import { useAuth } from './context/AuthContext';
+
 function App() {
+  console.log('useAuth isLoggedIn:', useAuth()?.isLoggedIn);
   return (
     <main>
       <Header />

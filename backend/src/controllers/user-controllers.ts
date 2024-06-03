@@ -33,7 +33,7 @@ export async function userSignup(req: Request, res: Response, next: NextFunction
 
     return res
       .status(201)
-      .json({ message: 'Successfully registered!', id: user._id.toString() });
+      .json({ message: 'Successfully registered!', name: user.name, email: user.email });
   } catch (error) {
     console.log(error);
     return res.status(200).json({ message: 'Error', cause: error.message });
@@ -58,7 +58,7 @@ export async function userLogin(req: Request, res: Response, next: NextFunction)
 
     return res
       .status(201)
-      .json({ message: 'Successfully logged in!', id: user._id.toString() });
+      .json({ message: 'Successfully logged in!', name: user.name, email: user.email });
   } catch (error) {
     console.log(error);
     return res.status(200).json({ message: 'Error', cause: error.message });

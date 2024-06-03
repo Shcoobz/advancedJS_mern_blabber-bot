@@ -9,7 +9,7 @@ export async function getAllUsers(req: Request, res: Response, next: NextFunctio
   try {
     const users = await User.find();
 
-    return res.status(200).json({ message: 'OK', users });
+    return res.status(200).json({ message: 'getAllUsers successful!', users });
   } catch (error) {
     console.log(error);
 

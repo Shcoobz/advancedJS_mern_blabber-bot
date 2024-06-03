@@ -4,7 +4,7 @@ import User from '../models/User.js';
 export async function getAllUsers(req, res, next) {
     try {
         const users = await User.find();
-        return res.status(200).json({ message: 'OK', users });
+        return res.status(200).json({ message: 'getAllUsers successful!', users });
     }
     catch (error) {
         console.log(error);
@@ -23,7 +23,7 @@ export async function userSignup(req, res, next) {
         handleUserCookie(res, user);
         return res
             .status(201)
-            .json({ message: 'Successfully registered!', id: user._id.toString() });
+            .json({ message: 'Successfully registered!', name: user.name, email: user.email });
     }
     catch (error) {
         console.log(error);
@@ -44,7 +44,7 @@ export async function userLogin(req, res, next) {
         handleUserCookie(res, user);
         return res
             .status(201)
-            .json({ message: 'Successfully logged in!', id: user._id.toString() });
+            .json({ message: 'Successfully logged in!', name: user.name, email: user.email });
     }
     catch (error) {
         console.log(error);

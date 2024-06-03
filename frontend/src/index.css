@@ -26,3 +26,9 @@ body {
   text-decoration: none;
   letter-spacing: 1px;
 }
+
+/* Form */
+.MuiOutlinedInput-input-root.Mui-focused,
+.MuiOutlinedInput-notchedOutline {
+  border-color: white !important;
+}

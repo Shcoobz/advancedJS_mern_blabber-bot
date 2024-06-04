@@ -4,8 +4,8 @@ import { verifyToken } from '../utils/token-manager.js';
 import { getAllUsers, userSignup, userLogin, verifyUser, } from '../controllers/user-controllers.js';
 const userRoutes = Router();
 userRoutes.get('/', getAllUsers);
+userRoutes.get('/auth-status', verifyToken, verifyUser);
 userRoutes.post('/signup', validate(signupValidator), userSignup);
 userRoutes.post('/login', validate(loginValidator), userLogin);
-userRoutes.get('/auth-status', verifyToken, verifyUser);
 export default userRoutes;
 //# sourceMappingURL=user-routes.js.map

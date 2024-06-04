@@ -1,56 +1,36 @@
 import { Box, Avatar, Typography, Button, IconButton } from '@mui/material';
+import { useRef, useState } from 'react';
 import { IoMdSend } from 'react-icons/io';
 import { red } from '@mui/material/colors';
 
 import { useAuth } from '../context/AuthContext';
 import ChatItem from '../components/chat/ChatItem';
+import { sendChatRequest } from '../helpers/api-communicator';
 
-const staticChatMessages = [
-  {
-    role: 'user',
-    content: 'Hi there!',
-  },
-  {
-    role: 'assistant',
-    content: 'Hello! How can I assist you today?',
-  },
-  {
-    role: 'user',
-    content: 'I need help with a programming problem.',
-  },
-  {
-    role: 'assistant',
-    content: "Sure, I'd be happy to help. What seems to be the issue?",
-  },
-  {
-    role: 'user',
-    content: "I'm getting an error message when I try to compile my code.",
-  },
-  {
-    role: 'assistant',
-    content: 'Can you provide me with the error message?',
-  },
-  {
-    role: 'user',
-    content: "It says 'SyntaxError: Unexpected token <' on line 27.'",
-  },
-  {
-    role: 'assistant',
-    content:
-      'That error usually indicates a problem with HTML tags in your JavaScript file. Check line 27 for any unexpected HTML characters.',
-  },
-  {
-    role: 'user',
-    content: 'Ah, I see the issue now. Thanks for your help!',
-  },
-  {
-    role: 'assistant',
-    content: "You're welcome! If you have any more questions, feel free to ask.",
-  },
-];
+type Message = {
+  role: 'user' | 'assistant';
+  content: string;
+};
 
 function Chat() {
+  const [chatMessages, setChatMessages] = useState<Message[]>([]);
+
   const auth = useAuth();
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  async function handleSubmit() {
+    const content = inputRef.current?.value as string;
+
+    if (inputRef && inputRef.current) {
+      inputRef.current.value = '';
+    }
+
+    const newMessage: Message = { role: 'user', content };
+    setChatMessages((prev) => [...prev, newMessage]);
+
+    const chatData = await sendChatRequest(content);
+    setChatMessages([...chatData.chats]);
+  }
 
   return (
     <Box
@@ -143,7 +123,8 @@ function Chat() {
             overflowY: 'auto',
             scrollBehavior: 'smooth',
           }}>
-          {staticChatMessages.map((chat, index) => (
+          {chatMessages.map((chat, index) => (
+            //@ts-expect-error: will be fixed later
             <ChatItem content={chat.content} role={chat.role} key={index} />
           ))}
         </Box>
@@ -156,6 +137,7 @@ function Chat() {
             margin: 'auto',
           }}>
           <input
+            ref={inputRef}
             type='text'
             style={{
               width: '100%',
@@ -167,7 +149,7 @@ function Chat() {
               fontSize: '20px',
             }}
           />
-          <IconButton sx={{ color: 'white', mx: 1 }}>
+          <IconButton onClick={handleSubmit} sx={{ color: 'white', mx: 1 }}>
             <IoMdSend />
           </IconButton>
         </div>

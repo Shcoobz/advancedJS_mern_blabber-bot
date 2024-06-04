@@ -23,3 +23,15 @@ export async function checkAuthStatus() {
 
   return data;
 }
+
+export async function sendChatRequest(message: string) {
+  const res = await axios.post('/chat/new', { message });
+
+  if (!(res.status === 200 || res.status === 201)) {
+    throw new Error('Unable to send chat! ' + res.status);
+  }
+
+  const data = await res.data;
+
+  return data;
+}

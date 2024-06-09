@@ -42,6 +42,7 @@ function extractCodeFromString(message: string) {
 const ChatItem = ({ content, role }: { content: string; role: 'user' | 'assistant' }) => {
   const messageBlocks = extractCodeFromString(content);
   const auth = useAuth();
+
   return role == 'assistant' ? (
     <Box
       sx={{
@@ -83,6 +84,7 @@ const ChatItem = ({ content, role }: { content: string; role: 'user' | 'assistan
         bgcolor: '#004d56',
         gap: 2,
         borderRadius: 2,
+        my: 2,
       }}>
       <Avatar sx={{ ml: '0', bgcolor: 'black', color: 'white' }}>
         {auth?.user?.name[0]}

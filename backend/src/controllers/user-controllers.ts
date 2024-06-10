@@ -4,6 +4,7 @@ import { hash, compare } from 'bcrypt';
 import { handleUserCookie } from '../utils/cookie-manager.js';
 
 import User from '../models/User.js';
+import { COOKIE_NAME } from '../utils/constants.js';
 
 export async function getAllUsers(req: Request, res: Response, next: NextFunction) {
   try {
@@ -76,6 +77,35 @@ export async function verifyUser(req: Request, res: Response, next: NextFunction
     if (user._id.toString() !== res.locals.jwtData.id) {
       return res.status(401).send("Permissions didn't match!");
     }
+
+    return res
+      .status(201)
+      .json({ message: 'User verified!', name: user.name, email: user.email });
+  } catch (error) {
+    console.log(error);
+    return res.status(200).json({ message: 'Error', cause: error.message });
+  }
+}
+
+export async function userLogout(req: Request, res: Response, next: NextFunction) {
+  try {
+    const user = await User.findById(res.locals.jwtData.id);
+
+    if (!user) {
+      return res.status(401).send('User not registered or token malfunction!');
+    }
+
+    if (user._id.toString() !== res.locals.jwtData.id) {
+      return res.status(401).send("Permissions didn't match!");
+    }
+
+    // TODO: make into reusable function
+    res.clearCookie(COOKIE_NAME, {
+      httpOnly: true,
+      domain: 'localhost',
+      signed: true,
+      path: '/',
+    });
 
     return res
       .status(201)

@@ -6,12 +6,14 @@ import {
   userSignup,
   userLogin,
   verifyUser,
+  userLogout,
 } from '../controllers/user-controllers.js';
 
 const userRoutes = Router();
 
 userRoutes.get('/', getAllUsers);
 userRoutes.get('/auth-status', verifyToken, verifyUser);
+userRoutes.get('/logout', verifyToken, userLogout);
 
 userRoutes.post('/signup', validate(signupValidator), userSignup);
 userRoutes.post('/login', validate(loginValidator), userLogin);

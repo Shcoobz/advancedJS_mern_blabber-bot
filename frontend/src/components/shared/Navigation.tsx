@@ -11,6 +11,7 @@ type Props = {
 function Navigation(props: Props) {
   return (
     <Link
+      onClick={props.onClick}
       className='navigation'
       to={props.to}
       style={{ background: props.bg, color: props.textColor }}>

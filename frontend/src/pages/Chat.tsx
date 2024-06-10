@@ -5,7 +5,11 @@ import { red } from '@mui/material/colors';
 
 import { useAuth } from '../context/AuthContext';
 import ChatItem from '../components/chat/ChatItem';
-import { getUserChats, sendChatRequest } from '../helpers/api-communicator';
+import {
+  deleteUserChats,
+  getUserChats,
+  sendChatRequest,
+} from '../helpers/api-communicator';
 import toast from 'react-hot-toast';
 
 type Message = {
@@ -31,6 +35,18 @@ function Chat() {
 
     const chatData = await sendChatRequest(content);
     setChatMessages([...chatData.chats]);
+  }
+
+  async function handleDeleteChats() {
+    try {
+      toast.loading('Deleting chats', { id: 'deletechats' });
+      await deleteUserChats();
+      setChatMessages([]);
+      toast.success('Deleted chats successfully', { id: 'deletechats' });
+    } catch (error) {
+      console.log(error);
+      toast.error('Deleting chats failed', { id: 'deletechats' });
+    }
   }
 
   useLayoutEffect(() => {
@@ -92,6 +108,7 @@ function Chat() {
             You can ask questions related to anything you're interested in!
           </Typography>
           <Button
+            onClick={handleDeleteChats}
             sx={{
               width: '200px',
               my: 'auto',
@@ -140,7 +157,6 @@ function Chat() {
             scrollBehavior: 'smooth',
           }}>
           {chatMessages.map((chat, index) => (
-            //@ts-expect-error: will be fixed later
             <ChatItem content={chat.content} role={chat.role} key={index} />
           ))}
         </Box>

@@ -61,7 +61,30 @@ export async function sendChatsToUser(req: Request, res: Response, next: NextFun
       return res.status(401).send("Permissions didn't match!");
     }
 
-    return res.status(201).json({ message: 'OK!', chats: user.chats });
+    return res.status(200).json({ message: 'OK!', chats: user.chats });
+  } catch (error) {
+    console.log(error);
+    return res.status(200).json({ message: 'Error', cause: error.message });
+  }
+}
+
+export async function deleteChats(req: Request, res: Response, next: NextFunction) {
+  try {
+    const user = await User.findById(res.locals.jwtData.id);
+
+    if (!user) {
+      return res.status(401).send('User not registered or token malfunction!');
+    }
+
+    if (user._id.toString() !== res.locals.jwtData.id) {
+      return res.status(401).send("Permissions didn't match!");
+    }
+
+    //@ts-ignore
+    user.chats = [];
+    await user.save();
+
+    return res.status(200).json({ message: 'OK!' });
   } catch (error) {
     console.log(error);
     return res.status(200).json({ message: 'Error', cause: error.message });

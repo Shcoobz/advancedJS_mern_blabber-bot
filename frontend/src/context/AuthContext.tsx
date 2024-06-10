@@ -15,7 +15,7 @@ type UserAuth = {
   logout: () => Promise<void>;
 };
 
-const AuthContext = createContext<UserAuth | null>(null);
+export const AuthContext = createContext<UserAuth | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -63,6 +63,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
+// export function useAuth() {
+//   return useContext(AuthContext);
+// }

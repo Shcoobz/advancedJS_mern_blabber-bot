@@ -3,7 +3,7 @@ import { IoIosLogIn } from 'react-icons/io';
 import { toast } from 'react-hot-toast';
 
 import CustomInput from '../components/shared/CustomInput';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 

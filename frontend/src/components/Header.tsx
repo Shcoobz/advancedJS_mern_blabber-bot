@@ -3,7 +3,7 @@ import { AppBar, Toolbar } from '@mui/material';
 import Logo from './shared/Logo';
 import Navigation from './shared/Navigation';
 
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 
 function Header() {
   const auth = useAuth();

@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { IoMdSend } from 'react-icons/io';
 import { red } from '@mui/material/colors';
 
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import ChatItem from '../components/chat/ChatItem';
 import {
   deleteUserChats,

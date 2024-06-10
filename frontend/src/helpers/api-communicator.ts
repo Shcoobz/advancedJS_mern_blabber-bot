@@ -35,3 +35,15 @@ export async function sendChatRequest(message: string) {
 
   return data;
 }
+
+export async function getUserChats() {
+  const res = await axios.get('/chat/all-chats');
+
+  if (!(res.status === 200 || res.status === 201)) {
+    throw new Error('Unable to send chat! ' + res.status);
+  }
+
+  const data = await res.data;
+
+  return data;
+}

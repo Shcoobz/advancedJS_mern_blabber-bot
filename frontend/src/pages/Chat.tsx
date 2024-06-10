@@ -1,5 +1,5 @@
 import { Box, Avatar, Typography, Button, IconButton } from '@mui/material';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { IoMdSend } from 'react-icons/io';
 import { red } from '@mui/material/colors';
 
@@ -7,7 +7,6 @@ import { useAuth } from '../context/AuthContext';
 import ChatItem from '../components/chat/ChatItem';
 import { getUserChats, sendChatRequest } from '../helpers/api-communicator';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -19,7 +18,6 @@ function Chat() {
 
   const auth = useAuth();
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const navigate = useNavigate();
 
   async function handleSubmit() {
     const content = inputRef.current?.value as string;

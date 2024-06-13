@@ -1,5 +1,10 @@
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
-import { checkAuthStatus, loginUser, logoutUser } from '../helpers/api-communicator';
+import { ReactNode, createContext, useEffect, useState } from 'react';
+import {
+  checkAuthStatus,
+  loginUser,
+  logoutUser,
+  signupUser,
+} from '../helpers/api-communicator';
 
 type User = {
   name: string;
@@ -43,7 +48,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  async function signup(name: string, email: string, password: string) {}
+  async function signup(name: string, email: string, password: string) {
+    const data = await signupUser(name, email, password);
+
+    if (data) {
+      setUser({ email: data.email, name: data.name });
+      setIsLoggedIn(true);
+    }
+  }
 
   async function logout() {
     await logoutUser();
@@ -62,7 +74,3 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
-
-// export function useAuth() {
-//   return useContext(AuthContext);
-// }

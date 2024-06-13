@@ -10,6 +10,10 @@ import App from './App.tsx';
 
 import './index.css';
 
+// TODO:
+// * implement one name signup -> check if name is one word, or at least two
+// *fix error loading chats after logout
+
 axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
 axios.defaults.withCredentials = true;
 

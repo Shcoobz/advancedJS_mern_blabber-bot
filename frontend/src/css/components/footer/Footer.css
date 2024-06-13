@@ -1,0 +1,16 @@
+.footer-container {
+  width: 100%;
+  min-height: 20vh;
+  max-height: 30vh;
+  margin-top: 60px;
+}
+
+.footer-text {
+  font-size: 15px;
+  text-align: center;
+  padding: 20px;
+}
+
+.link-white {
+  color: white;
+}

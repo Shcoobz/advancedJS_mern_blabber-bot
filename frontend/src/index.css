@@ -10,6 +10,27 @@ body {
   font-family: 'Roboto Slab', sans-serif;
 }
 
+/* Scroll Bar */
+::-webkit-scrollbar {
+  width: 11.5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  border: 2px solid rgba(5, 16, 28, 0.5);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(5, 16, 28);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-corner {
+  background: rgb(5, 16, 28);
+}
+
 /* Logo */
 .image-inverted {
   filter: invert(100%);

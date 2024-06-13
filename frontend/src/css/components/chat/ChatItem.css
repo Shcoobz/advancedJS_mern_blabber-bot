@@ -1,0 +1,41 @@
+.chat-item-container {
+  display: flex;
+  padding: 16px;
+  gap: 16px;
+  border-radius: 16px;
+  margin: 8px 0;
+}
+
+.chat-item-assistant {
+  background-color: #004d5612;
+}
+
+.chat-item-user {
+  background-color: #004d56;
+}
+
+.chat-avatar {
+  margin-left: 0;
+}
+
+.chat-avatar-user {
+  background-color: black;
+  color: white;
+}
+
+.chat-content {
+  font-size: 20px;
+}
+
+.chat-content-code {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.chat-content-list {
+  font-size: 18px;
+}
+
+.newline {
+  height: 1rem;
+}

@@ -1,22 +1,14 @@
 import { Link } from 'react-router-dom';
+import '../../css/components/footer/Footer.css';
 
 function Footer() {
   return (
     <footer>
-      <div
-        style={{
-          width: '100%',
-          minHeight: '20vh',
-          maxHeight: '30vh',
-          marginTop: 60,
-        }}>
-        <p style={{ fontSize: '15px', textAlign: 'center', padding: '20px' }}>
+      <div className='footer-container'>
+        <p className='footer-text'>
           Built by
           <span>
-            <Link
-              style={{ color: 'white' }}
-              className='navigation'
-              to={'https://shcoobz.github.io/'}>
+            <Link className='link-white navigation' to={'https://shcoobz.github.io/'}>
               Shcoobz
             </Link>
           </span>

@@ -1,0 +1,28 @@
+.logo-container {
+  display: flex;
+  margin-right: auto;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-image {
+  width: 30px;
+  height: 30px;
+}
+
+.logo-text {
+  margin-right: auto;
+  font-weight: 800;
+  text-shadow: 2px 2px 20px #000;
+  font-size: 14px;
+}
+
+.logo-text span {
+  font-size: inherit;
+}
+
+@media (min-width: 768px) {
+  .logo-text {
+    font-size: 20px;
+  }
+}

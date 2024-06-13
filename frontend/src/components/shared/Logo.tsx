@@ -1,28 +1,16 @@
 import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
+import '../../css/components/shared/Logo.css';
 
 function Logo() {
   return (
-    <div
-      style={{ display: 'flex', marginRight: 'auto', alignItems: 'center', gap: '15px' }}>
+    <div className='logo-container'>
       <Link to={'/'}>
-        <img
-          src='openai.png'
-          alt='openai'
-          width={'30px'}
-          height={'30px'}
-          className='image-inverted'
-        />
+        <img src='openai.png' alt='openai' className='image-inverted logo-image' />
       </Link>
 
-      <Typography
-        sx={{
-          display: { md: 'block', sm: 'none', xs: 'none' },
-          mr: 'auto',
-          fontWeight: '800',
-          textShadow: '2px 2px 20px #000',
-        }}>
-        <span style={{ fontSize: '20px' }}>MERN</span> - Blabber Bot
+      <Typography className='logo-text'>
+        <span>MERN</span> - Blabber Bot
       </Typography>
     </div>
   );

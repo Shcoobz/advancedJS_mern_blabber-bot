@@ -1,0 +1,10 @@
+.custom-input-label {
+  color: white !important;
+}
+
+.custom-input-field {
+  width: 400px !important;
+  border-radius: 10px !important;
+  font-size: 25px !important;
+  color: white !important;
+}

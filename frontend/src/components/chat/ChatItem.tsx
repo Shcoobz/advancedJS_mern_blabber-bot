@@ -2,6 +2,7 @@ import { Box, Avatar, Typography } from '@mui/material';
 import { useAuth } from '../../context/useAuth';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { coldarkDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import '../../css/components/chat/ChatItem.css';
 
 function isCodeBlock(str: string) {
   if (
@@ -57,27 +58,19 @@ const ChatItem = ({ content, role }: { content: string; role: 'user' | 'assistan
   const auth = useAuth();
 
   return role == 'assistant' ? (
-    <Box
-      sx={{
-        display: 'flex',
-        p: 2,
-        bgcolor: '#004d5612',
-        gap: 2,
-        borderRadius: 2,
-        my: 1,
-      }}>
-      <Avatar sx={{ ml: '0' }}>
+    <Box className='chat-item-container chat-item-assistant'>
+      <Avatar className='chat-avatar'>
         <img src='openai.png' alt='openai' width={'30px'} />
       </Avatar>
       <Box>
         {messageBlocks?.length ? (
           messageBlocks.map((codeBlock, index) => [
-            index > 0 && <Box key={`newline-${index}`} sx={{ height: '1rem' }} />,
+            index > 0 && <Box key={`newline-${index}`} className='newline' />,
             codeBlock.language && (
               <Typography
                 key={`lang-${index}`}
                 variant='body2'
-                sx={{ fontSize: '14px', fontWeight: 'bold' }}>
+                className='chat-content-code'>
                 {codeBlock.language}
               </Typography>
             ),
@@ -91,35 +84,27 @@ const ChatItem = ({ content, role }: { content: string; role: 'user' | 'assistan
         ) : listItems?.length ? (
           listItems.map((item) => (
             <Box key={`item-${item.index}`}>
-              <Typography sx={{ fontSize: '18px' }}>{item.content}</Typography>
-              <Box sx={{ height: '1rem' }} />
+              <Typography className='chat-content-list'>{item.content}</Typography>
+              <Box className='newline' />
             </Box>
           ))
         ) : (
-          <Typography sx={{ fontSize: '20px' }}>{content}</Typography>
+          <Typography className='chat-content'>{content}</Typography>
         )}
       </Box>
     </Box>
   ) : (
-    <Box
-      sx={{
-        display: 'flex',
-        p: 2,
-        bgcolor: '#004d56',
-        gap: 2,
-        borderRadius: 2,
-        my: 2,
-      }}>
-      <Avatar sx={{ ml: '0', bgcolor: 'black', color: 'white' }}>
+    <Box className='chat-item-container chat-item-user'>
+      <Avatar className='chat-avatar chat-avatar-user'>
         {auth?.user?.name[0]}
         {auth?.user?.name.split(' ')[1][0]}
       </Avatar>
       <Box>
-        {!messageBlocks && <Typography sx={{ fontSize: '20px' }}>{content}</Typography>}
+        {!messageBlocks && <Typography className='chat-content'>{content}</Typography>}
         {messageBlocks &&
           messageBlocks.length &&
           messageBlocks.map((codeBlock, index) => [
-            index > 0 && <Box key={`newline-${index}`} sx={{ height: '1rem' }} />,
+            index > 0 && <Box key={`newline-${index}`} className='newline' />,
             codeBlock.language && (
               <Box key={`lang-${codeBlock.code}`}>
                 <Typography variant='body2'>{codeBlock.language}</Typography>

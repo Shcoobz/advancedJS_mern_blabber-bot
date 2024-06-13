@@ -39,8 +39,21 @@ function extractCodeFromString(message: string) {
   }
 }
 
+function formatAsList(message: string) {
+  const regex = /^(\d+\..+|[-*+]\s*.+)$/gm;
+  if (regex.test(message)) {
+    return message.split('\n').map((item, index) => ({
+      type: 'list',
+      content: item.trim(),
+      index,
+    }));
+  }
+  return null;
+}
+
 const ChatItem = ({ content, role }: { content: string; role: 'user' | 'assistant' }) => {
   const messageBlocks = extractCodeFromString(content);
+  const listItems = !messageBlocks ? formatAsList(content) : null;
   const auth = useAuth();
 
   return role == 'assistant' ? (
@@ -57,15 +70,16 @@ const ChatItem = ({ content, role }: { content: string; role: 'user' | 'assistan
         <img src='openai.png' alt='openai' width={'30px'} />
       </Avatar>
       <Box>
-        {!messageBlocks && <Typography sx={{ fontSize: '20px' }}>{content}</Typography>}
-        {messageBlocks &&
-          messageBlocks.length &&
+        {messageBlocks?.length ? (
           messageBlocks.map((codeBlock, index) => [
             index > 0 && <Box key={`newline-${index}`} sx={{ height: '1rem' }} />,
             codeBlock.language && (
-              <Box key={`lang-${codeBlock.code}`}>
-                <Typography variant='body2'>{codeBlock.language}</Typography>
-              </Box>
+              <Typography
+                key={`lang-${index}`}
+                variant='body2'
+                sx={{ fontSize: '14px', fontWeight: 'bold' }}>
+                {codeBlock.language}
+              </Typography>
             ),
             <SyntaxHighlighter
               key={codeBlock.code}
@@ -73,7 +87,17 @@ const ChatItem = ({ content, role }: { content: string; role: 'user' | 'assistan
               language={codeBlock.language || 'javascript'}>
               {codeBlock.code}
             </SyntaxHighlighter>,
-          ])}
+          ])
+        ) : listItems?.length ? (
+          listItems.map((item) => (
+            <Box key={`item-${item.index}`}>
+              <Typography sx={{ fontSize: '18px' }}>{item.content}</Typography>
+              <Box sx={{ height: '1rem' }} />
+            </Box>
+          ))
+        ) : (
+          <Typography sx={{ fontSize: '20px' }}>{content}</Typography>
+        )}
       </Box>
     </Box>
   ) : (

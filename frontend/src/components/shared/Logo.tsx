@@ -6,7 +6,7 @@ function Logo() {
   return (
     <div className='logo-container'>
       <Link to={'/'}>
-        <img src='openai.png' alt='openai' className='image-inverted logo-image' />
+        <img src='openai.png' alt='openai' className='logo-inverted logo-image' />
       </Link>
 
       <Typography className='logo-text'>

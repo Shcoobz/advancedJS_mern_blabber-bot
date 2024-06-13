@@ -36,18 +36,6 @@ body {
   filter: invert(100%);
 }
 
-/* Navigation */
-.navigation {
-  font-weight: 600;
-  text-transform: uppercase;
-  margin-right: 10px;
-  margin-left: 10px;
-  padding: 8px 20px;
-  border-radius: 10px;
-  text-decoration: none;
-  letter-spacing: 1px;
-}
-
 /* Form */
 .MuiOutlinedInput-input-root.Mui-focused,
 .MuiOutlinedInput-notchedOutline {

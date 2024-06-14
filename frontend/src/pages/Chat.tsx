@@ -11,7 +11,6 @@ import {
   chatSideBarMsgs,
   chatWindowMsgs,
   chatToastMsgs,
-  chatRoles,
 } from '../constants/chatPageMsgs';
 import {
   deleteUserChats,
@@ -33,6 +32,15 @@ function Chat() {
   const auth = useAuth();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  function getInitials(name: string) {
+    if (!name) return '';
+
+    const parts = name.split(' ');
+    const initials =
+      parts.length === 1 ? parts[0][0] : `${parts[0][0]}${parts[parts.length - 1][0]}`;
+    return initials.toUpperCase();
+  }
 
   async function handleSubmit() {
     const content = inputRef.current?.value as string;
@@ -100,10 +108,7 @@ function Chat() {
     <Box className='chatContainer'>
       <Box className='sideBar'>
         <Box className='chatDetails'>
-          <Avatar className='userAvatar'>
-            {auth?.user?.name[0]}
-            {auth?.user?.name.split(' ')[1][0]}
-          </Avatar>
+          <Avatar className='userAvatar'>{getInitials(auth!.user!.name)}</Avatar>
           <Typography className='paragraphOne'>{chatSideBarMsgs.title}</Typography>
           <Typography className='paragraphTwo'>{chatSideBarMsgs.description}</Typography>
 

@@ -1,16 +1,24 @@
 import { Box, Avatar, Typography, Button, IconButton } from '@mui/material';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { IoMdSend } from 'react-icons/io';
+import toast from 'react-hot-toast';
 
 import { useAuth } from '../context/useAuth';
 import ChatItem from '../components/chat/ChatItem';
+import { navigation } from '../constants/navigation';
+import {
+  chatSideBarMsgs,
+  chatWindowMsgs,
+  chatToastMsgs,
+  chatRoles,
+} from '../constants/chatPageMsgs';
 import {
   deleteUserChats,
   getUserChats,
   sendChatRequest,
 } from '../helpers/api-communicator';
-import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+
 import '../css/pages/Chat.css';
 
 type Message = {
@@ -49,36 +57,36 @@ function Chat() {
 
   async function handleDeleteChats() {
     try {
-      toast.loading('Deleting chats', { id: 'deletechats' });
+      toast.loading(chatToastMsgs.deletingChats, { id: chatToastMsgs.deletingId });
       await deleteUserChats();
       setChatMessages([]);
-      toast.success('Deleted chats successfully', { id: 'deletechats' });
+      toast.success(chatToastMsgs.deleteChatsSuccess, { id: chatToastMsgs.deletingId });
     } catch (error) {
       console.log(error);
-      toast.error('Deleting chats failed', { id: 'deletechats' });
+      toast.error(chatToastMsgs.deleteChatsError, { id: chatToastMsgs.deletingId });
     }
   }
 
   useLayoutEffect(() => {
     if (auth?.isLoggedIn && auth.user) {
-      toast.loading('Loading chats', { id: 'loadchats' });
+      toast.loading(chatToastMsgs.loadingChats, { id: chatToastMsgs.loadingId });
       getUserChats()
         .then((data) => {
           setChatMessages([...data.chats]);
-          toast.success('Successfully loaded chats', { id: 'loadchats' });
+          toast.success(chatToastMsgs.loadChatsSuccess, { id: chatToastMsgs.loadingId });
         })
         .catch((err) => {
           console.log(err);
-          toast.error('Loading chats failed', { id: 'loadchats' });
+          toast.error(chatToastMsgs.loadChatsError, { id: chatToastMsgs.loadingId });
         });
     }
   }, [auth]);
 
   useEffect(() => {
-    if (!auth?.user) {
-      return navigate('/login');
+    if (!auth?.isLoggedIn || !auth.user) {
+      return navigate(navigation.login);
     }
-  }, [auth]);
+  }, [auth, navigate]);
 
   useEffect(() => {
     const scrollableArea = messagesEndRef.current;
@@ -96,20 +104,17 @@ function Chat() {
             {auth?.user?.name[0]}
             {auth?.user?.name.split(' ')[1][0]}
           </Avatar>
-          <Typography className='paragraphOne'>Chat with Blabber Bot!</Typography>
-          <Typography className='paragraphTwo'>
-            You can ask questions related to anything you're interested in!
-          </Typography>
+          <Typography className='paragraphOne'>{chatSideBarMsgs.title}</Typography>
+          <Typography className='paragraphTwo'>{chatSideBarMsgs.description}</Typography>
 
           <Button className='clearConversationButton' onClick={handleDeleteChats}>
-            Clear Conversation
+            {chatSideBarMsgs.clearConversationButton}
           </Button>
         </Box>
       </Box>
 
       <Box className='flexibleMainContent'>
-        <Typography className='modelTitle'>Model - GPT 3.5 Turbo</Typography>
-
+        <Typography className='modelTitle'>{chatWindowMsgs.modelVersion}</Typography>
         <Box className='scrollableContentArea' ref={messagesEndRef}>
           {chatMessages.map((chat, index) => (
             <ChatItem content={chat.content} role={chat.role} key={index} />
@@ -121,7 +126,7 @@ function Chat() {
             type='text'
             className='chatInput'
             onKeyDown={handleKeyPress}
-            placeholder='Type your message here...'
+            placeholder={chatWindowMsgs.inputPlaceholder}
           />
           <IconButton onClick={handleSubmit} className='sendButton'>
             <IoMdSend />

@@ -16,7 +16,7 @@
 .chatDetails {
   display: flex;
   width: 100%;
-  height: 60vh;
+  height: 100%;
   background-color: rgb(17, 29, 39);
   border-radius: 5px;
   flex-direction: column;
@@ -25,23 +25,28 @@
 }
 
 .userAvatar {
+  height: 75px !important;
+  width: 75px !important;
   margin: auto;
-  margin-top: 16px;
-  margin-bottom: 16px;
+  margin-top: 25px;
+  margin-bottom: 25px;
   background-color: white;
   color: black;
   font-weight: 700;
+  font-size: 40px !important;
 }
 
 .paragraphOne {
   margin-left: auto !important;
   margin-right: auto !important;
+  font-size: 30px !important;
   font-family: 'Work Sans', sans-serif;
 }
 
 .paragraphTwo {
   margin-left: auto !important;
   margin-right: auto !important;
+  font-size: 20px !important;
   font-family: 'Work Sans', sans-serif;
   margin-top: 32px;
   margin-bottom: 32px;
@@ -55,6 +60,7 @@
   font-weight: 700 !important;
   border-radius: 3px !important;
   background-color: #ef5350 !important;
+  bottom: -215px;
 }
 
 .clearConversationButton:hover {
@@ -120,16 +126,149 @@
   .sideBar {
     display: none;
   }
+
+  .chatContainer {
+    flex-direction: column;
+    margin-top: 16px;
+    gap: 16px;
+  }
+
+  .chatDetails {
+    margin-left: 8px;
+    margin-right: 8px;
+    padding: 16px;
+  }
+
+  .modelTitle {
+    font-size: 24px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .scrollableContentArea {
+    height: 50vh;
+    margin-bottom: 16px;
+  }
+
+  .chatInput {
+    font-size: 16px;
+    margin: 10px;
+  }
+
+  .sendButton {
+    font-size: 24px !important;
+  }
 }
 
 @media (max-width: 960px) {
   .flexibleMainContent {
     flex: 1;
   }
+
+  .chatContainer {
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  .chatDetails {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .userAvatar {
+    height: 40px !important;
+    width: 40px !important;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    background-color: white;
+    color: black;
+    font-weight: 700;
+    font-size: 20px !important;
+  }
+
+  .paragraphOne {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    font-size: 20px !important;
+    font-family: 'Work Sans', sans-serif;
+  }
+
+  .paragraphTwo {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    font-size: 15px !important;
+    font-family: 'Work Sans', sans-serif;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    padding: 24px;
+  }
+
+  .clearConversationButton {
+    width: 200px !important;
+    margin: auto !important;
+    color: white !important;
+    font-weight: 700 !important;
+    border-radius: 3px !important;
+    background-color: #ef5350 !important;
+    position: absolute;
+    bottom: -180px;
+  }
+
+  .clearConversationButton:hover {
+    background-color: #e53935 !important;
+  }
+
+  .modelTitle {
+    font-size: 32px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .scrollableContentArea {
+    height: 55vh;
+    margin-bottom: 24px;
+  }
+
+  .chatInput {
+    font-size: 18px;
+    margin: 20px;
+  }
+
+  .sendButton {
+    font-size: 32px !important;
+  }
 }
 
 @media (min-width: 961px) {
   .flexibleMainContent {
     flex: 0.8;
+  }
+
+  .chatContainer {
+    gap: 48px;
+    margin-top: 48px;
+  }
+
+  .chatDetails {
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+
+  .modelTitle {
+    font-size: 40px !important;
+    margin-bottom: 32px !important;
+  }
+
+  .scrollableContentArea {
+    height: 60vh;
+    margin-bottom: 30px;
+  }
+
+  .chatInput {
+    font-size: 20px;
+    margin: 25px;
+  }
+
+  .sendButton {
+    font-size: 40px !important;
   }
 }

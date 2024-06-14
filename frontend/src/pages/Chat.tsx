@@ -24,6 +24,7 @@ function Chat() {
   const navigate = useNavigate();
   const auth = useAuth();
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   async function handleSubmit() {
     const content = inputRef.current?.value as string;
@@ -79,6 +80,14 @@ function Chat() {
     }
   }, [auth]);
 
+  useEffect(() => {
+    const scrollableArea = messagesEndRef.current;
+
+    if (scrollableArea) {
+      scrollableArea.scrollTop = scrollableArea.scrollHeight;
+    }
+  }, [chatMessages]);
+
   return (
     <Box className='chatContainer'>
       <Box className='sideBar'>
@@ -100,7 +109,8 @@ function Chat() {
 
       <Box className='flexibleMainContent'>
         <Typography className='modelTitle'>Model - GPT 3.5 Turbo</Typography>
-        <Box className='scrollableContentArea'>
+
+        <Box className='scrollableContentArea' ref={messagesEndRef}>
           {chatMessages.map((chat, index) => (
             <ChatItem content={chat.content} role={chat.role} key={index} />
           ))}
@@ -110,7 +120,8 @@ function Chat() {
             ref={inputRef}
             type='text'
             className='chatInput'
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyPress}
+            placeholder='Type your message here...'
           />
           <IconButton onClick={handleSubmit} className='sendButton'>
             <IoMdSend />

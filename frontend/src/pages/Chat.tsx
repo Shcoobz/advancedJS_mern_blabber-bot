@@ -1,7 +1,6 @@
 import { Box, Avatar, Typography, Button, IconButton } from '@mui/material';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { IoMdSend } from 'react-icons/io';
-import { red } from '@mui/material/colors';
 
 import { useAuth } from '../context/useAuth';
 import ChatItem from '../components/chat/ChatItem';
@@ -38,6 +37,13 @@ function Chat() {
 
     const chatData = await sendChatRequest(content);
     setChatMessages([...chatData.chats]);
+  }
+
+  async function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSubmit();
+    }
   }
 
   async function handleDeleteChats() {
@@ -100,8 +106,12 @@ function Chat() {
           ))}
         </Box>
         <div className='chatInputContainer'>
-          <input ref={inputRef} type='text' className='chatInput' />
-
+          <input
+            ref={inputRef}
+            type='text'
+            className='chatInput'
+            onKeyPress={handleKeyPress}
+          />
           <IconButton onClick={handleSubmit} className='sendButton'>
             <IoMdSend />
           </IconButton>

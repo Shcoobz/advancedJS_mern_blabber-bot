@@ -8,3 +8,19 @@
   text-decoration: none;
   letter-spacing: 1px;
 }
+
+.bg-blue {
+  background-color: #00fffc;
+}
+
+.bg-dark {
+  background-color: #51538f;
+}
+
+.text-black {
+  color: black;
+}
+
+.text-white {
+  color: white;
+}

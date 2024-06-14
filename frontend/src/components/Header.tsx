@@ -5,28 +5,45 @@ import Navigation from './shared/Navigation';
 
 import { useAuth } from '../context/useAuth';
 
+import '../css/components/Header.css';
+
 function Header() {
   const auth = useAuth();
   return (
-    <AppBar sx={{ bgcolor: 'transparent', position: 'static', boxShadow: 'none' }}>
-      <Toolbar sx={{ display: 'flex' }}>
+    <AppBar className='appBar'>
+      <Toolbar className='toolbar'>
         <Logo />
         <div>
           {auth?.isLoggedIn ? (
             <>
-              <Navigation bg='#00fffc' to='/chat' text='Go to Chat' textColor='black' />
               <Navigation
-                bg='#51538f'
+                to='/chat'
+                text='Go to Chat'
+                bgColor='bg-blue'
+                textColorClass='text-black'
+              />
+              <Navigation
                 to='/'
                 text='Logout'
-                textColor='white'
+                bgColor='bg-dark'
+                textColorClass='text-white'
                 onClick={auth.logout}
               />
             </>
           ) : (
             <>
-              <Navigation bg='#00fffc' to='/login' text='Login' textColor='black' />
-              <Navigation bg='#51538f' to='/signup' text='Signup' textColor='white' />
+              <Navigation
+                to='/login'
+                text='Login'
+                bgColor='bg-blue'
+                textColorClass='text-black'
+              />
+              <Navigation
+                to='/signup'
+                text='Signup'
+                bgColor='bg-dark'
+                textColorClass='text-white'
+              />
             </>
           )}
         </div>

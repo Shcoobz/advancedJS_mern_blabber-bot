@@ -3,20 +3,16 @@ import '../../css/components/shared/Navigation.css';
 
 type Props = {
   to: string;
-  bg: string;
+  bgColor: string;
   text: string;
-  textColor: string;
+  textColorClass: string;
   onClick?: () => Promise<void>;
 };
 
-function Navigation(props: Props) {
+function Navigation({ to, bgColor, text, textColorClass, onClick }: Props) {
   return (
-    <Link
-      onClick={props.onClick}
-      className='navigation'
-      to={props.to}
-      style={{ background: props.bg, color: props.textColor }}>
-      {props.text}
+    <Link onClick={onClick} className={`navigation ${bgColor} ${textColorClass}`} to={to}>
+      {text}
     </Link>
   );
 }

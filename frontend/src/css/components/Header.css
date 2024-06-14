@@ -1,0 +1,10 @@
+.appBar {
+  background-color: transparent !important;
+  position: relative !important;
+  box-shadow: none !important;
+  z-index: 1100;
+}
+
+.toolbar {
+  display: flex;
+}

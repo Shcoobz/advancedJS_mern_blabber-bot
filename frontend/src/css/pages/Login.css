@@ -1,0 +1,99 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.robot-container {
+  padding: 64px;
+  margin-top: 64px;
+  margin-left: 250px;
+  flex: 1;
+}
+
+.robot-image {
+  width: 400px;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  margin-left: auto;
+  margin-right: 350px;
+  margin-top: 128px;
+  flex: 1;
+}
+
+.form-style {
+  margin: auto;
+  padding: 30px;
+  box-shadow: 10px 10px 20px #000;
+  border-radius: 10px;
+  border: none;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.MuiOutlinedInput-input-root.Mui-focused,
+.MuiOutlinedInput-notchedOutline {
+  border-color: white !important;
+}
+
+.login-title {
+  text-align: center;
+  padding: 16px;
+  font-weight: 600;
+}
+
+.submit-button {
+  padding: 16px 8px !important;
+  margin-top: 16px !important;
+  width: 400px !important;
+  border-radius: 16px !important;
+  background-color: #00fffc !important;
+  font-size: 25px !important;
+  font-weight: bold !important;
+  transition: background-color 0.3s, color 0.3s !important;
+}
+
+.submit-button:hover {
+  background-color: white !important;
+  color: black !important;
+}
+
+.submit-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px !important;
+  font-weight: bold !important;
+}
+
+@media (min-width: 600px) {
+  .robot-container {
+    display: none;
+  }
+}
+
+@media (max-width: 959px) {
+  .form-container {
+    flex: 1;
+  }
+}
+
+@media (min-width: 960px) {
+  .robot-container {
+    display: flex;
+  }
+
+  .form-container {
+    flex: 0.5;
+  }
+}

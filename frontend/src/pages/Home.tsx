@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import TypingAnimation from '../components/typer/TypingAnimation';
 
-import { chatImage, openAIImage, robotImage } from '../constants/images';
+import { HOME_CHAT_IMG, HOME_OPENAI_IMG, HOME_ROBOT_IMG } from '../constants/images';
 import Footer from '../components/footer/Footer';
 
 import '../css/pages/Home.css';
@@ -14,10 +14,10 @@ function Home() {
           <TypingAnimation />
         </Box>
         <Box className='img-container'>
-          {robotImage}
-          {openAIImage}
+          {HOME_ROBOT_IMG}
+          {HOME_OPENAI_IMG}
         </Box>
-        <Box className='chat-container'>{chatImage}</Box>
+        <Box className='chat-container'>{HOME_CHAT_IMG}</Box>
       </Box>
       <Footer />
     </Box>

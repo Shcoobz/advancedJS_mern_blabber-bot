@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 import { useAuth } from '../context/useAuth';
 import ChatItem from '../components/chat/ChatItem';
-import { navigation } from '../constants/navigation';
+import { NAVIGATION } from '../constants/navigation';
 import {
   chatSideBarMsgs,
   chatWindowMsgs,
@@ -102,7 +102,7 @@ function Chat() {
 
   useEffect(() => {
     if (!auth?.isLoggedIn || !auth.user) {
-      return navigate(navigation.login);
+      return navigate(NAVIGATION.LOGIN);
     }
   }, [auth, navigate]);
 

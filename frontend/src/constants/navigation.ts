@@ -1,3 +1,4 @@
-export const navigation = {
-  login: '/login',
+export const NAVIGATION = {
+  LOGIN: '/login',
+  CHAT: '/chat',
 };

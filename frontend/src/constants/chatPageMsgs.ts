@@ -1,3 +1,11 @@
+export const CHAT = {
+  TITLE: 'Chat with Blabber Bot!',
+  DESCRIPTION: "You can ask questions related to anything you're interested in!",
+  DELETE: 'Clear Conversation',
+  MODEL_VERSION: 'Model - GPT 3.5 Turbo',
+  PLACEHOLDER: 'Type your message here...',
+};
+
 export const chatSideBarMsgs = {
   title: 'Chat with Blabber Bot!',
   description: "You can ask questions related to anything you're interested in!",
@@ -24,5 +32,3 @@ export const chatRoles = {
   user: 'user',
   assistant: 'assistant',
 };
-
-

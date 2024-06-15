@@ -31,27 +31,8 @@ body {
   background: rgb(5, 16, 28);
 }
 
-/* Logo */
-.image-inverted {
-  filter: invert(100%);
-}
-
 /* Form */
 .MuiOutlinedInput-input-root.Mui-focused,
 .MuiOutlinedInput-notchedOutline {
   border-color: white !important;
-}
-
-/* Home */
-.rotate {
-  animation: rotation 8s infinite linear;
-}
-
-@keyframes rotation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(359deg);
-  }
 }

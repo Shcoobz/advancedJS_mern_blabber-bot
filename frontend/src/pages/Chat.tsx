@@ -42,6 +42,16 @@ function Chat() {
     return initials.toUpperCase();
   }
 
+  function renderChatItems(chatMessages: Message[]) {
+    return (
+      <>
+        {chatMessages.map((chat, index) => (
+          <ChatItem content={chat.content} role={chat.role} key={index} />
+        ))}
+      </>
+    );
+  }
+
   async function handleSubmit() {
     const content = inputRef.current?.value as string;
 
@@ -111,7 +121,6 @@ function Chat() {
           <Avatar className='userAvatar'>{getInitials(auth!.user!.name)}</Avatar>
           <Typography className='paragraphOne'>{chatSideBarMsgs.title}</Typography>
           <Typography className='paragraphTwo'>{chatSideBarMsgs.description}</Typography>
-
           <Button className='clearConversationButton' onClick={handleDeleteChats}>
             {chatSideBarMsgs.clearConversationButton}
           </Button>
@@ -121,9 +130,7 @@ function Chat() {
       <Box className='flexibleMainContent'>
         <Typography className='modelTitle'>{chatWindowMsgs.modelVersion}</Typography>
         <Box className='scrollableContentArea' ref={messagesEndRef}>
-          {chatMessages.map((chat, index) => (
-            <ChatItem content={chat.content} role={chat.role} key={index} />
-          ))}
+          {renderChatItems(chatMessages)}
         </Box>
         <div className='chatInputContainer'>
           <input

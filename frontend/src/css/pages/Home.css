@@ -1,0 +1,85 @@
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.typing-animation-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 24px;
+}
+
+.img-container {
+  width: 100%;
+  display: flex;
+  gap: 40px;
+  margin-top: 80px;
+  margin-bottom: 80px;
+  flex-direction: column;
+}
+
+.img {
+  width: 300px;
+  margin: auto;
+}
+
+.image-inverted {
+  filter: invert(100%);
+}
+
+.rotate {
+  animation: rotation 8s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+.chat-container {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.chat-image {
+  display: flex;
+  margin: auto;
+  border-radius: 20px;
+  box-shadow: -5px -5px 105px #64f3d5;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+@media (min-width: 600px) {
+  .img-container {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 960px) {
+  .img-container {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 960px) {
+  .chat-image {
+    width: 80%;
+  }
+}
+
+@media (min-width: 961px) {
+  .chat-image {
+    width: 75%;
+  }
+}

@@ -13,3 +13,8 @@ export const HOME_CHAT_IMG = <img src='chat.png' alt='chatbot' className='chat-i
 export const GREETING_ROBOT_IMG = (
   <img src='airobot.png' alt='Robot' className='robot-image' />
 );
+
+// Chat
+export const CHAT_AVATAR = (
+  <img src='openai.png' alt='openai' className='chat-avatar-image' />
+);

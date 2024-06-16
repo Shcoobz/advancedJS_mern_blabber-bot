@@ -1,8 +1,12 @@
+import React from 'react';
 import { Box, Avatar, Typography } from '@mui/material';
 import { useAuth } from '../../context/useAuth';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { coldarkDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import '../../css/components/chat/ChatItem.css';
+import { MISC } from '../../constants/MISC';
+import { CHAT_AVATAR } from '../../constants/images';
+import { getInitials } from '../../utils/utils';
 
 function isCodeBlock(str: string) {
   if (
@@ -52,74 +56,84 @@ function formatAsList(message: string) {
   return null;
 }
 
+function capitalizeFirstLetter(string: string) {
+  if (!string) return '';
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
 const ChatItem = ({ content, role }: { content: string; role: 'user' | 'assistant' }) => {
   const messageBlocks = extractCodeFromString(content);
   const listItems = !messageBlocks ? formatAsList(content) : null;
   const auth = useAuth();
 
-  return role == 'assistant' ? (
-    <Box className='chat-item-container chat-item-assistant'>
-      <Avatar className='chat-avatar'>
-        <img src='openai.png' alt='openai' width={'30px'} />
-      </Avatar>
-      <Box>
-        {messageBlocks?.length ? (
-          messageBlocks.map((codeBlock, index) => [
-            index > 0 && <Box key={`newline-${index}`} className='newline' />,
-            codeBlock.language && (
-              <Typography
-                key={`lang-${index}`}
-                variant='body2'
-                className='chat-content-code'>
-                {codeBlock.language}
+  function renderCodeBlocks() {
+    return messageBlocks?.length
+      ? messageBlocks.map((codeBlock, index) => (
+          <React.Fragment key={index}>
+            {index > 0 && <Box className='newline' />}
+            {codeBlock.language && (
+              <Typography className='chat-content-code'>
+                {capitalizeFirstLetter(codeBlock.language)}
               </Typography>
-            ),
+            )}
             <SyntaxHighlighter
-              key={codeBlock.code}
               style={coldarkDark}
-              language={codeBlock.language || 'javascript'}>
+              language={codeBlock.language || MISC.PLAINTEXT}>
               {codeBlock.code}
-            </SyntaxHighlighter>,
-          ])
-        ) : listItems?.length ? (
-          listItems.map((item) => (
-            <Box key={`item-${item.index}`}>
-              <Typography className='chat-content-list'>{item.content}</Typography>
-              <Box className='newline' />
-            </Box>
-          ))
-        ) : (
-          <Typography className='chat-content'>{content}</Typography>
-        )}
+            </SyntaxHighlighter>
+          </React.Fragment>
+        ))
+      : null;
+  }
+
+  function renderList() {
+    return listItems?.length
+      ? listItems.map((item) => (
+          <Box key={`item-${item.index}`}>
+            <Typography className='chat-content-list'>{item.content}</Typography>
+            <Box className='newline' />
+          </Box>
+        ))
+      : null;
+  }
+
+  function renderContent() {
+    return <Typography className='chat-content'>{content}</Typography>;
+  }
+
+  function renderAssistantMsg() {
+    return (
+      <Box className='chat-item-container chat-item-assistant'>
+        <Avatar className='chat-avatar'>{CHAT_AVATAR}</Avatar>
+        <Box>
+          {messageBlocks
+            ? renderCodeBlocks()
+            : listItems
+            ? renderList()
+            : renderContent()}
+        </Box>
       </Box>
-    </Box>
-  ) : (
-    <Box className='chat-item-container chat-item-user'>
-      <Avatar className='chat-avatar chat-avatar-user'>
-        {auth?.user?.name[0]}
-        {auth?.user?.name.split(' ')[1][0]}
-      </Avatar>
-      <Box>
-        {!messageBlocks && <Typography className='chat-content'>{content}</Typography>}
-        {messageBlocks &&
-          messageBlocks.length &&
-          messageBlocks.map((codeBlock, index) => [
-            index > 0 && <Box key={`newline-${index}`} className='newline' />,
-            codeBlock.language && (
-              <Box key={`lang-${codeBlock.code}`}>
-                <Typography variant='body2'>{codeBlock.language}</Typography>
-              </Box>
-            ),
-            <SyntaxHighlighter
-              key={codeBlock.code}
-              style={coldarkDark}
-              language={codeBlock.language || 'javascript'}>
-              {codeBlock.code}
-            </SyntaxHighlighter>,
-          ])}
+    );
+  }
+
+  function renderUserMsg() {
+    return (
+      <Box className='chat-item-container chat-item-user'>
+        <Avatar className='chat-avatar chat-avatar-user'>
+          {getInitials(auth!.user!.name)}
+        </Avatar>
+        <Box>
+          {messageBlocks
+            ? renderCodeBlocks()
+            : listItems
+            ? renderList()
+            : renderContent()}
+        </Box>
       </Box>
-    </Box>
-  );
+    );
+  }
+
+  return role == 'assistant' ? renderAssistantMsg() : renderUserMsg();
 };
 
 export default ChatItem;

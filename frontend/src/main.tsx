@@ -6,9 +6,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.tsx';
 import { Toaster } from 'react-hot-toast';
 
+import { theme } from '../src/constants/theme.ts';
 import App from './App.tsx';
 
-import { theme } from '../src/constants/theme.ts';
 import './index.css';
 
 axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;

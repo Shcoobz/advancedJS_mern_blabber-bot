@@ -19,6 +19,7 @@ import {
 } from '../helpers/api-communicator';
 
 import '../css/pages/Chat.css';
+import { getInitials } from '../utils/utils';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -32,15 +33,6 @@ function Chat() {
   const auth = useAuth();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  function getInitials(name: string) {
-    if (!name) return '';
-
-    const parts = name.split(' ');
-    const initials =
-      parts.length === 1 ? parts[0][0] : `${parts[0][0]}${parts[parts.length - 1][0]}`;
-    return initials.toUpperCase();
-  }
 
   function renderChatItems(chatMessages: Message[]) {
     return (

@@ -18,22 +18,33 @@
   margin-left: 0;
 }
 
+.chat-avatar-image {
+  width: 30px;
+  height: auto;
+}
+
 .chat-avatar-user {
   background-color: black;
   color: white;
 }
 
 .chat-content {
-  font-size: 20px;
+  font-size: 16px !important;
 }
 
 .chat-content-code {
-  font-size: 14px;
+  font-size: 16px !important;
+  color: #ccc;
+  background-color: #333;
+  padding: 8px !important;
+  border-radius: 4px;
+  margin: 5px 0;
+
   font-weight: bold;
 }
 
 .chat-content-list {
-  font-size: 18px;
+  font-size: 16px !important;
 }
 
 .newline {

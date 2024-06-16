@@ -1,4 +1,7 @@
 import { Link } from 'react-router-dom';
+
+import { CREATOR, FOOTER_CREDIT_TEXT, GITHUB_URL } from '../../constants/constants';
+
 import '../../css/components/footer/Footer.css';
 
 function Footer() {
@@ -6,10 +9,10 @@ function Footer() {
     <footer>
       <div className='footer-container'>
         <p className='footer-text'>
-          Built by
+          {FOOTER_CREDIT_TEXT}
           <span>
-            <Link className='link-white navigation' to={'https://shcoobz.github.io/'}>
-              Shcoobz
+            <Link className='link-white navigation' to={GITHUB_URL}>
+              {CREATOR}
             </Link>
           </span>
         </p>

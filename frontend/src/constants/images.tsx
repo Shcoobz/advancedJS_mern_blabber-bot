@@ -1,5 +1,10 @@
 import '../css/constants/images.css';
 
+// Nav Bar
+export const NAV_OPENAI_IMG = (
+  <img src='openai.png' alt='openai' className='logo-inverted logo-image' />
+);
+
 // Home Page
 export const HOME_ROBOT_IMG = <img src='robot.png' alt='robot' className='img' />;
 

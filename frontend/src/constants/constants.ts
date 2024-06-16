@@ -1,3 +1,8 @@
+// Nav Bar
+export const TECH_DESC = 'MERN';
+export const HYPHEN = ' - ';
+export const PROJ_NAME = 'Blabber Bot';
+
 // Roles
 export const ASSISTANT_ROLE = 'assistant';
 export const USER_ROLE = 'user';

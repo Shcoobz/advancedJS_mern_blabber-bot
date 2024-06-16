@@ -31,8 +31,19 @@ body {
   background: rgb(5, 16, 28);
 }
 
-/* Form */
-.MuiOutlinedInput-input-root.Mui-focused,
-.MuiOutlinedInput-notchedOutline {
-  border-color: white !important;
+/* Toasts */
+
+.toast-container {
+  position: fixed !important;
+  top: 10% !important;
+  right: 10% !important;
+  bottom: auto !important;
+  left: auto !important;
+}
+
+@media (max-width: 600px) {
+  .toast-container {
+    top: 20% !important;
+    right: 5% !important;
+  }
 }

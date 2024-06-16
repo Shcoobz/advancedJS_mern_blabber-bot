@@ -9,7 +9,7 @@ export const HOME_OPENAI_IMG = (
 
 export const HOME_CHAT_IMG = <img src='chat.png' alt='chatbot' className='chat-image' />;
 
-// Login Page
-export const LOGIN_ROBOT_IMG = (
+// Login/Signup Page
+export const GREETING_ROBOT_IMG = (
   <img src='airobot.png' alt='Robot' className='robot-image' />
 );

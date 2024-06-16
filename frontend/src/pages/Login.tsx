@@ -7,7 +7,7 @@ import { useAuth } from '../context/useAuth';
 import { NAVIGATION } from '../constants/navigation';
 import { LOGIN } from '../constants/toastMsgs';
 import { SUBMIT_ICON } from '../constants/icons';
-import { LOGIN_ROBOT_IMG } from '../constants/images';
+import { GREETING_ROBOT_IMG } from '../constants/images';
 import { BUTTONS } from '../constants/buttons';
 import { FORM_FIELDS } from '../constants/formFields';
 
@@ -44,7 +44,7 @@ function Login() {
 
   return (
     <Box className='container'>
-      <Box className='robot-container'>{LOGIN_ROBOT_IMG}</Box>
+      <Box className='robot-container'>{GREETING_ROBOT_IMG}</Box>
       <Box className='form-container'>
         <form onSubmit={handleSubmit} className='form-style'>
           <Box className='login-container'>

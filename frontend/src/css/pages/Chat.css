@@ -1,4 +1,4 @@
-.chatContainer {
+.chat-container {
   display: flex;
   flex: 1;
   width: 100%;
@@ -7,13 +7,13 @@
   gap: 48px;
 }
 
-.sideBar {
+.side-bar {
   display: flex;
   flex: 0.2;
   flex-direction: column;
 }
 
-.chatDetails {
+.chat-details {
   display: flex;
   width: 100%;
   height: 100%;
@@ -24,7 +24,7 @@
   margin-right: 24px;
 }
 
-.userAvatar {
+.user-avatar {
   height: 75px !important;
   width: 75px !important;
   margin: auto;
@@ -36,14 +36,14 @@
   font-size: 40px !important;
 }
 
-.paragraphOne {
+.p-title {
   margin-left: auto !important;
   margin-right: auto !important;
   font-size: 30px !important;
   font-family: 'Work Sans', sans-serif;
 }
 
-.paragraphTwo {
+.p-description {
   margin-left: auto !important;
   margin-right: auto !important;
   font-size: 20px !important;
@@ -53,7 +53,7 @@
   padding: 24px;
 }
 
-.clearConversationButton {
+.del-chat-btn {
   width: 200px !important;
   margin: auto !important;
   color: white !important;
@@ -63,16 +63,17 @@
   bottom: -215px;
 }
 
-.clearConversationButton:hover {
+.del-chat-button:hover {
   background-color: #e53935 !important;
 }
 
-.flexibleMainContent {
+.chat-window {
+  width: 10%;
   display: flex;
   flex-direction: column;
 }
 
-.modelTitle {
+.model-title {
   font-size: 40px !important;
   color: white;
   margin-bottom: 32px !important;
@@ -81,7 +82,7 @@
   font-weight: 600 !important;
 }
 
-.scrollableContentArea {
+.scrollable-msg-area {
   width: 100%;
   height: 60vh;
   border-radius: 3px;
@@ -97,14 +98,14 @@
   margin-bottom: 30px;
 }
 
-.chatInputContainer {
+.chat-input-container {
   width: calc(100% - 10px);
   border-radius: 8px;
   background-color: rgb(17, 27, 39);
   display: flex;
 }
 
-.chatInput {
+.chat-input {
   width: 100%;
   background-color: transparent;
   padding: 10px;
@@ -115,7 +116,7 @@
   margin: 25px;
 }
 
-.sendButton {
+.chat-submit-btn {
   color: white !important;
   margin-left: 8px !important;
   margin-right: 20px !important;
@@ -123,58 +124,58 @@
 }
 
 @media (max-width: 600px) {
-  .sideBar {
+  .side-bar {
     display: none;
   }
 
-  .chatContainer {
+  .chat-container {
     flex-direction: column;
     margin-top: 16px;
     gap: 16px;
   }
 
-  .chatDetails {
+  .chat-details {
     margin-left: 8px;
     margin-right: 8px;
     padding: 16px;
   }
 
-  .modelTitle {
+  .model-title {
     font-size: 24px !important;
     margin-bottom: 16px !important;
   }
 
-  .scrollableContentArea {
+  .scrollable-msg-area {
     height: 50vh;
     margin-bottom: 16px;
   }
 
-  .chatInput {
+  .chat-input {
     font-size: 16px;
     margin: 10px;
   }
 
-  .sendButton {
+  .chat-submit-button {
     font-size: 24px !important;
   }
 }
 
 @media (max-width: 960px) {
-  .flexibleMainContent {
+  .chat-window {
     flex: 1;
   }
 
-  .chatContainer {
+  .chat-container {
     gap: 24px;
     margin-top: 24px;
   }
 
-  .chatDetails {
+  .chat-details {
     margin-left: 16px;
     margin-right: 16px;
   }
 
-  .userAvatar {
+  .user-avatar {
     height: 40px !important;
     width: 40px !important;
     margin: auto;
@@ -186,14 +187,14 @@
     font-size: 20px !important;
   }
 
-  .paragraphOne {
+  .p-title {
     margin-left: auto !important;
     margin-right: auto !important;
     font-size: 20px !important;
     font-family: 'Work Sans', sans-serif;
   }
 
-  .paragraphTwo {
+  .p-description {
     margin-left: auto !important;
     margin-right: auto !important;
     font-size: 15px !important;
@@ -203,7 +204,7 @@
     padding: 24px;
   }
 
-  .clearConversationButton {
+  .del-chat-btn {
     width: 200px !important;
     margin: auto !important;
     color: white !important;
@@ -214,61 +215,61 @@
     bottom: -180px;
   }
 
-  .clearConversationButton:hover {
+  .del-chat-btn:hover {
     background-color: #e53935 !important;
   }
 
-  .modelTitle {
+  .model-title {
     font-size: 32px !important;
     margin-bottom: 24px !important;
   }
 
-  .scrollableContentArea {
+  .scrollable-msg-area {
     height: 55vh;
     margin-bottom: 24px;
   }
 
-  .chatInput {
+  .chat-input {
     font-size: 18px;
     margin: 20px;
   }
 
-  .sendButton {
+  .chat-submit-btn {
     font-size: 32px !important;
   }
 }
 
 @media (min-width: 961px) {
-  .flexibleMainContent {
+  .chat-window {
     flex: 0.8;
   }
 
-  .chatContainer {
+  .chat-container {
     gap: 48px;
     margin-top: 48px;
   }
 
-  .chatDetails {
+  .chat-details {
     margin-left: 24px;
     margin-right: 24px;
   }
 
-  .modelTitle {
+  .model-title {
     font-size: 40px !important;
     margin-bottom: 32px !important;
   }
 
-  .scrollableContentArea {
+  .scrollable-msg-area {
     height: 60vh;
     margin-bottom: 30px;
   }
 
-  .chatInput {
+  .chat-input {
     font-size: 20px;
     margin: 25px;
   }
 
-  .sendButton {
+  .chat-submit-btn {
     font-size: 40px !important;
   }
 }

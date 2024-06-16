@@ -72,11 +72,12 @@ const ChatItem = ({ content, role }: { content: string; role: 'user' | 'assistan
           <React.Fragment key={index}>
             {index > 0 && <Box className='newline' />}
             {codeBlock.language && (
-              <Typography className='chat-content-code'>
+              <Typography className='chat-content-code-lang'>
                 {capitalizeFirstLetter(codeBlock.language)}
               </Typography>
             )}
             <SyntaxHighlighter
+              className='chat-content-code'
               style={coldarkDark}
               language={codeBlock.language || MISC.PLAINTEXT}>
               {codeBlock.code}

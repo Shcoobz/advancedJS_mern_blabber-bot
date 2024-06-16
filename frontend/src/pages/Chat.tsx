@@ -107,32 +107,32 @@ function Chat() {
   }, [chatMessages]);
 
   return (
-    <Box className='chatContainer'>
-      <Box className='sideBar'>
-        <Box className='chatDetails'>
-          <Avatar className='userAvatar'>{getInitials(auth!.user!.name)}</Avatar>
-          <Typography className='paragraphOne'>{chatSideBarMsgs.title}</Typography>
-          <Typography className='paragraphTwo'>{chatSideBarMsgs.description}</Typography>
-          <Button className='clearConversationButton' onClick={handleDeleteChats}>
+    <Box className='chat-container'>
+      <Box className='side-bar'>
+        <Box className='chat-details'>
+          <Avatar className='user-avatar'>{getInitials(auth!.user!.name)}</Avatar>
+          <Typography className='p-title'>{chatSideBarMsgs.title}</Typography>
+          <Typography className='p-description'>{chatSideBarMsgs.description}</Typography>
+          <Button className='del-chat-btn' onClick={handleDeleteChats}>
             {chatSideBarMsgs.clearConversationButton}
           </Button>
         </Box>
       </Box>
 
-      <Box className='flexibleMainContent'>
-        <Typography className='modelTitle'>{chatWindowMsgs.modelVersion}</Typography>
-        <Box className='scrollableContentArea' ref={messagesEndRef}>
+      <Box className='chat-window'>
+        <Typography className='model-title'>{chatWindowMsgs.modelVersion}</Typography>
+        <Box className='scrollable-msg-area' ref={messagesEndRef}>
           {renderChatItems(chatMessages)}
         </Box>
-        <div className='chatInputContainer'>
+        <div className='chat-input-container'>
           <input
             ref={inputRef}
             type='text'
-            className='chatInput'
+            className='chat-input'
             onKeyDown={handleKeyPress}
             placeholder={chatWindowMsgs.inputPlaceholder}
           />
-          <IconButton onClick={handleSubmit} className='sendButton'>
+          <IconButton onClick={handleSubmit} className='chat-submit-btn'>
             <IoMdSend />
           </IconButton>
         </div>

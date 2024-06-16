@@ -18,8 +18,8 @@ function Home() {
           {HOME_OPENAI_IMG}
         </Box>
         <Box className='chat-container'>{HOME_CHAT_IMG}</Box>
+        <Footer />
       </Box>
-      <Footer />
     </Box>
   );
 }

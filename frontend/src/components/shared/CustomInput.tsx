@@ -10,7 +10,6 @@ type Props = {
 function CustomInput(props: Props) {
   return (
     <TextField
-      margin='normal'
       InputLabelProps={{
         className: 'custom-input-label',
       }}

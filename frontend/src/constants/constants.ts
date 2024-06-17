@@ -14,6 +14,40 @@ export const DELAY_2 = 2000;
 export const DELAY_3 = 1500;
 export const DELAY_4 = 2000;
 
+// URLs
+const USER_BASE_URL = '/user';
+const CHAT_BASE_URL = '/chat';
+
+export const URL = {
+  USER: {
+    SIGNUP: `${USER_BASE_URL}/signup`,
+    LOGIN: `${USER_BASE_URL}/login`,
+    LOGOUT: `${USER_BASE_URL}/logout`,
+    AUTH_STATUS: `${USER_BASE_URL}/auth-status`,
+  },
+
+  CHAT: {
+    NEW_MSG: `${CHAT_BASE_URL}/new`,
+    ALL_CHATS: `${CHAT_BASE_URL}/all-chats`,
+    DELETE_CHATS: `${CHAT_BASE_URL}/delete`,
+  },
+};
+
+// Error Msg
+export const ERROR = {
+  USER: {
+    SIGNUP: 'Unable to signup!',
+    LOGIN: 'Unable to login!',
+    LOGOUT: 'Unable to logout!',
+    AUTH_STATUS: 'Unable to authenticate!',
+  },
+  CHAT: {
+    NEW: 'Unable to send new chat message!',
+    FETCH_ALL: 'Unable to retrieve all chats!',
+    DELETE: 'Unable to delete chats!',
+  },
+};
+
 // Roles
 export const ASSISTANT_ROLE = 'assistant';
 export const USER_ROLE = 'user';

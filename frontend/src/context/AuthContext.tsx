@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useEffect, useState } from 'react';
 import {
   checkAuthStatus,
+  fetchUserData,
   loginUser,
   logoutUser,
   signupUser,
@@ -27,12 +28,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    async function checkStatus() {
-      const data = await checkAuthStatus();
+    // async function checkStatus() {
+    //   const data = await checkAuthStatus();
 
-      if (data) {
-        setUser({ email: data.email, name: data.name });
+    //   if (data) {
+    //     setUser({ email: data.email, name: data.name });
+    //     setIsLoggedIn(true);
+    //   }
+    // }
+
+    // checkStatus();
+
+    async function checkStatus() {
+      const isAuthenticated = await checkAuthStatus();
+
+      if (isAuthenticated) {
+        const userData = await fetchUserData();
+        setUser({ email: userData.email, name: userData.name });
         setIsLoggedIn(true);
+      } else {
+        setUser(null);
+        setIsLoggedIn(false);
       }
     }
 

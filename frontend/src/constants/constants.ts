@@ -38,6 +38,7 @@ export const URL = {
     LOGIN: `${USER_BASE_URL}/login`,
     LOGOUT: `${USER_BASE_URL}/logout`,
     AUTH_STATUS: `${USER_BASE_URL}/auth-status`,
+    GET_USER_DATA: `${USER_BASE_URL}/get-user-data`,
   },
 
   CHAT: {
@@ -47,26 +48,27 @@ export const URL = {
   },
 };
 
+// Error Msg
+export const ERROR = {
+  USER: {
+    SIGNUP: 'Unable to signup! ',
+    LOGIN: 'Unable to login! ',
+    LOGOUT: 'Unable to logout! ',
+    AUTH_STATUS: 'Unable to authenticate! ',
+    FETCH_USER_DATA: 'Failed to fetch user data. ',
+  },
+  CHAT: {
+    NEW: 'Unable to send new chat message! ',
+    FETCH_ALL: 'Unable to retrieve all chats! ',
+    DELETE: 'Unable to delete chats! ',
+  },
+};
+
 // Form Fields
 export const FORM_FIELD = {
   NAME: 'name',
   EMAIL: 'email',
   PASSWORD: 'password',
-};
-
-// Error Msg
-export const ERROR = {
-  USER: {
-    SIGNUP: 'Unable to signup!',
-    LOGIN: 'Unable to login!',
-    LOGOUT: 'Unable to logout!',
-    AUTH_STATUS: 'Unable to authenticate!',
-  },
-  CHAT: {
-    NEW: 'Unable to send new chat message!',
-    FETCH_ALL: 'Unable to retrieve all chats!',
-    DELETE: 'Unable to delete chats!',
-  },
 };
 
 // Navigation

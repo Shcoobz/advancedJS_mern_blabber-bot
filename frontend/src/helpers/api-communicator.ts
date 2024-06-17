@@ -1,6 +1,18 @@
 import axios from 'axios';
 import { URL, ERROR } from '../constants/constants';
 
+export async function fetchUserData() {
+  const res = await axios.get(URL.USER.GET_USER_DATA);
+
+  if (res.status !== 200) {
+    throw new Error(ERROR.USER.FETCH_USER_DATA + res.status);
+  }
+
+  const data = await res.data;
+
+  return data;
+}
+
 export async function signupUser(name: string, email: string, password: string) {
   const res = await axios.post(URL.USER.SIGNUP, { name, email, password });
 
@@ -38,6 +50,16 @@ export async function logoutUser() {
 }
 
 export async function checkAuthStatus() {
+  // const res = await axios.get(URL.USER.AUTH_STATUS);
+
+  // if (res.status !== 200) {
+  //   throw new Error(ERROR.USER.AUTH_STATUS + res.status);
+  // }
+
+  // const data = await res.data;
+
+  // return data;
+
   const res = await axios.get(URL.USER.AUTH_STATUS);
 
   if (res.status !== 200) {
@@ -46,7 +68,7 @@ export async function checkAuthStatus() {
 
   const data = await res.data;
 
-  return data;
+  return data.isAuthenticated;
 }
 
 export async function sendChatRequest(message: string) {

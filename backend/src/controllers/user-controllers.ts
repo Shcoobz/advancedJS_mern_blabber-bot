@@ -97,22 +97,54 @@ export async function userLogout(req: Request, res: Response, next: NextFunction
 }
 
 export async function verifyUser(req: Request, res: Response, next: NextFunction) {
+  // try {
+  //   const user = await User.findById(res.locals.jwtData.id);
+
+  //   if (!user) {
+  //     return res.status(401).send('User not registered or token malfunction!');
+  //   }
+
+  //   if (user._id.toString() !== res.locals.jwtData.id) {
+  //     return res.status(403).send("Permissions didn't match!");
+  //   }
+
+  //   return res
+  //     .status(200)
+  //     .json({ message: 'User verified!', name: user.name, email: user.email });
+  // } catch (error) {
+  //   console.log(error);
+  //   return res.status(500).json({ message: 'Error', cause: error.message });
+  // }
+
   try {
     const user = await User.findById(res.locals.jwtData.id);
 
     if (!user) {
-      return res.status(401).send('User not registered or token malfunction!');
+      return res.status(401).json({ isAuthenticated: false });
     }
 
     if (user._id.toString() !== res.locals.jwtData.id) {
-      return res.status(403).send("Permissions didn't match!");
+      return res.status(403).json({ isAuthenticated: false });
     }
 
-    return res
-      .status(200)
-      .json({ message: 'User verified!', name: user.name, email: user.email });
+    return res.status(200).json({ isAuthenticated: true });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Error', cause: error.message });
+  }
+}
+
+export async function getUserData(req: Request, res: Response) {
+  try {
+    const user = await User.findById(res.locals.jwtData.id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.status(200).json({ email: user.email, name: user.name });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Server error' });
   }
 }

@@ -7,12 +7,14 @@ import {
   userLogin,
   verifyUser,
   userLogout,
+  getUserData,
 } from '../controllers/user-controllers.js';
 
 const userRoutes = Router();
 
 userRoutes.get('/', getAllUsers);
 userRoutes.get('/auth-status', verifyToken, verifyUser);
+userRoutes.get('/get-user-data', verifyToken, getUserData);
 userRoutes.get('/logout', verifyToken, userLogout);
 
 userRoutes.post('/signup', validate(signupValidator), userSignup);

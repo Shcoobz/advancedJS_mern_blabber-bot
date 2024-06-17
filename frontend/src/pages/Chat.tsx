@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 import { useAuth } from '../context/useAuth';
 import ChatItem from '../components/chat/ChatItem';
-import { INFO, NAVIGATION, TOAST, BUTTON } from '../constants/constants';
+import { INFO, NAVIGATION, TOAST, BUTTON, ROLE } from '../constants/constants';
 import {
   deleteUserChats,
   getUserChats,
@@ -17,7 +17,7 @@ import '../css/pages/Chat.css';
 import { getInitials } from '../utils/utils';
 
 type Message = {
-  role: 'user' | 'assistant';
+  role: typeof ROLE.USER | typeof ROLE.ASSISTANT;
   content: string;
 };
 

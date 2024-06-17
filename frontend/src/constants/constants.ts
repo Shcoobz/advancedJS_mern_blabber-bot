@@ -8,6 +8,7 @@ export const THEME = createTheme({
   },
 });
 
+// General info
 export const INFO = {
   TITLE: 'Chat with Blabber Bot!',
   DESCRIPTION: "You can ask questions related to anything you're interested in!",
@@ -18,8 +19,6 @@ export const INFO = {
   PROJ_NAME: 'Blabber Bot',
   PLAINTEXT: 'plaintext',
 };
-
-// Nav Bar
 
 // Typing Animation
 export const SEQUENCE_DETAILS = {

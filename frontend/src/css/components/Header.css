@@ -8,3 +8,18 @@
 .toolbar {
   display: flex;
 }
+
+.header-btn-light {
+  display: inline-block;
+  width: 75px !important;
+  text-align: center;
+  background-color: #5ef8fc;
+  color: black;
+}
+
+.header-btn-dark {
+  background-color: #51538f;
+  color: white;
+  width: 75px !important;
+  text-align: center;
+}

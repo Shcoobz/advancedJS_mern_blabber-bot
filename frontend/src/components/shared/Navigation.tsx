@@ -4,18 +4,16 @@ import '../../css/components/shared/Navigation.css';
 
 type Props = {
   to: string;
-  bgColor: string;
   text: string;
-  textColorClass: string;
+  className?: string;
   onClick?: () => Promise<void>;
 };
 
-function Navigation({ to, bgColor, text, textColorClass, onClick }: Props) {
+function Navigation({ to, text, className, onClick }: Props) {
   return (
-    <Link onClick={onClick} className={`navigation ${bgColor} ${textColorClass}`} to={to}>
+    <Link onClick={onClick} className={`navigation ${className}`} to={to}>
       {text}
     </Link>
   );
 }
-
 export default Navigation;

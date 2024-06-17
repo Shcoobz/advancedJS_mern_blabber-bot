@@ -9,7 +9,7 @@ export async function getAllUsers(req, res, next) {
     }
     catch (error) {
         console.log(error);
-        return res.status(200).json({ message: 'Error', cause: error.message });
+        return res.status(500).json({ message: 'Error', cause: error.message });
     }
 }
 export async function userSignup(req, res, next) {
@@ -17,7 +17,7 @@ export async function userSignup(req, res, next) {
         const { name, email, password } = req.body;
         const existingUser = await User.findOne({ email });
         if (existingUser)
-            return res.status(401).send('User already registered!');
+            return res.status(409).send('User already registered!');
         const hashedPassword = await hash(password, 10);
         const user = new User({ name, email, password: hashedPassword });
         await user.save();
@@ -28,7 +28,7 @@ export async function userSignup(req, res, next) {
     }
     catch (error) {
         console.log(error);
-        return res.status(200).json({ message: 'Error', cause: error.message });
+        return res.status(500).json({ message: 'Error', cause: error.message });
     }
 }
 export async function userLogin(req, res, next) {
@@ -40,34 +40,16 @@ export async function userLogin(req, res, next) {
         }
         const isPasswordCorrect = await compare(password, user.password);
         if (!isPasswordCorrect) {
-            return res.status(403).send('Incorrect Password!');
+            return res.status(401).send('Incorrect Password!');
         }
         handleUserCookie(res, user);
         return res
-            .status(201)
+            .status(200)
             .json({ message: 'Successfully logged in!', name: user.name, email: user.email });
     }
     catch (error) {
         console.log(error);
-        return res.status(200).json({ message: 'Error', cause: error.message });
-    }
-}
-export async function verifyUser(req, res, next) {
-    try {
-        const user = await User.findById(res.locals.jwtData.id);
-        if (!user) {
-            return res.status(401).send('User not registered or token malfunction!');
-        }
-        if (user._id.toString() !== res.locals.jwtData.id) {
-            return res.status(401).send("Permissions didn't match!");
-        }
-        return res
-            .status(201)
-            .json({ message: 'User verified!', name: user.name, email: user.email });
-    }
-    catch (error) {
-        console.log(error);
-        return res.status(200).json({ message: 'Error', cause: error.message });
+        return res.status(500).json({ message: 'Error', cause: error.message });
     }
 }
 export async function userLogout(req, res, next) {
@@ -77,7 +59,7 @@ export async function userLogout(req, res, next) {
             return res.status(401).send('User not registered or token malfunction!');
         }
         if (user._id.toString() !== res.locals.jwtData.id) {
-            return res.status(401).send("Permissions didn't match!");
+            return res.status(403).send("Permissions didn't match!");
         }
         // TODO: make into reusable function
         res.clearCookie(COOKIE_NAME, {
@@ -87,12 +69,30 @@ export async function userLogout(req, res, next) {
             path: '/',
         });
         return res
-            .status(201)
+            .status(200)
             .json({ message: 'User verified!', name: user.name, email: user.email });
     }
     catch (error) {
         console.log(error);
-        return res.status(200).json({ message: 'Error', cause: error.message });
+        return res.status(500).json({ message: 'Error', cause: error.message });
+    }
+}
+export async function verifyUser(req, res, next) {
+    try {
+        const user = await User.findById(res.locals.jwtData.id);
+        if (!user) {
+            return res.status(401).send('User not registered or token malfunction!');
+        }
+        if (user._id.toString() !== res.locals.jwtData.id) {
+            return res.status(403).send("Permissions didn't match!");
+        }
+        return res
+            .status(200)
+            .json({ message: 'User verified!', name: user.name, email: user.email });
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: 'Error', cause: error.message });
     }
 }
 //# sourceMappingURL=user-controllers.js.map

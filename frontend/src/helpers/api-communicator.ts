@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-export async function loginUser(email: string, password: string) {
-  const res = await axios.post('/user/login', { email, password });
+export async function signupUser(name: string, email: string, password: string) {
+  const res = await axios.post('/user/signup', { name, email, password });
 
-  if (!(res.status === 200 || res.status === 201)) {
-    throw new Error('Unable to login! ' + res.status);
+  if (res.status !== 201) {
+    throw new Error('Unable to signup! ' + res.status);
   }
 
   const data = await res.data;
@@ -12,11 +12,11 @@ export async function loginUser(email: string, password: string) {
   return data;
 }
 
-export async function signupUser(name: string, email: string, password: string) {
-  const res = await axios.post('/user/signup', { name, email, password });
+export async function loginUser(email: string, password: string) {
+  const res = await axios.post('/user/login', { email, password });
 
-  if (!(res.status === 200 || res.status === 201)) {
-    throw new Error('Unable to signup! ' + res.status);
+  if (res.status !== 200) {
+    throw new Error('Unable to login! ' + res.status);
   }
 
   const data = await res.data;
@@ -27,7 +27,7 @@ export async function signupUser(name: string, email: string, password: string) 
 export async function logoutUser() {
   const res = await axios.get('/user/logout');
 
-  if (!(res.status === 200 || res.status === 201)) {
+  if (res.status !== 200) {
     throw new Error('Unable to delete chats! ' + res.status);
   }
 
@@ -39,7 +39,7 @@ export async function logoutUser() {
 export async function checkAuthStatus() {
   const res = await axios.get('/user/auth-status');
 
-  if (!(res.status === 200 || res.status === 201)) {
+  if (res.status !== 200) {
     throw new Error('Unable to authenticate! ' + res.status);
   }
 
@@ -51,7 +51,7 @@ export async function checkAuthStatus() {
 export async function sendChatRequest(message: string) {
   const res = await axios.post('/chat/new', { message });
 
-  if (!(res.status === 200 || res.status === 201)) {
+  if (res.status !== 200) {
     throw new Error('Unable to send chat! ' + res.status);
   }
 
@@ -63,7 +63,7 @@ export async function sendChatRequest(message: string) {
 export async function getUserChats() {
   const res = await axios.get('/chat/all-chats');
 
-  if (!(res.status === 200 || res.status === 201)) {
+  if (res.status !== 200) {
     throw new Error('Unable to send chat! ' + res.status);
   }
 

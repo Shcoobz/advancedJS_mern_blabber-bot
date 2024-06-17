@@ -14,7 +14,7 @@ export async function getAllUsers(req: Request, res: Response, next: NextFunctio
   } catch (error) {
     console.log(error);
 
-    return res.status(200).json({ message: 'Error', cause: error.message });
+    return res.status(500).json({ message: 'Error', cause: error.message });
   }
 }
 
@@ -22,7 +22,8 @@ export async function userSignup(req: Request, res: Response, next: NextFunction
   try {
     const { name, email, password } = req.body;
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(401).send('User already registered!');
+
+    if (existingUser) return res.status(409).send('User already registered!');
 
     const hashedPassword = await hash(password, 10);
 
@@ -37,7 +38,7 @@ export async function userSignup(req: Request, res: Response, next: NextFunction
       .json({ message: 'Successfully registered!', name: user.name, email: user.email });
   } catch (error) {
     console.log(error);
-    return res.status(200).json({ message: 'Error', cause: error.message });
+    return res.status(500).json({ message: 'Error', cause: error.message });
   }
 }
 
@@ -52,38 +53,17 @@ export async function userLogin(req: Request, res: Response, next: NextFunction)
 
     const isPasswordCorrect = await compare(password, user.password);
     if (!isPasswordCorrect) {
-      return res.status(403).send('Incorrect Password!');
+      return res.status(401).send('Incorrect Password!');
     }
 
     handleUserCookie(res, user);
 
     return res
-      .status(201)
+      .status(200)
       .json({ message: 'Successfully logged in!', name: user.name, email: user.email });
   } catch (error) {
     console.log(error);
-    return res.status(200).json({ message: 'Error', cause: error.message });
-  }
-}
-
-export async function verifyUser(req: Request, res: Response, next: NextFunction) {
-  try {
-    const user = await User.findById(res.locals.jwtData.id);
-
-    if (!user) {
-      return res.status(401).send('User not registered or token malfunction!');
-    }
-
-    if (user._id.toString() !== res.locals.jwtData.id) {
-      return res.status(401).send("Permissions didn't match!");
-    }
-
-    return res
-      .status(201)
-      .json({ message: 'User verified!', name: user.name, email: user.email });
-  } catch (error) {
-    console.log(error);
-    return res.status(200).json({ message: 'Error', cause: error.message });
+    return res.status(500).json({ message: 'Error', cause: error.message });
   }
 }
 
@@ -96,7 +76,7 @@ export async function userLogout(req: Request, res: Response, next: NextFunction
     }
 
     if (user._id.toString() !== res.locals.jwtData.id) {
-      return res.status(401).send("Permissions didn't match!");
+      return res.status(403).send("Permissions didn't match!");
     }
 
     // TODO: make into reusable function
@@ -108,10 +88,31 @@ export async function userLogout(req: Request, res: Response, next: NextFunction
     });
 
     return res
-      .status(201)
+      .status(200)
       .json({ message: 'User verified!', name: user.name, email: user.email });
   } catch (error) {
     console.log(error);
-    return res.status(200).json({ message: 'Error', cause: error.message });
+    return res.status(500).json({ message: 'Error', cause: error.message });
+  }
+}
+
+export async function verifyUser(req: Request, res: Response, next: NextFunction) {
+  try {
+    const user = await User.findById(res.locals.jwtData.id);
+
+    if (!user) {
+      return res.status(401).send('User not registered or token malfunction!');
+    }
+
+    if (user._id.toString() !== res.locals.jwtData.id) {
+      return res.status(403).send("Permissions didn't match!");
+    }
+
+    return res
+      .status(200)
+      .json({ message: 'User verified!', name: user.name, email: user.email });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Error', cause: error.message });
   }
 }

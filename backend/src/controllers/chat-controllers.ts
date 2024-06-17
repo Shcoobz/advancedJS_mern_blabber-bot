@@ -58,13 +58,13 @@ export async function sendChatsToUser(req: Request, res: Response, next: NextFun
     }
 
     if (user._id.toString() !== res.locals.jwtData.id) {
-      return res.status(401).send("Permissions didn't match!");
+      return res.status(403).send("Permissions didn't match!");
     }
 
     return res.status(200).json({ message: 'OK!', chats: user.chats });
   } catch (error) {
     console.log(error);
-    return res.status(200).json({ message: 'Error', cause: error.message });
+    return res.status(500).json({ message: 'Error', cause: error.message });
   }
 }
 
@@ -77,16 +77,15 @@ export async function deleteChats(req: Request, res: Response, next: NextFunctio
     }
 
     if (user._id.toString() !== res.locals.jwtData.id) {
-      return res.status(401).send("Permissions didn't match!");
+      return res.status(403).send("Permissions didn't match!");
     }
 
-    //@ts-ignore
-    user.chats = [];
+    user.chats.splice(0, user.chats.length);
     await user.save();
 
     return res.status(200).json({ message: 'OK!' });
   } catch (error) {
     console.log(error);
-    return res.status(200).json({ message: 'Error', cause: error.message });
+    return res.status(500).json({ message: 'Error', cause: error.message });
   }
 }

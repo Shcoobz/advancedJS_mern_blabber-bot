@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.tsx';
 import { Toaster } from 'react-hot-toast';
 
-import { theme } from '../src/constants/theme.ts';
+import { THEME } from '../src/constants/constants.ts';
 import App from './App.tsx';
 
 import './index.css';
@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AuthProvider>
       <BrowserRouter>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={THEME}>
           <Toaster />
           <App />
         </ThemeProvider>

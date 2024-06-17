@@ -4,9 +4,8 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { coldarkDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import { useAuth } from '../../context/useAuth';
-import { MISC } from '../../constants/MISC';
-import { CHAT_AVATAR } from '../../constants/images';
-import { ASSISTANT_ROLE, USER_ROLE } from '../../constants/constants';
+import { CHAT_AVATAR } from '../../constants/assets';
+import { INFO, ROLE } from '../../constants/constants';
 import {
   capitalizeFirstLetter,
   extractCodeFromString,
@@ -18,7 +17,7 @@ import '../../css/components/chat/ChatItem.css';
 
 interface ChatItemProps {
   content: string;
-  role: typeof USER_ROLE | typeof ASSISTANT_ROLE;
+  role: typeof ROLE.USER | typeof ROLE.ASSISTANT;
 }
 
 const ChatItem = ({ content, role }: ChatItemProps) => {
@@ -39,7 +38,7 @@ const ChatItem = ({ content, role }: ChatItemProps) => {
             <SyntaxHighlighter
               className='chat-content-code'
               style={coldarkDark}
-              language={codeBlock.language || MISC.PLAINTEXT}>
+              language={codeBlock.language || INFO.PLAINTEXT}>
               {codeBlock.code}
             </SyntaxHighlighter>
           </React.Fragment>
@@ -94,7 +93,7 @@ const ChatItem = ({ content, role }: ChatItemProps) => {
     );
   }
 
-  return role == ASSISTANT_ROLE ? renderAssistantMsg() : renderUserMsg();
+  return role == ROLE.ASSISTANT ? renderAssistantMsg() : renderUserMsg();
 };
 
 export default ChatItem;

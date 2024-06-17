@@ -1,31 +1,24 @@
 import { TypeAnimation } from 'react-type-animation';
 
-import {
-  DELAY_1,
-  DELAY_2,
-  DELAY_3,
-  DELAY_4,
-  SEQUENCE_1,
-  SEQUENCE_2,
-  SEQUENCE_3,
-  SEQUENCE_4,
-} from '../../constants/constants';
+import { SEQUENCE_DETAILS } from '../../constants/constants';
 
 import '../../css/components/typer/TypingAnimation.css';
 
 function TypingAnimation() {
+  const animationSequence = [
+    SEQUENCE_DETAILS.SEQ_1.message,
+    SEQUENCE_DETAILS.SEQ_1.delay,
+    SEQUENCE_DETAILS.SEQ_2.message,
+    SEQUENCE_DETAILS.SEQ_2.delay,
+    SEQUENCE_DETAILS.SEQ_3.message,
+    SEQUENCE_DETAILS.SEQ_3.delay,
+    SEQUENCE_DETAILS.SEQ_4.message,
+    SEQUENCE_DETAILS.SEQ_4.delay,
+  ];
+
   return (
     <TypeAnimation
-      sequence={[
-        SEQUENCE_1,
-        DELAY_1,
-        SEQUENCE_2,
-        DELAY_2,
-        SEQUENCE_3,
-        DELAY_3,
-        SEQUENCE_4,
-        DELAY_4,
-      ]}
+      sequence={animationSequence}
       speed={50}
       className='typing-animation'
       repeat={Infinity}

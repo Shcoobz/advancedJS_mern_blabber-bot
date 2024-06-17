@@ -1,5 +1,14 @@
+import { IoIosLogIn } from 'react-icons/io';
 import '../css/constants/images.css';
 
+// Icons
+export const SUBMIT_ICON = (
+  <span className='submit-icon'>
+    <IoIosLogIn />
+  </span>
+);
+
+// Images
 // Nav Bar
 export const NAV_OPENAI_IMG = (
   <img src='openai.png' alt='openai' className='logo-inverted logo-image' />

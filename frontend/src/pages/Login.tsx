@@ -4,12 +4,8 @@ import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { useAuth } from '../context/useAuth';
-import { NAVIGATION } from '../constants/navigation';
-import { LOGIN } from '../constants/toastMsgs';
-import { SUBMIT_ICON } from '../constants/icons';
-import { GREETING_ROBOT_IMG } from '../constants/images';
-import { BUTTONS } from '../constants/buttons';
-import { FORM_FIELDS } from '../constants/formFields';
+import { NAVIGATION, BUTTON, FORM_FIELD, TOAST } from '../constants/constants';
+import { SUBMIT_ICON, GREETING_ROBOT_IMG } from '../constants/assets';
 
 import CustomInput from '../components/shared/CustomInput';
 
@@ -23,16 +19,16 @@ function Login() {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const email = formData.get(FORM_FIELDS.EMAIL) as string;
-    const password = formData.get(FORM_FIELDS.PASSWORD) as string;
+    const email = formData.get(FORM_FIELD.EMAIL) as string;
+    const password = formData.get(FORM_FIELD.PASSWORD) as string;
 
     try {
-      toast.loading(LOGIN.LOADING, { id: LOGIN.ID });
+      toast.loading(TOAST.LOGIN.LOADING, { id: TOAST.LOGIN.ID });
       await auth?.login(email, password);
-      toast.success(LOGIN.SUCCESS, { id: LOGIN.ID });
+      toast.success(TOAST.LOGIN.SUCCESS, { id: TOAST.LOGIN.ID });
     } catch (error) {
       console.log(error);
-      toast.error(LOGIN.ERROR, { id: LOGIN.ID });
+      toast.error(TOAST.LOGIN.ERROR, { id: TOAST.LOGIN.ID });
     }
   }
 
@@ -49,12 +45,12 @@ function Login() {
         <form onSubmit={handleSubmit} className='form-style'>
           <Box className='login-container'>
             <Typography variant='h4' className='login-title'>
-              {BUTTONS.LOGIN}
+              {BUTTON.LOGIN}
             </Typography>
             <CustomInput type='email' name='email' label='Email' />
             <CustomInput type='password' name='password' label='Password' />
             <Button type='submit' className='submit-button' endIcon={SUBMIT_ICON}>
-              {BUTTONS.LOGIN}
+              {BUTTON.LOGIN}
             </Button>
           </Box>
         </form>

@@ -3,12 +3,8 @@ import { toast } from 'react-hot-toast';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { FORM_FIELDS } from '../constants/formFields';
-import { SIGNUP } from '../constants/toastMsgs';
-import { NAVIGATION } from '../constants/navigation';
-import { GREETING_ROBOT_IMG } from '../constants/images';
-import { BUTTONS } from '../constants/buttons';
-import { SUBMIT_ICON } from '../constants/icons';
+import { NAVIGATION, BUTTON, FORM_FIELD, TOAST } from '../constants/constants';
+import { SUBMIT_ICON, GREETING_ROBOT_IMG } from '../constants/assets';
 
 import CustomInput from '../components/shared/CustomInput';
 import { useAuth } from '../context/useAuth';
@@ -23,17 +19,17 @@ function Signup() {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const name = formData.get(FORM_FIELDS.NAME) as string;
-    const email = formData.get(FORM_FIELDS.EMAIL) as string;
-    const password = formData.get(FORM_FIELDS.PASSWORD) as string;
+    const name = formData.get(FORM_FIELD.NAME) as string;
+    const email = formData.get(FORM_FIELD.EMAIL) as string;
+    const password = formData.get(FORM_FIELD.PASSWORD) as string;
 
     try {
-      toast.loading(SIGNUP.LOADING, { id: SIGNUP.ID });
+      toast.loading(TOAST.SIGNUP.LOADING, { id: TOAST.SIGNUP.ID });
       await auth?.signup(name, email, password);
-      toast.success(SIGNUP.SUCCESS, { id: SIGNUP.ID });
+      toast.success(TOAST.SIGNUP.SUCCESS, { id: TOAST.SIGNUP.ID });
     } catch (error) {
       console.log(error);
-      toast.error(SIGNUP.ERROR, { id: SIGNUP.ID });
+      toast.error(TOAST.SIGNUP.ERROR, { id: TOAST.SIGNUP.ID });
     }
   }
 
@@ -50,13 +46,13 @@ function Signup() {
         <form onSubmit={handleSubmit} className='form-style'>
           <Box className='signup-container'>
             <Typography variant='h4' className='login-title'>
-              {BUTTONS.SIGNUP}
+              {BUTTON.SIGNUP}
             </Typography>
             <CustomInput type='text' name='name' label='Name' />
             <CustomInput type='email' name='email' label='Email' />
             <CustomInput type='password' name='password' label='Password' />
             <Button type='submit' className='submit-button' endIcon={SUBMIT_ICON}>
-              {BUTTONS.SIGNUP}
+              {BUTTON.SIGNUP}
             </Button>
           </Box>
         </form>

@@ -1,18 +1,33 @@
+import { createTheme } from '@mui/material/styles';
+
+// Theme
+export const THEME = createTheme({
+  typography: {
+    fontFamily: 'Roboto Slab, sans-serif',
+    allVariants: { color: 'whitesmoke' },
+  },
+});
+
+export const INFO = {
+  TITLE: 'Chat with Blabber Bot!',
+  DESCRIPTION: "You can ask questions related to anything you're interested in!",
+  MODEL_VERSION: 'Model - GPT 3.5 Turbo',
+  PLACEHOLDER: 'Type your message here...',
+  TECH_DESC: 'MERN',
+  HYPHEN: ' - ',
+  PROJ_NAME: 'Blabber Bot',
+  PLAINTEXT: 'plaintext',
+};
+
 // Nav Bar
-export const TECH_DESC = 'MERN';
-export const HYPHEN = ' - ';
-export const PROJ_NAME = 'Blabber Bot';
 
 // Typing Animation
-export const SEQUENCE_1 = `${PROJ_NAME} - AI at your fingertips`;
-export const SEQUENCE_2 = `${PROJ_NAME} - Experience advanced AI chat`;
-export const SEQUENCE_3 = `${PROJ_NAME} - Powered by Chat GPT 3.5`;
-export const SEQUENCE_4 = `${PROJ_NAME} - Built by Shcoobz`;
-
-export const DELAY_1 = 1000;
-export const DELAY_2 = 2000;
-export const DELAY_3 = 1500;
-export const DELAY_4 = 2000;
+export const SEQUENCE_DETAILS = {
+  SEQ_1: { message: `${INFO.PROJ_NAME} - AI at your fingertips`, delay: 1000 },
+  SEQ_2: { message: `${INFO.PROJ_NAME} - Experience advanced AI chat`, delay: 2000 },
+  SEQ_3: { message: `${INFO.PROJ_NAME} - Powered by Chat GPT 3.5`, delay: 1500 },
+  SEQ_4: { message: `${INFO.PROJ_NAME} - Built by Shcoobz`, delay: 2000 },
+};
 
 // URLs
 const USER_BASE_URL = '/user';
@@ -33,6 +48,13 @@ export const URL = {
   },
 };
 
+// Form Fields
+export const FORM_FIELD = {
+  NAME: 'name',
+  EMAIL: 'email',
+  PASSWORD: 'password',
+};
+
 // Error Msg
 export const ERROR = {
   USER: {
@@ -48,9 +70,59 @@ export const ERROR = {
   },
 };
 
+// Navigation
+export const NAVIGATION = {
+  HOME: '/',
+  LOGIN: '/login',
+  SIGNUP: '/signup',
+  CHAT: '/chat',
+};
+
+// Buttons
+export const BUTTON = {
+  LOGIN: 'Login',
+  SIGNUP: 'Signup',
+  CHAT: 'Chat',
+  LOGOUT: 'Logout',
+  DELETE: 'Delete chats',
+};
+
+// Toast Msg
+export const TOAST = {
+  SIGNUP: {
+    ID: 'signup',
+    LOADING: 'Signing up!',
+    SUCCESS: 'Signed up successfully!',
+    ERROR: 'Sign up failed! :(',
+  },
+
+  LOGIN: {
+    ID: 'login',
+    LOADING: 'Logging in!',
+    SUCCESS: 'Log in successfully!',
+    ERROR: 'Log in failed! :(',
+  },
+
+  CHATS: {
+    ID: 'loadchats',
+    LOADING: 'Loading chats!',
+    SUCCESS: 'Successfully loaded chats!',
+    ERROR: 'Loading chats failed! :(',
+  },
+
+  DELETION: {
+    ID: 'deletechats',
+    LOADING: 'Deleting chats!',
+    SUCCESS: 'Deleted chats successfully!',
+    ERROR: 'Deleting chats failed! :(',
+  },
+};
+
 // Roles
-export const ASSISTANT_ROLE = 'assistant';
-export const USER_ROLE = 'user';
+export const ROLE = {
+  ASSISTANT: 'assistant',
+  USER: 'user',
+};
 
 // Project Portfolio
 export const GITHUB_URL = 'https://shcoobz.github.io/';

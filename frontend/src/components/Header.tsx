@@ -6,8 +6,7 @@ import Navigation from './shared/Navigation';
 import { useAuth } from '../context/useAuth';
 
 import '../css/components/Header.css';
-import { NAVIGATION } from '../constants/navigation';
-import { BUTTONS } from '../constants/buttons';
+import { NAVIGATION, BUTTON } from '../constants/constants';
 
 function Header() {
   const auth = useAuth();
@@ -20,12 +19,12 @@ function Header() {
             <>
               <Navigation
                 to={NAVIGATION.CHAT}
-                text={BUTTONS.CHAT}
+                text={BUTTON.CHAT}
                 className='header-btn-light'
               />
               <Navigation
                 to={NAVIGATION.HOME}
-                text={BUTTONS.LOGOUT}
+                text={BUTTON.LOGOUT}
                 className='header-btn-dark'
                 onClick={auth.logout}
               />
@@ -34,12 +33,12 @@ function Header() {
             <>
               <Navigation
                 to={NAVIGATION.LOGIN}
-                text={BUTTONS.LOGIN}
+                text={BUTTON.LOGIN}
                 className='header-btn-light'
               />
               <Navigation
                 to={NAVIGATION.SIGNUP}
-                text={BUTTONS.SIGNUP}
+                text={BUTTON.SIGNUP}
                 className='header-btn-dark'
               />
             </>

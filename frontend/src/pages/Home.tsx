@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import TypingAnimation from '../components/typer/TypingAnimation';
 
-import { HOME_CHAT_IMG, HOME_OPENAI_IMG, HOME_ROBOT_IMG } from '../constants/images';
+import { HOME_CHAT_IMG, HOME_OPENAI_IMG, HOME_ROBOT_IMG } from '../constants/assets';
 import Footer from '../components/footer/Footer';
 
 import '../css/pages/Home.css';

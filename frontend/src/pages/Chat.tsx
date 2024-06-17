@@ -6,12 +6,7 @@ import toast from 'react-hot-toast';
 
 import { useAuth } from '../context/useAuth';
 import ChatItem from '../components/chat/ChatItem';
-import { NAVIGATION } from '../constants/navigation';
-import {
-  chatSideBarMsgs,
-  chatWindowMsgs,
-  chatToastMsgs,
-} from '../constants/chatPageMsgs';
+import { INFO, NAVIGATION, TOAST, BUTTON } from '../constants/constants';
 import {
   deleteUserChats,
   getUserChats,
@@ -67,27 +62,35 @@ function Chat() {
 
   async function handleDeleteChats() {
     try {
-      toast.loading(chatToastMsgs.deletingChats, { id: chatToastMsgs.deletingId });
+      toast.loading(TOAST.DELETION.LOADING, {
+        id: TOAST.DELETION.ID,
+      });
       await deleteUserChats();
       setChatMessages([]);
-      toast.success(chatToastMsgs.deleteChatsSuccess, { id: chatToastMsgs.deletingId });
+      toast.success(TOAST.DELETION.SUCCESS, {
+        id: TOAST.DELETION.ID,
+      });
     } catch (error) {
       console.log(error);
-      toast.error(chatToastMsgs.deleteChatsError, { id: chatToastMsgs.deletingId });
+      toast.error(TOAST.DELETION.ERROR, {
+        id: TOAST.DELETION.ID,
+      });
     }
   }
 
   useLayoutEffect(() => {
     if (auth?.isLoggedIn && auth.user) {
-      toast.loading(chatToastMsgs.loadingChats, { id: chatToastMsgs.loadingId });
+      toast.loading(TOAST.LOGIN.LOADING, { id: TOAST.LOGIN.ID });
       getUserChats()
         .then((data) => {
           setChatMessages([...data.chats]);
-          toast.success(chatToastMsgs.loadChatsSuccess, { id: chatToastMsgs.loadingId });
+          toast.success(TOAST.LOGIN.SUCCESS, {
+            id: TOAST.LOGIN.ID,
+          });
         })
         .catch((err) => {
           console.log(err);
-          toast.error(chatToastMsgs.loadChatsError, { id: chatToastMsgs.loadingId });
+          toast.error(TOAST.LOGIN.ERROR, { id: TOAST.LOGIN.ID });
         });
     }
   }, [auth]);
@@ -111,16 +114,16 @@ function Chat() {
       <Box className='side-bar'>
         <Box className='chat-details'>
           <Avatar className='user-avatar'>{getInitials(auth!.user!.name)}</Avatar>
-          <Typography className='p-title'>{chatSideBarMsgs.title}</Typography>
-          <Typography className='p-description'>{chatSideBarMsgs.description}</Typography>
+          <Typography className='p-title'>{INFO.TITLE}</Typography>
+          <Typography className='p-description'>{INFO.DESCRIPTION}</Typography>
           <Button className='del-chat-btn' onClick={handleDeleteChats}>
-            {chatSideBarMsgs.clearConversationButton}
+            {BUTTON.DELETE}
           </Button>
         </Box>
       </Box>
 
       <Box className='chat-window'>
-        <Typography className='model-title'>{chatWindowMsgs.modelVersion}</Typography>
+        <Typography className='model-title'>{INFO.MODEL_VERSION}</Typography>
         <Box className='scrollable-msg-area' ref={messagesEndRef}>
           {renderChatItems(chatMessages)}
         </Box>
@@ -130,7 +133,7 @@ function Chat() {
             type='text'
             className='chat-input'
             onKeyDown={handleKeyPress}
-            placeholder={chatWindowMsgs.inputPlaceholder}
+            placeholder={INFO.PLACEHOLDER}
           />
           <IconButton onClick={handleSubmit} className='chat-submit-btn'>
             <IoMdSend />

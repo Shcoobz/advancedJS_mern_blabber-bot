@@ -96,12 +96,6 @@ function Chat() {
   }, [auth]);
 
   useEffect(() => {
-    if (!auth?.isLoggedIn || !auth.user) {
-      return navigate(NAVIGATION.LOGIN);
-    }
-  }, [auth, navigate]);
-
-  useEffect(() => {
     const scrollableArea = messagesEndRef.current;
 
     if (scrollableArea) {

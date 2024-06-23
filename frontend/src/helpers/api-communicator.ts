@@ -1,5 +1,7 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosInstance } from 'axios';
 import { URL, ERROR } from '../constants/constants';
+
+const silentAxios = createSilentAxios();
 
 export async function fetchUserData() {
   const res = await axios.get(URL.USER.GET_USER_DATA);
@@ -49,26 +51,34 @@ export async function logoutUser() {
   return data;
 }
 
+function createSilentAxios(): AxiosInstance {
+  const instance = axios.create();
+  const isStatusValid = (status: number) => status >= 200 && status < 600;
+  instance.interceptors.request.use((config) => {
+    config.validateStatus = isStatusValid;
+    return config;
+  });
+  instance.interceptors.response.use(
+    (response) => response,
+    (error: AxiosError) => {
+      if (error.response) {
+        return Promise.resolve(error.response);
+      }
+      return Promise.resolve({ data: { isAuthenticated: false } });
+    }
+  );
+  return instance;
+}
+
 export async function checkAuthStatus() {
-  // const res = await axios.get(URL.USER.AUTH_STATUS);
-
-  // if (res.status !== 200) {
-  //   throw new Error(ERROR.USER.AUTH_STATUS + res.status);
-  // }
-
-  // const data = await res.data;
-
-  // return data;
-
-  const res = await axios.get(URL.USER.AUTH_STATUS);
-
-  if (res.status !== 200) {
-    throw new Error(ERROR.USER.AUTH_STATUS + res.status);
+  try {
+    const res = await silentAxios.get(URL.USER.AUTH_STATUS, {
+      withCredentials: true,
+    });
+    return res.data.isAuthenticated ?? false;
+  } catch (error) {
+    return false;
   }
-
-  const data = await res.data;
-
-  return data.isAuthenticated;
 }
 
 export async function sendChatRequest(message: string) {

@@ -28,32 +28,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // async function checkStatus() {
-    //   const data = await checkAuthStatus();
+    checkStatus();
+  }, []);
 
-    //   if (data) {
-    //     setUser({ email: data.email, name: data.name });
-    //     setIsLoggedIn(true);
-    //   }
-    // }
+  async function checkStatus() {
+    const isAuthenticated = await checkAuthStatus();
 
-    // checkStatus();
-
-    async function checkStatus() {
-      const isAuthenticated = await checkAuthStatus();
-
-      if (isAuthenticated) {
+    if (isAuthenticated) {
+      try {
         const userData = await fetchUserData();
         setUser({ email: userData.email, name: userData.name });
         setIsLoggedIn(true);
-      } else {
+      } catch (error) {
+        console.error('Error fetching user data:', error);
         setUser(null);
         setIsLoggedIn(false);
       }
+    } else {
+      setUser(null);
+      setIsLoggedIn(false);
     }
-
-    checkStatus();
-  }, []);
+  }
 
   async function login(email: string, password: string) {
     const data = await loginUser(email, password);

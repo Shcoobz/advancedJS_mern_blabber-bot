@@ -79,6 +79,7 @@ export const STRING = {
   CODE_BLOCK_START: '```',
   CODE_BLOCK_END: '```',
   LIST_TYPE: 'list',
+  ROOT: 'root',
 };
 
 /**

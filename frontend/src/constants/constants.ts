@@ -13,6 +13,14 @@ export const THEME: object = createTheme({
 });
 
 /**
+ * The key value used to detect the 'Enter' key press.
+ * This is used for submitting forms or triggering actions when the 'Enter' key is pressed.
+ * @constant
+ * @type {string}
+ */
+export const SUBMIT_KEY = 'Enter';
+
+/**
  * General information constants used throughout the application.
  * @constant
  * @type {object}

@@ -90,7 +90,7 @@ export const ERROR = {
     LOGIN: 'Unable to login! ',
     LOGOUT: 'Unable to logout! ',
     AUTH_STATUS: 'Unable to authenticate! ',
-    FETCH_USER_DATA: 'Failed to fetch user data. ',
+    FETCH_DATA: 'Failed to fetch user data. ',
   },
   CHAT: {
     NEW: 'Unable to send new chat message! ',

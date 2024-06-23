@@ -7,7 +7,7 @@ export async function fetchUserData() {
   const res = await axios.get(URL.USER.GET_USER_DATA);
 
   if (res.status !== 200) {
-    throw new Error(ERROR.USER.FETCH_USER_DATA + res.status);
+    throw new Error(ERROR.USER.FETCH_DATA + res.status);
   }
 
   const data = await res.data;

@@ -1,14 +1,30 @@
 import { createTheme } from '@mui/material/styles';
 
-// Theme
-export const THEME = createTheme({
+/**
+ * Defines the Material-UI theme for the application, specifying typography settings.
+ * @constant
+ * @type {object}
+ */
+export const THEME: object = createTheme({
   typography: {
     fontFamily: 'Roboto Slab, sans-serif',
     allVariants: { color: 'whitesmoke' },
   },
 });
 
-// General info
+/**
+ * General information constants used throughout the application.
+ * @constant
+ * @type {object}
+ * @property {string} TITLE - The title of the application.
+ * @property {string} DESCRIPTION - The description of the application.
+ * @property {string} MODEL_VERSION - The version of the AI model being used.
+ * @property {string} PLACEHOLDER - Placeholder text for input fields.
+ * @property {string} TECH_DESC - Short description of the technology stack.
+ * @property {string} HYPHEN - A hyphen for concatenation.
+ * @property {string} PROJ_NAME - The name of the project.
+ * @property {string} PLAINTEXT - Default text type.
+ */
 export const INFO = {
   TITLE: 'Chat with Blabber Bot!',
   DESCRIPTION: "You can ask questions related to anything you're interested in!",
@@ -20,7 +36,15 @@ export const INFO = {
   PLAINTEXT: 'plaintext',
 };
 
-// Typing Animation
+/**
+ * Typing animation sequence details.
+ * @constant
+ * @type {object}
+ * @property {object} SEQ_1 - The first sequence with message and delay.
+ * @property {object} SEQ_2 - The second sequence with message and delay.
+ * @property {object} SEQ_3 - The third sequence with message and delay.
+ * @property {object} SEQ_4 - The fourth sequence with message and delay.
+ */
 export const SEQUENCE_DETAILS = {
   SEQ_1: { message: `${INFO.PROJ_NAME} - AI at your fingertips`, delay: 1000 },
   SEQ_2: { message: `${INFO.PROJ_NAME} - Experience advanced AI chat`, delay: 2000 },
@@ -28,10 +52,17 @@ export const SEQUENCE_DETAILS = {
   SEQ_4: { message: `${INFO.PROJ_NAME} - Built by Shcoobz`, delay: 2000 },
 };
 
-// URLs
+/**
+ * Base URLs for various API endpoints and routes
+ */
 const USER_BASE_URL = '/user';
 const CHAT_BASE_URL = '/chat';
 
+/**
+ * URL constants for user and chat-related endpoints.
+ * @constant
+ * @type {object}
+ */
 export const URL = {
   USER: {
     SIGNUP: `${USER_BASE_URL}/signup`,
@@ -48,7 +79,11 @@ export const URL = {
   },
 };
 
-// Error Msg
+/**
+ * Error messages for various operations.
+ * @constant
+ * @type {object}
+ */
 export const ERROR = {
   USER: {
     SIGNUP: 'Unable to signup! ',
@@ -64,14 +99,22 @@ export const ERROR = {
   },
 };
 
-// Form Fields
+/**
+ * Form field names used in the application.
+ * @constant
+ * @type {object}
+ */
 export const FORM_FIELD = {
   NAME: 'name',
   EMAIL: 'email',
   PASSWORD: 'password',
 };
 
-// Navigation
+/**
+ * Navigation paths for routing within the application.
+ * @constant
+ * @type {object}
+ */
 export const NAVIGATION = {
   HOME: '/',
   LOGIN: '/login',
@@ -79,7 +122,11 @@ export const NAVIGATION = {
   CHAT: '/chat',
 };
 
-// Buttons
+/**
+ * Button labels used throughout the application.
+ * @constant
+ * @type {object}
+ */
 export const BUTTON = {
   LOGIN: 'Login',
   SIGNUP: 'Signup',
@@ -88,7 +135,11 @@ export const BUTTON = {
   DELETE: 'Delete chats',
 };
 
-// Toast Msg
+/**
+ * Toast messages for various operations, categorized by operation type.
+ * @constant
+ * @type {object}
+ */
 export const TOAST = {
   SIGNUP: {
     ID: 'signup',
@@ -119,15 +170,33 @@ export const TOAST = {
   },
 };
 
-// Roles
+/**
+ * User roles within the application.
+ * @constant
+ * @type {object}
+ */
 export const ROLE = {
   ASSISTANT: 'assistant',
   USER: 'user',
 };
 
-// Project Portfolio
+/**
+ * URL to the project portfolio on GitHub.
+ * @constant
+ * @type {string}
+ */
 export const GITHUB_URL = 'https://shcoobz.github.io/';
 
-// Footer
+/**
+ * Text for the footer credit.
+ * @constant
+ * @type {string}
+ */
 export const FOOTER_CREDIT_TEXT = 'Build by';
+
+/**
+ * Creator's name for the footer credit.
+ * @constant
+ * @type {string}
+ */
 export const CREATOR = 'Shcoobz';

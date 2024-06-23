@@ -1,4 +1,4 @@
-import { REGEX, STRING } from '../constants/constants';
+import { INDEX, LENGTH, REGEX, STRING } from '../constants/constants';
 
 /**
  * Extracts and returns the initials from a given name.
@@ -13,11 +13,19 @@ export function getInitials(name: string) {
   if (!name) return '';
 
   const parts = name.split(REGEX.WHITESPACE);
-  const initials =
-    parts.length === 1 ? parts[0][0] : `${parts[0][0]}${parts[parts.length - 1][0]}`;
-  const uppercaseInitials = initials.toUpperCase();
 
-  return uppercaseInitials;
+  const isOneName = parts.length === LENGTH.SINGLE_PART;
+  const firstName = parts[INDEX.FIRST_CHAR];
+  const lastName = parts[parts.length - LENGTH.SINGLE_PART];
+
+  const initialFirstName = firstName[INDEX.FIRST_CHAR];
+  const initialLastName = !isOneName ? lastName[INDEX.FIRST_CHAR] : '';
+
+  const initials = isOneName ? initialFirstName : `${initialFirstName}${initialLastName}`;
+
+  const initialsUppercase = initials.toUpperCase();
+
+  return initialsUppercase;
 }
 
 /**
@@ -27,7 +35,39 @@ export function getInitials(name: string) {
  * @returns {boolean} True if the string contains any code block indicators, otherwise false.
  */
 function isCodeBlock(str: string): boolean {
-  return REGEX.CODE_BLOCK.test(str);
+  const containsCodeBlock = REGEX.CODE_BLOCK.test(str);
+
+  return containsCodeBlock;
+}
+
+/**
+ * Extracts the language and code content from a code block.
+ *
+ * @param {string} block - The code block to extract language and code from.
+ * @returns {Object} An object containing the language and code content.
+ */
+function extractLanguageAndCode(block: string): {
+  language: string;
+  codeContent: string;
+} {
+  const [language, ...code] = block.trim().split(REGEX.NEWLINE);
+  const codeContent = code.join(STRING.NEWLINE);
+  const result = { language: language.trim(), codeContent };
+
+  return result;
+}
+
+/**
+ * Formats the code block with appropriate delimiters.
+ *
+ * @param {string} language - The language of the code block.
+ * @param {string} codeContent - The content of the code block.
+ * @returns {string} The formatted code block.
+ */
+function formatCodeBlock(language: string, codeContent: string): string {
+  const formattedCodeBlock = `${STRING.CODE_BLOCK_START}${language}${STRING.NEWLINE}${codeContent}${STRING.CODE_BLOCK_END}`;
+
+  return formattedCodeBlock;
 }
 
 /**
@@ -36,27 +76,30 @@ function isCodeBlock(str: string): boolean {
  * @param {string} message - The message string containing potential code blocks.
  * @returns {Array<{ language: string, code: string }>} An array of objects representing the extracted code blocks with their respective languages.
  */
-export function extractCodeFromString(message: string) {
-  if (REGEX.CODE_BLOCK_DELIMITER.test(message)) {
-    const blocks = message.split(REGEX.CODE_BLOCK_DELIMITER);
-    const codeBlocks = [];
-
-    for (let i = 1; i < blocks.length; i += 2) {
-      const [language, ...code] = blocks[i].trim().split(REGEX.NEWLINE);
-      const codeContent = code.join(STRING.NEWLINE);
-
-      if (isCodeBlock(codeContent)) {
-        codeBlocks.push({ language: language.trim(), code: codeContent });
-      } else {
-        codeBlocks.push({
-          language: '',
-          code: `${STRING.CODE_BLOCK_START}${language}${STRING.NEWLINE}${codeContent}${STRING.CODE_BLOCK_END}`,
-        });
-      }
-    }
-
-    return codeBlocks;
+export function extractCodeFromString(
+  message: string
+): Array<{ language: string; code: string }> | undefined {
+  if (!REGEX.CODE_BLOCK_DELIMITER.test(message)) {
+    return undefined;
   }
+
+  const blocks = message.split(REGEX.CODE_BLOCK_DELIMITER);
+  const codeBlocks = [];
+
+  for (let i = 1; i < blocks.length; i += 2) {
+    const { language, codeContent } = extractLanguageAndCode(blocks[i]);
+
+    if (isCodeBlock(codeContent)) {
+      codeBlocks.push({ language, code: codeContent });
+    } else {
+      codeBlocks.push({
+        language: '',
+        code: formatCodeBlock(language, codeContent),
+      });
+    }
+  }
+
+  return codeBlocks;
 }
 
 /**
@@ -88,7 +131,8 @@ export function capitalizeFirstLetter(string: string) {
   if (!string) return '';
 
   const capitalizedString =
-    string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    string.charAt(INDEX.FIRST_CHAR).toUpperCase() +
+    string.slice(INDEX.START_REST).toLowerCase();
 
   return capitalizedString;
 }

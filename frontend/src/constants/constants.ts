@@ -55,6 +55,30 @@ export const STRING = {
 };
 
 /**
+ * Index constants used for string and array manipulation.
+ * @constant
+ * @type {object}
+ * @property {number} FIRST_CHAR - Index of the first character.
+ * @property {number} START_REST - Index to start the rest of the string.
+ */
+export const INDEX = {
+  FIRST_CHAR: 0,
+  START_REST: 1,
+};
+
+/**
+ * Length constants used for array length comparisons.
+ * @constant
+ * @type {object}
+ * @property {number} SINGLE_PART - Length indicating a single part.
+ * @property {number} LAST_PART - Indicator for the last part in an array.
+ */
+export const LENGTH = {
+  SINGLE_PART: 1,
+  LAST_PART: -1,
+};
+
+/**
  * General information constants used throughout the application.
  * @constant
  * @type {object}

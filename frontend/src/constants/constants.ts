@@ -21,6 +21,40 @@ export const THEME: object = createTheme({
 export const SUBMIT_KEY = 'Enter';
 
 /**
+ * Constants used throughout the application for various text processing tasks.
+ * @constant
+ * @type {object}
+ * @property {RegExp} WHITESPACE - Matches one or more whitespace characters.
+ * @property {RegExp} CODE_BLOCK_DELIMITER - Matches Markdown code block delimiters (``` syntax).
+ * @property {RegExp} CODE_BLOCK - Matches common code block indicators such as =, ;, [, ], {, }, #, //, and <...>.
+ * @property {RegExp} LIST_ITEM - Matches Markdown list items, including ordered and unordered lists.
+ * @property {RegExp} NEWLINE - Matches newline characters.
+ */
+export const REGEX = {
+  WHITESPACE: /\s+/,
+  CODE_BLOCK_DELIMITER: /```/,
+  CODE_BLOCK: /[=;\[\]{}#]|\/\/|<[^>]+>/,
+  LIST_ITEM: /^(\d+\..+|[-*+]\s*.+)$/gm,
+  NEWLINE: /\n/,
+};
+
+/**
+ * String constants used throughout the application for consistent text representation.
+ * @constant
+ * @type {object}
+ * @property {string} NEWLINE - Represents a newline character.
+ * @property {string} CODE_BLOCK_START - Represents the start delimiter for a Markdown code block (``` syntax).
+ * @property {string} CODE_BLOCK_END - Represents the end delimiter for a Markdown code block (``` syntax).
+ * @property {string} LIST_TYPE - Represents the type for list items.
+ */
+export const STRING = {
+  NEWLINE: '\n',
+  CODE_BLOCK_START: '```',
+  CODE_BLOCK_END: '```',
+  LIST_TYPE: 'list',
+};
+
+/**
  * General information constants used throughout the application.
  * @constant
  * @type {object}

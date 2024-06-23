@@ -46,7 +46,7 @@ function Home() {
    */
   const content = (
     <Box className='container'>
-      <Box className='typing-animation-container'>
+      <Box className='home-screen'>
         {typingAnimation}
         {images}
         {projectScreenshot}

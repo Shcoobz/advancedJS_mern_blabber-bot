@@ -58,7 +58,7 @@ function Login() {
   /**
    * JSX content for the robot image section.
    */
-  const robotImage = <Box className='robot-container'>{GREETING_ROBOT_IMG}</Box>;
+  const greetingImg = <Box className='robot-container'>{GREETING_ROBOT_IMG}</Box>;
 
   /**
    * JSX content for the login form.
@@ -85,7 +85,7 @@ function Login() {
    */
   const content = (
     <Box className='container'>
-      {robotImage}
+      {greetingImg}
       {loginForm}
     </Box>
   );

@@ -1,4 +1,11 @@
 import { createTheme } from '@mui/material/styles';
+import { Route } from 'react-router-dom';
+
+import Home from '../pages/Home';
+import Login from '../pages/Login';
+import Signup from '../pages/Signup';
+import Error404 from '../pages/Error404';
+import Chat from '../pages/Chat';
 
 /**
  * Defines the Material-UI theme for the application, specifying typography settings.
@@ -11,6 +18,26 @@ export const THEME: object = createTheme({
     allVariants: { color: 'whitesmoke' },
   },
 });
+
+/**
+ * An object that contains route configurations for the application.
+ * Each property represents a route with a specific path and component to render.
+ *
+ * @constant
+ * @type {object}
+ * @property {JSX.Element} HOME - Route for the home page.
+ * @property {JSX.Element} LOGIN - Route for the login page.
+ * @property {JSX.Element} SIGNUP - Route for the signup page.
+ * @property {JSX.Element} CHAT - Route for the chat page.
+ * @property {JSX.Element} ERROR - Route for handling 404 errors.
+ */
+export const ROUTE = {
+  HOME: <Route path='/' element={<Home />} />,
+  LOGIN: <Route path='/login' element={<Login />} />,
+  SIGNUP: <Route path='/signup' element={<Signup />} />,
+  CHAT: <Route path='/chat' element={<Chat />} />,
+  ERROR: <Route path='*' element={<Error404 />} />,
+};
 
 /**
  * The key value used to detect the 'Enter' key press.

@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.tsx';
 import { Toaster } from 'react-hot-toast';
 
-import { THEME } from '../src/constants/constants.ts';
+import { THEME } from '../src/constants/constants.tsx';
 import App from './App.tsx';
 
 import './index.css';

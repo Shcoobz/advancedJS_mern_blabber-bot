@@ -105,6 +105,9 @@ export const ERROR = {
     FETCH_ALL: 'Unable to retrieve all chats! ',
     DELETE: 'Unable to delete chats! ',
   },
+  PAGE: {
+    NOT_FOUND: '404 Error: Page Not Found',
+  },
 };
 
 /**

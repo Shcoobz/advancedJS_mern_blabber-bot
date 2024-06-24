@@ -6,6 +6,7 @@ export const MSG = {
     },
     GENERAL: {
       SOMETHING_WENT_WRONG: 'Something went terribly wrong!',
+      ERROR: 'Error',
     },
   },
   SUCCESS: {

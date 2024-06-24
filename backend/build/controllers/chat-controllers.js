@@ -53,54 +53,48 @@ export async function generateChatCompletion(req, res, next) {
         res.status(500).json({ message: MSG.ERROR.GENERAL.SOMETHING_WENT_WRONG });
     }
 }
-// export async function generateChatCompletion(
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) {
-//   const { message } = req.body;
-//   try {
-//     const user = await User.findById(res.locals.jwtData.id);
-//     if (!user) return res.status(401).json({ message: MSG.ERROR.USER.NOT_REGISTERED });
-//     // get all chats of user
-//     const chats = user.chats.map(({ role, content }) => ({
-//       role,
-//       content,
-//     })) as ChatCompletionRequestMessage[];
-//     chats.push({ content: message, role: ROLE.USER });
-//     user.chats.push({ content: message, role: ROLE.USER });
-//     // send all chats with new one to api
-//     const config = configureOpenAI();
-//     const openai = new OpenAIApi(config);
-//     const chatResponse = await openai.createChatCompletion({
-//       model: OPENAI.MODEL,
-//       messages: chats,
-//     });
-//     user.chats.push(chatResponse.data.choices[0].message);
-//     await user.save();
-//     //  get res
-//     return res.status(200).json({ chats: user.chats });
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({ message: MSG.ERROR.GENERAL.SOMETHING_WENT_WRONG });
-//   }
-// }
+async function findUser(userId) {
+    const user = await User.findById(userId);
+    if (!user) {
+        throw new Error(MSG.ERROR.USER.NOT_REGISTERED);
+    }
+    return user;
+}
+function verifyUserPermissions(user, jwtUserId) {
+    if (user._id.toString() !== jwtUserId) {
+        throw new Error(MSG.ERROR.USER.PERMISSIONS_MISMATCH);
+    }
+}
 export async function sendChatsToUser(req, res, next) {
     try {
-        const user = await User.findById(res.locals.jwtData.id);
-        if (!user) {
-            return res.status(401).send('User not registered or token malfunction!');
-        }
-        if (user._id.toString() !== res.locals.jwtData.id) {
-            return res.status(403).send("Permissions didn't match!");
-        }
-        return res.status(200).json({ message: 'OK!', chats: user.chats });
+        const user = await findUser(res.locals.jwtData.id);
+        verifyUserPermissions(user, res.locals.jwtData.id);
+        return res.status(200).json({ message: MSG.SUCCESS.OK, chats: user.chats });
     }
     catch (error) {
         console.log(error);
-        return res.status(500).json({ message: 'Error', cause: error.message });
+        return res
+            .status(500)
+            .json({ message: MSG.ERROR.GENERAL.ERROR, cause: error.message });
     }
 }
+// export async function sendChatsToUser(req: Request, res: Response, next: NextFunction) {
+//   try {
+//     const user = await User.findById(res.locals.jwtData.id);
+//     if (!user) {
+//       return res.status(401).send(MSG.ERROR.USER.NOT_REGISTERED);
+//     }
+//     if (user._id.toString() !== res.locals.jwtData.id) {
+//       return res.status(403).send(MSG.ERROR.USER.PERMISSIONS_MISMATCH);
+//     }
+//     return res.status(200).json({ message: MSG.SUCCESS.OK, chats: user.chats });
+//   } catch (error) {
+//     console.log(error);
+//     return res
+//       .status(500)
+//       .json({ message: MSG.ERROR.GENERAL.ERROR, cause: error.message });
+//   }
+// }
 export async function deleteChats(req, res, next) {
     try {
         const user = await User.findById(res.locals.jwtData.id);

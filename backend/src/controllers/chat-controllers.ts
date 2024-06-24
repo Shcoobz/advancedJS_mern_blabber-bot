@@ -6,7 +6,42 @@ import { INDEX, MSG, OPENAI, ROLE } from '../constants/constants.js';
 
 import User from '../models/User.js';
 
-async function getUserChats(userId: string) {
+/**
+ * Sends a standardized success response.
+ * @param {Response} res - The response object.
+ * @param {any} data - The data to include in the response.
+ * @returns {Response} The response object with the success message.
+ */
+function sendSuccessResponse(res: Response, data: any = {}) {
+  const responseData = { message: MSG.SUCCESS.OK, ...data };
+  const successResponse = res.status(200).json(responseData);
+
+  return successResponse;
+}
+
+/**
+ * Sends a standardized error response.
+ * @param {Response} res - The response object.
+ * @param {Error} error - The error object.
+ * @returns {Response} The response object with the error message.
+ */
+function sendErrorResponse(res: Response, error: Error) {
+  const responseData = { message: MSG.ERROR.GENERAL.ERROR, cause: error.message };
+
+  console.log(error);
+
+  const errorResponse = res.status(500).json(responseData);
+
+  return errorResponse;
+}
+
+/**
+ * Validates if a user exists by ID.
+ * @param {string} userId - The ID of the user to validate.
+ * @returns {Promise<any>} The user if found.
+ * @throws {Error} If the user is not found.
+ */
+async function validateUser(userId: string) {
   const user = await User.findById(userId);
 
   if (!user) {
@@ -16,6 +51,36 @@ async function getUserChats(userId: string) {
   return user;
 }
 
+/**
+ * Verifies if the user's ID matches the one in the JWT.
+ * @param {any} user - The user object.
+ * @param {string} jwtUserId - The user ID from the JWT.
+ * @throws {Error} If the user's ID does not match the one in the JWT.
+ */
+function verifyUserPermissions(user: any, jwtUserId: string) {
+  if (user._id.toString() !== jwtUserId) {
+    throw new Error(MSG.ERROR.USER.PERMISSIONS_MISMATCH);
+  }
+}
+
+/**
+ * Gets the chats of a user.
+ * @param {string} userId - The ID of the user.
+ * @returns {Promise<any[]>} The chats of the user.
+ */
+async function getUserChats(userId: string) {
+  const user = await validateUser(userId);
+  const chats = user.chats;
+
+  return chats;
+}
+
+/**
+ * Prepares the chat messages by adding a new user message.
+ * @param {any} user - The user object.
+ * @param {string} message - The new message content.
+ * @returns {ChatCompletionRequestMessage[]} The prepared chat messages.
+ */
 function prepareChats(user: any, message: string) {
   const chats = user.chats.map(({ role, content }) => ({
     role,
@@ -28,6 +93,11 @@ function prepareChats(user: any, message: string) {
   return chats;
 }
 
+/**
+ * Sends chat messages to OpenAI and gets the response.
+ * @param {ChatCompletionRequestMessage[]} chats - The chat messages.
+ * @returns {Promise<string>} The response message from OpenAI.
+ */
 async function sendToOpenAI(chats: ChatCompletionRequestMessage[]) {
   const config = configureOpenAI();
   const openai = new OpenAIApi(config);
@@ -40,19 +110,36 @@ async function sendToOpenAI(chats: ChatCompletionRequestMessage[]) {
   return message;
 }
 
-function saveAndRespond(user: any, res: Response, message: any) {
+/**
+ * Saves the user and sends an appropriate response.
+ * @param {any} user - The user object to save.
+ * @param {Response} res - The response object.
+ * @param {any} message - The message to add to the user's chats.
+ * @returns {Promise<Response>} The response object.
+ */
+async function saveAndRespond(user: any, res: Response, message: any) {
   user.chats.push(message);
-  user
-    .save()
-    .then(() => {
-      res.status(200).json({ chats: user.chats });
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json({ message: MSG.ERROR.GENERAL.SOMETHING_WENT_WRONG });
-    });
+
+  try {
+    await user.save();
+
+    const successResponse = sendSuccessResponse(res, { chats: user.chats });
+
+    return successResponse;
+  } catch (error) {
+    const errorResponse = sendErrorResponse(res, error);
+
+    return errorResponse;
+  }
 }
 
+/**
+ * Generates a chat completion and saves it to the user's chats.
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object.
+ * @param {NextFunction} next - The next middleware function.
+ * @returns {Promise<Response>} The response object.
+ */
 export async function generateChatCompletion(
   req: Request,
   res: Response,
@@ -61,86 +148,75 @@ export async function generateChatCompletion(
   const { message } = req.body;
 
   try {
-    const user = await getUserChats(res.locals.jwtData.id);
+    const user = await validateUser(res.locals.jwtData.id);
+    verifyUserPermissions(user, res.locals.jwtData.id);
+
     const chats = prepareChats(user, message);
     const chatResponseMessage = await sendToOpenAI(chats);
 
-    saveAndRespond(user, res, chatResponseMessage);
+    const successResponse = await saveAndRespond(user, res, chatResponseMessage);
+
+    return successResponse;
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: MSG.ERROR.GENERAL.SOMETHING_WENT_WRONG });
+    const errorResponse = sendErrorResponse(res, error);
+
+    return errorResponse;
   }
 }
 
+/**
+ * Finds a user by ID.
+ * @param {string} userId - The ID of the user to find.
+ * @returns {Promise<any>} The user if found.
+ * @throws {Error} If the user is not found.
+ */
 async function findUser(userId: string) {
-  const user = await User.findById(userId);
-
-  if (!user) {
-    throw new Error(MSG.ERROR.USER.NOT_REGISTERED);
-  }
+  const user = validateUser(userId);
 
   return user;
 }
 
-function verifyUserPermissions(user: any, jwtUserId: string) {
-  if (user._id.toString() !== jwtUserId) {
-    throw new Error(MSG.ERROR.USER.PERMISSIONS_MISMATCH);
-  }
-}
-
+/**
+ * Sends the chats of the user to the client.
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object.
+ * @param {NextFunction} next - The next middleware function.
+ * @returns {Promise<Response>} The response object.
+ */
 export async function sendChatsToUser(req: Request, res: Response, next: NextFunction) {
   try {
     const user = await findUser(res.locals.jwtData.id);
     verifyUserPermissions(user, res.locals.jwtData.id);
 
-    return res.status(200).json({ message: MSG.SUCCESS.OK, chats: user.chats });
+    const chats = await getUserChats(res.locals.jwtData.id);
+
+    return sendSuccessResponse(res, { chats });
   } catch (error) {
-    console.log(error);
-    return res
-      .status(500)
-      .json({ message: MSG.ERROR.GENERAL.ERROR, cause: error.message });
+    const errorResponse = sendErrorResponse(res, error);
+
+    return errorResponse;
   }
 }
 
-// export async function sendChatsToUser(req: Request, res: Response, next: NextFunction) {
-//   try {
-//     const user = await User.findById(res.locals.jwtData.id);
-
-//     if (!user) {
-//       return res.status(401).send(MSG.ERROR.USER.NOT_REGISTERED);
-//     }
-
-//     if (user._id.toString() !== res.locals.jwtData.id) {
-//       return res.status(403).send(MSG.ERROR.USER.PERMISSIONS_MISMATCH);
-//     }
-
-//     return res.status(200).json({ message: MSG.SUCCESS.OK, chats: user.chats });
-//   } catch (error) {
-//     console.log(error);
-//     return res
-//       .status(500)
-//       .json({ message: MSG.ERROR.GENERAL.ERROR, cause: error.message });
-//   }
-// }
-
+/**
+ * Deletes all chat messages of the user.
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object.
+ * @param {NextFunction} next - The next middleware function.
+ * @returns {Promise<Response>} The response object.
+ */
 export async function deleteChats(req: Request, res: Response, next: NextFunction) {
   try {
-    const user = await User.findById(res.locals.jwtData.id);
+    const user = await findUser(res.locals.jwtData.id);
+    verifyUserPermissions(user, res.locals.jwtData.id);
 
-    if (!user) {
-      return res.status(401).send('User not registered or token malfunction!');
-    }
-
-    if (user._id.toString() !== res.locals.jwtData.id) {
-      return res.status(403).send("Permissions didn't match!");
-    }
-
-    user.chats.splice(0, user.chats.length);
+    user.chats.splice(INDEX.FIRST, user.chats.length);
     await user.save();
 
-    return res.status(200).json({ message: 'OK!' });
+    return sendSuccessResponse(res);
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: 'Error', cause: error.message });
+    const errorResponse = sendErrorResponse(res, error);
+
+    return errorResponse;
   }
 }

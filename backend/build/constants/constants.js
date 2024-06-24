@@ -25,4 +25,16 @@ export const OPENAI = {
 export const INDEX = {
     FIRST: 0,
 };
+export const COOKIE = {
+    EXPIRES_IN: '7d',
+    DOMAIN: 'localhost',
+    NAME: 'auth_token',
+    PATH: '/',
+};
+export const COOKIE_OPTIONS = {
+    path: COOKIE.PATH,
+    domain: COOKIE.DOMAIN,
+    httpOnly: true,
+    signed: true,
+};
 //# sourceMappingURL=constants.js.map

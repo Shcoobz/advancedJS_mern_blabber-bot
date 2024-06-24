@@ -1,7 +1,6 @@
 import { hash, compare } from 'bcrypt';
-import { handleUserCookie } from '../utils/cookie-manager.js';
+import { deleteCookie, handleUserCookie } from '../utils/cookie-manager.js';
 import User from '../models/User.js';
-import { COOKIE_NAME } from '../utils/constants.js';
 export async function getAllUsers(req, res, next) {
     try {
         const users = await User.find();
@@ -61,13 +60,7 @@ export async function userLogout(req, res, next) {
         if (user._id.toString() !== res.locals.jwtData.id) {
             return res.status(403).send("Permissions didn't match!");
         }
-        // TODO: make into reusable function
-        res.clearCookie(COOKIE_NAME, {
-            httpOnly: true,
-            domain: 'localhost',
-            signed: true,
-            path: '/',
-        });
+        deleteCookie(res);
         return res
             .status(200)
             .json({ message: 'User verified!', name: user.name, email: user.email });
@@ -78,21 +71,6 @@ export async function userLogout(req, res, next) {
     }
 }
 export async function verifyUser(req, res, next) {
-    // try {
-    //   const user = await User.findById(res.locals.jwtData.id);
-    //   if (!user) {
-    //     return res.status(401).send('User not registered or token malfunction!');
-    //   }
-    //   if (user._id.toString() !== res.locals.jwtData.id) {
-    //     return res.status(403).send("Permissions didn't match!");
-    //   }
-    //   return res
-    //     .status(200)
-    //     .json({ message: 'User verified!', name: user.name, email: user.email });
-    // } catch (error) {
-    //   console.log(error);
-    //   return res.status(500).json({ message: 'Error', cause: error.message });
-    // }
     try {
         const user = await User.findById(res.locals.jwtData.id);
         if (!user) {

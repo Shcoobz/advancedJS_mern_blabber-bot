@@ -30,7 +30,7 @@
 .form-style {
   margin: auto;
   padding: 30px;
-  box-shadow: 10px 10px 20px #000;
+  box-shadow: 10px 10px 20px var(--bs-dark) !important;
   border-radius: 10px;
   border: none;
 }
@@ -43,7 +43,7 @@
 
 .MuiOutlinedInput-input-root.Mui-focused,
 .MuiOutlinedInput-notchedOutline {
-  border-color: white !important;
+  border-color: var(--bg-light) !important;
 }
 
 .signup-title {
@@ -57,22 +57,22 @@
   margin-top: 16px !important;
   width: 400px !important;
   border-radius: 16px !important;
-  background-color: #00fffc !important;
-  font-size: 25px !important;
+  background-color: var(--btn-light) !important;
+  font-size: var(--font-size-large) !important;
   font-weight: bold !important;
   transition: background-color 0.3s, color 0.3s !important;
 }
 
 .submit-button:hover {
-  background-color: white !important;
-  color: black !important;
+  background-color: var(--bg-light) !important;
+  color: var(--font-color-dark) !important;
 }
 
 .submit-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px !important;
+  font-size: var(--font-size-extra-large) !important;
   font-weight: bold !important;
 }
 

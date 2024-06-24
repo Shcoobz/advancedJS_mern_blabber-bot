@@ -1,11 +1,11 @@
 .custom-input-label {
-  color: white !important;
+  color: var(--font-color-light) !important;
 }
 
 .custom-input-field {
   width: 400px !important;
   border-radius: 10px !important;
   font-size: 25px !important;
-  color: white !important;
+  color: var(--font-color-light) !important;
   margin-bottom: 15px;
 }

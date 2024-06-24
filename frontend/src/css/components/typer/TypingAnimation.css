@@ -1,6 +1,6 @@
 .typing-animation {
   font-size: 60px;
-  color: white;
+  color: var(--font-color-light) !important;
   display: inline-block;
-  text-shadow: 1px 1px 20px #000;
+  text-shadow: 1px 1px 20px var(--bg-dark) !important;
 }

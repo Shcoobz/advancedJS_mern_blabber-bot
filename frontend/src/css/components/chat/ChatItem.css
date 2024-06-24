@@ -7,11 +7,11 @@
 }
 
 .chat-item-assistant {
-  background-color: #004d5612;
+  background-color: var(--bg-chat-msg-assistant) !important;
 }
 
 .chat-item-user {
-  background-color: #004d56;
+  background-color: var(--bg-chat-msg-user) !important;
 }
 
 .chat-avatar {
@@ -24,18 +24,19 @@
 }
 
 .chat-avatar-user {
-  background-color: black;
-  color: white;
+  background-color: var(--bg-chat-avatar-user) !important;
+  color: var(--bg-chat-avatar-user-initials) !important;
+  font-weight: bold;
 }
 
 .chat-content {
-  font-size: 20px !important;
+  font-size: var(--font-size-small) !important;
 }
 
 .chat-content-code-lang {
-  font-size: 16px !important;
-  color: #ccc;
-  background-color: #333;
+  font-size: var(--font-size-very-small) !important;
+  color: var(--font-color-code-language) !important;
+  background-color: var(--bg-code-language) !important;
   padding: 8px !important;
   border-radius: 4px;
   margin: 5px 0;
@@ -43,11 +44,11 @@
 }
 
 .chat-content-code {
-  font-size: 20px !important;
+  font-size: var(--font-size-small) !important;
 }
 
 .chat-content-list {
-  font-size: 20px !important;
+  font-size: var(--font-size-small) !important;
 }
 
 .newline {

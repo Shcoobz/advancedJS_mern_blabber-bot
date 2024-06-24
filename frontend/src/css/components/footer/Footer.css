@@ -12,5 +12,5 @@
 }
 
 .link-white {
-  color: white;
+  color: var(--font-color-light) !important;
 }

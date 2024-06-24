@@ -1,6 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
+:root {
+  /* Background */
+  --bg-light: white;
+  --bg-dark: rgb(17, 29, 39);
+  --bg-warning: #ef5350;
+  --bg-warning-hover: #e53935;
+  --bg-code-language: #333;
+
+  /* Bg Assistant */
+  --bg-chat-msg-assistant: #004d5612;
+
+  /* Bg User */
+  --bg-chat-avatar-user: #000;
+  --bg-chat-avatar-user-initials: white;
+  --bg-chat-msg-user: #004d56;
+
+  /* Box shadow */
+  --bs-dark: black;
+
+  /* Buttons */
+  --btn-light: #64f3d5;
+  --btn-light-hover: white;
+  --btn-dark: #51538f;
+
+  /* Font color */
+  --font-color-light: white;
+  --font-color-dark: black;
+  --font-color-code-language: #ccc;
+
+  /* Font size */
+  --font-size-very-small: 12px;
+  --font-size-small: 16px;
+  --font-size-medium: 20px;
+  --font-size-large: 24px;
+  --font-size-extra-large: 32px;
+  --font-size-extra-extra-large: 40px;
+}
+
 html,
 body {
   margin: 0;

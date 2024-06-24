@@ -13,13 +13,13 @@
   display: inline-block;
   width: 75px !important;
   text-align: center;
-  background-color: #5ef8fc;
-  color: black;
+  background-color: var(--btn-light) !important;
+  color: var(--bg-dark) !important;
 }
 
 .header-btn-dark {
-  background-color: #51538f;
-  color: white;
+  background-color: var(--btn-dark) !important;
+  color: var(--bg-light) !important;
   width: 75px !important;
   text-align: center;
 }

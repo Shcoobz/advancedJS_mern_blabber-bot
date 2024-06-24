@@ -7,7 +7,7 @@
 
 .error-text {
   font-size: 5rem;
-  color: white;
+  color: var(--font-color-light) !important;
   font-weight: bold;
   text-align: center;
 }

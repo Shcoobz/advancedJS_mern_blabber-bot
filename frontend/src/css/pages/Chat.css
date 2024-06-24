@@ -17,7 +17,7 @@
   display: flex;
   width: 100%;
   height: 100%;
-  background-color: rgb(17, 29, 39);
+  background-color: var(--bg-dark) !important;
   border-radius: 5px;
   flex-direction: column;
   margin-left: 24px;
@@ -30,24 +30,24 @@
   margin: auto;
   margin-top: 25px;
   margin-bottom: 25px;
-  background-color: white;
-  color: black;
+  background-color: var(--bg-chat-avatar-user) !important;
+  color: var(--font-color-light) !important;
   font-weight: 700;
   font-size: 40px !important;
 }
 
 .p-title {
+  font-size: var(--font-size-extra-large) !important;
+  font-family: 'Work Sans', sans-serif;
   margin-left: auto !important;
   margin-right: auto !important;
-  font-size: 30px !important;
-  font-family: 'Work Sans', sans-serif;
 }
 
 .p-description {
+  font-size: var(--font-size-medium) !important;
+  font-family: 'Work Sans', sans-serif;
   margin-left: auto !important;
   margin-right: auto !important;
-  font-size: 20px !important;
-  font-family: 'Work Sans', sans-serif;
   margin-top: 32px;
   margin-bottom: 32px;
   padding: 24px;
@@ -55,16 +55,18 @@
 
 .del-chat-btn {
   width: 200px !important;
-  margin: auto !important;
-  color: white !important;
+  color: var(--font-color-light) !important;
   font-weight: 700 !important;
   border-radius: 3px !important;
-  background-color: #ef5350 !important;
-  bottom: -215px;
+  background-color: var(--bg-warning) !important;
+  position: fixed;
+  bottom: -435px;
+  left: 75px;
+  margin: 0;
 }
 
-.del-chat-button:hover {
-  background-color: #e53935 !important;
+.del-chat-btn:hover {
+  background-color: var(--bg-warning-hover) !important;
 }
 
 .chat-window {
@@ -74,8 +76,8 @@
 }
 
 .model-title {
-  font-size: 40px !important;
-  color: white;
+  font-size: var(--font-size-extra-extra-large) !important;
+  color: var(--font-color-light) !important;
   margin-bottom: 32px !important;
   margin-left: auto !important;
   margin-right: auto !important;
@@ -101,7 +103,7 @@
 .chat-input-container {
   width: calc(100% - 10px);
   border-radius: 8px;
-  background-color: rgb(17, 27, 39);
+  background-color: var(--bg-dark) !important;
   display: flex;
 }
 
@@ -111,16 +113,16 @@
   padding: 10px;
   border: none;
   outline: none;
-  color: white;
-  font-size: 20px;
+  color: var(--font-color-light) !important;
+  font-size: var(--font-size-small) !important;
   margin: 25px;
 }
 
 .chat-submit-btn {
-  color: white !important;
+  color: var(--font-color-light) !important;
   margin-left: 8px !important;
   margin-right: 20px !important;
-  font-size: 40px !important;
+  font-size: var(--font-size-extra-large) !important;
 }
 
 @media (max-width: 600px) {
@@ -141,7 +143,7 @@
   }
 
   .model-title {
-    font-size: 24px !important;
+    font-size: var(--font-size-large) !important;
     margin-bottom: 16px !important;
   }
 
@@ -151,12 +153,12 @@
   }
 
   .chat-input {
-    font-size: 16px;
+    font-size: var(--font-size-small);
     margin: 10px;
   }
 
   .chat-submit-button {
-    font-size: 24px !important;
+    font-size: var(--font-size-large) !important;
   }
 }
 
@@ -181,23 +183,23 @@
     margin: auto;
     margin-top: 25px;
     margin-bottom: 25px;
-    background-color: white;
-    color: black;
+    background-color: var(--bg-light) !important;
+    color: var(--font-color-dark);
     font-weight: 700;
-    font-size: 20px !important;
+    font-size: var(--font-size-medium) !important;
   }
 
   .p-title {
     margin-left: auto !important;
     margin-right: auto !important;
-    font-size: 20px !important;
+    font-size: var(--font-size-medium) !important;
     font-family: 'Work Sans', sans-serif;
   }
 
   .p-description {
     margin-left: auto !important;
     margin-right: auto !important;
-    font-size: 15px !important;
+    font-size: var(--font-size-small) !important;
     font-family: 'Work Sans', sans-serif;
     margin-top: 32px;
     margin-bottom: 32px;
@@ -207,7 +209,7 @@
   .del-chat-btn {
     width: 200px !important;
     margin: auto !important;
-    color: white !important;
+    color: var(--font-color-light) !important;
     font-weight: 700 !important;
     border-radius: 3px !important;
     background-color: #ef5350 !important;
@@ -220,7 +222,7 @@
   }
 
   .model-title {
-    font-size: 32px !important;
+    font-size: var(--font-size-extra-large) !important;
     margin-bottom: 24px !important;
   }
 
@@ -230,12 +232,12 @@
   }
 
   .chat-input {
-    font-size: 18px;
+    font-size: var(--font-size-small) !important;
     margin: 20px;
   }
 
   .chat-submit-btn {
-    font-size: 32px !important;
+    font-size: var(--font-size-extra-large) !important;
   }
 }
 
@@ -255,7 +257,7 @@
   }
 
   .model-title {
-    font-size: 40px !important;
+    font-size: var(--font-size-extra-extra-large) !important;
     margin-bottom: 32px !important;
   }
 
@@ -265,11 +267,11 @@
   }
 
   .chat-input {
-    font-size: 20px;
+    font-size: var(--font-size-medium) !important;
     margin: 25px;
   }
 
   .chat-submit-btn {
-    font-size: 40px !important;
+    font-size: var(--font-size-extra-large) !important;
   }
 }

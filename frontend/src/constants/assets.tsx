@@ -1,5 +1,4 @@
 import { IoIosLogIn } from 'react-icons/io';
-import '../css/constants/images.css';
 
 /**
  * This file contains constant definitions for icons and images used throughout the application.

@@ -4,16 +4,24 @@ import { hash, compare } from 'bcrypt';
 import { deleteCookie, handleUserCookie } from '../utils/cookie-manager.js';
 
 import User from '../models/User.js';
+import { sendErrorResponse, sendSuccessResponse } from './user-handler.js';
 
+/**
+ * Fetches all users from the database.
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object.
+ * @param {NextFunction} next - The next middleware function.
+ * @returns {Promise<Response>} - A response with all users or an error message.
+ */
 export async function getAllUsers(req: Request, res: Response, next: NextFunction) {
   try {
     const users = await User.find();
 
-    return res.status(200).json({ message: 'getAllUsers successful!', users });
+    return sendSuccessResponse(res, { users });
   } catch (error) {
     console.log(error);
 
-    return res.status(500).json({ message: 'Error', cause: error.message });
+    return sendErrorResponse(res, error);
   }
 }
 

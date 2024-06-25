@@ -16,6 +16,7 @@ export const SUCCESS = {
     USER: {
         REGISTRATION: 'Successfully registered!',
         LOGIN: 'Successfully logged in!',
+        LOGOUT: 'User verified!',
     },
 };
 export const ROLE = {

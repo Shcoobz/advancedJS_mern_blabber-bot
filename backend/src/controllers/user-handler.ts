@@ -134,6 +134,42 @@ export async function checkUserExistsLogin(email: string, res: Response) {
 }
 
 /**
+ * Checks if a user with the given ID exists.
+ * @param {string} userId - The ID of the user to check.
+ * @param {Response} res - The response object used to send the error response if the user does not exist.
+ * @returns {Promise<any>} - Returns the user object if found, otherwise null.
+ */
+export async function checkUserExistsByID(userId: string, res: Response) {
+  const user = await validateUserByID(userId);
+
+  if (!user) {
+    sendErrorResponse(res, new Error(ERROR.USER.NOT_REGISTERED), 401);
+    return null;
+  }
+
+  return user;
+}
+
+/**
+ * Verifies user permissions and sends an error response if the permissions do not match.
+ * @param {any} user - The user object.
+ * @param {string} jwtUserId - The user ID from the JWT.
+ * @param {Response} res - The response object used to send the error response if the permissions do not match.
+ * @returns {boolean} - Returns true if permissions match, otherwise false.
+ */
+export function checkUserPermissions(user: any, jwtUserId: string, res: Response) {
+  try {
+    verifyUserPermissions(user, jwtUserId);
+
+    return true;
+  } catch (error) {
+    sendErrorResponse(res, new Error(ERROR.USER.PERMISSIONS_MISMATCH), 403);
+
+    return false;
+  }
+}
+
+/**
  * Validates the provided password against the stored hashed password.
  * @param {string} password - The plain text password provided by the user.
  * @param {string} hashedPassword - The hashed password stored in the database.

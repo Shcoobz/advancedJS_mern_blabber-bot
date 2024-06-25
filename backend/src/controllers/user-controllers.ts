@@ -5,14 +5,18 @@ import { deleteCookie, handleUserCookie } from '../utils/cookie-manager.js';
 
 import User from '../models/User.js';
 import {
+  checkUserExistsByID,
   checkUserExistsLogin,
   checkUserExistsSignup,
+  checkUserPermissions,
   createAndSaveUser,
   hashPassword,
   sendErrorResponse,
   sendSuccessResponse,
   validatePassword,
   validateUserByEmail,
+  validateUserByID,
+  verifyUserPermissions,
 } from './user-handler.js';
 import { ERROR, SECURITY, SUCCESS } from '../constants/constants.js';
 
@@ -102,54 +106,58 @@ export async function userLogin(req: Request, res: Response, next: NextFunction)
   }
 }
 
-// export async function userLogin(req: Request, res: Response, next: NextFunction) {
-//   try {
-//     const { email, password } = req.body;
+/**
+ * Handles the user logout process.
+ * @param {Request} req - The request object containing the user details.
+ * @param {Response} res - The response object used to send the response.
+ * @param {NextFunction} next - The next middleware function in the stack.
+ * @returns {Promise<void>} - A promise that resolves to void.
+ */
+export async function userLogout(req: Request, res: Response, next: NextFunction) {
+  try {
+    const user = await checkUserExistsByID(res.locals.jwtData.id, res);
+    if (!user) return;
 
-//     const user = await User.findOne({ email });
+    if (!checkUserPermissions(user, res.locals.jwtData.id, res)) {
+      return;
+    }
+
+    deleteCookie(res);
+
+    return sendSuccessResponse(res, {
+      message: SUCCESS.USER.LOGOUT,
+      name: user.name,
+      email: user.email,
+    });
+  } catch (error) {
+    console.log(error);
+
+    return sendErrorResponse(res, error);
+  }
+}
+
+// export async function userLogout(req: Request, res: Response, next: NextFunction) {
+//   try {
+//     const user = await User.findById(res.locals.jwtData.id);
 
 //     if (!user) {
-//       return res.status(401).send('User not registered!');
+//       return res.status(401).send('User not registered or token malfunction!');
 //     }
 
-//     const isPasswordCorrect = await compare(password, user.password);
-//     if (!isPasswordCorrect) {
-//       return res.status(401).send('Incorrect Password!');
+//     if (user._id.toString() !== res.locals.jwtData.id) {
+//       return res.status(403).send("Permissions didn't match!");
 //     }
 
-//     handleUserCookie(res, user);
+//     deleteCookie(res);
 
 //     return res
 //       .status(200)
-//       .json({ message: 'Successfully logged in!', name: user.name, email: user.email });
+//       .json({ message: 'User verified!', name: user.name, email: user.email });
 //   } catch (error) {
 //     console.log(error);
 //     return res.status(500).json({ message: 'Error', cause: error.message });
 //   }
 // }
-
-export async function userLogout(req: Request, res: Response, next: NextFunction) {
-  try {
-    const user = await User.findById(res.locals.jwtData.id);
-
-    if (!user) {
-      return res.status(401).send('User not registered or token malfunction!');
-    }
-
-    if (user._id.toString() !== res.locals.jwtData.id) {
-      return res.status(403).send("Permissions didn't match!");
-    }
-
-    deleteCookie(res);
-
-    return res
-      .status(200)
-      .json({ message: 'User verified!', name: user.name, email: user.email });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: 'Error', cause: error.message });
-  }
-}
 
 export async function verifyUser(req: Request, res: Response, next: NextFunction) {
   try {

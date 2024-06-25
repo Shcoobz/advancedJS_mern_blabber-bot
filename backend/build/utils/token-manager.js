@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { COOKIE_NAME } from './constants.js';
+import { COOKIE } from '../constants/constants.js';
 export function createToken(id, email, expiresIn) {
     const privateKey = process.env.JWT_PRIVATE_KEY;
     const payload = { id, email };
@@ -8,7 +8,7 @@ export function createToken(id, email, expiresIn) {
 }
 export async function verifyToken(req, res, next) {
     const privateKey = process.env.JWT_PRIVATE_KEY;
-    const token = req.signedCookies[`${COOKIE_NAME}`];
+    const token = req.signedCookies[`${COOKIE.NAME}`];
     if (!token || token.trim() === '') {
         return res.status(401).json({ message: 'Token not received!' });
     }

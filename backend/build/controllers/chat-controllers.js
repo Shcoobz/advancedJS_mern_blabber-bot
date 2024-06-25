@@ -1,54 +1,7 @@
 import { OpenAIApi } from 'openai';
 import { configureOpenAI } from '../config/openai-config.js';
-import { INDEX, MSG, OPENAI, ROLE } from '../constants/constants.js';
-import User from '../models/User.js';
-/**
- * Sends a standardized success response.
- * @param {Response} res - The response object.
- * @param {any} data - The data to include in the response.
- * @returns {Response} The response object with the success message.
- */
-function sendSuccessResponse(res, data = {}) {
-    const responseData = { message: MSG.SUCCESS.OK, ...data };
-    const successResponse = res.status(200).json(responseData);
-    return successResponse;
-}
-/**
- * Sends a standardized error response.
- * @param {Response} res - The response object.
- * @param {Error} error - The error object.
- * @returns {Response} The response object with the error message.
- */
-function sendErrorResponse(res, error) {
-    const responseData = { message: MSG.ERROR.GENERAL.ERROR, cause: error.message };
-    console.log(error);
-    const errorResponse = res.status(500).json(responseData);
-    return errorResponse;
-}
-/**
- * Validates if a user exists by ID.
- * @param {string} userId - The ID of the user to validate.
- * @returns {Promise<any>} The user if found.
- * @throws {Error} If the user is not found.
- */
-async function validateUser(userId) {
-    const user = await User.findById(userId);
-    if (!user) {
-        throw new Error(MSG.ERROR.USER.NOT_REGISTERED);
-    }
-    return user;
-}
-/**
- * Verifies if the user's ID matches the one in the JWT.
- * @param {any} user - The user object.
- * @param {string} jwtUserId - The user ID from the JWT.
- * @throws {Error} If the user's ID does not match the one in the JWT.
- */
-function verifyUserPermissions(user, jwtUserId) {
-    if (user._id.toString() !== jwtUserId) {
-        throw new Error(MSG.ERROR.USER.PERMISSIONS_MISMATCH);
-    }
-}
+import { INDEX, OPENAI, ROLE } from '../constants/constants.js';
+import { sendErrorResponse, sendSuccessResponse, validateUser, verifyUserPermissions, } from './user-handler.js';
 /**
  * Gets the chats of a user.
  * @param {string} userId - The ID of the user.

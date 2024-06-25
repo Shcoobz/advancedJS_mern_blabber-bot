@@ -1,17 +1,15 @@
-export const MSG = {
-  ERROR: {
-    USER: {
-      NOT_REGISTERED: 'User not registered or token malfunction!',
-      PERMISSIONS_MISMATCH: "Permissions didn't match!",
-    },
-    GENERAL: {
-      SOMETHING_WENT_WRONG: 'Something went terribly wrong!',
-      ERROR: 'Error',
-    },
+export const ERROR = {
+  USER: {
+    NOT_REGISTERED: 'User not registered or token malfunction!',
+    PERMISSIONS_MISMATCH: "Permissions didn't match!",
   },
-  SUCCESS: {
-    OK: 'OK!',
+  RES: {
+    FAIL: 'Something went terribly wrong!',
   },
+};
+
+export const SUCCESS = {
+  RES: { OK: 'OK!' },
 };
 
 export const ROLE = {

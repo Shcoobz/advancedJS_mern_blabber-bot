@@ -3,14 +3,20 @@ export const ERROR = {
         NOT_REGISTERED: 'User not registered or token malfunction!',
         PERMISSIONS_MISMATCH: "Permissions didn't match!",
         ALREADY_REGISTERED: 'User already registered!',
+        INCORRECT_PASSWORD: 'Incorrect Password!',
     },
     RES: {
         FAIL: 'Something went terribly wrong!',
     },
 };
 export const SUCCESS = {
-    RES: { OK: 'OK!' },
-    USER: { REGISTRATION: 'Successfully registered!' },
+    RES: {
+        OK: 'OK!',
+    },
+    USER: {
+        REGISTRATION: 'Successfully registered!',
+        LOGIN: 'Successfully logged in!',
+    },
 };
 export const ROLE = {
     USER: 'user',

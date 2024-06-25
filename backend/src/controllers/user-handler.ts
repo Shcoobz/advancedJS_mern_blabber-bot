@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { ERROR, SECURITY, SUCCESS } from '../constants/constants.js';
 import User from '../models/User.js';
-import { hash } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
 
 /**
  * Sends a standardized success response with customizable status code.
@@ -23,19 +23,24 @@ export function sendSuccessResponse(
 }
 
 /**
- * Sends a standardized error response.
+ * Sends a standardized error response with customizable status code.
  * @param {Response} res - The response object.
  * @param {Error} error - The error object.
+ * @param {number} [statusCode=500] - The HTTP status code for the response (defaults to 500).
  * @returns {Response} The response object with the error message.
  */
-export function sendErrorResponse(res: Response, error: Error) {
+export function sendErrorResponse(res: Response, error: Error, statusCode: number = 500) {
   const responseData = { message: ERROR.RES.FAIL, cause: error.message };
 
   console.log(error);
 
-  const errorResponse = res.status(500).json(responseData);
+  if (statusCode === 401) {
+    return res
+      .status(401)
+      .json({ message: ERROR.USER.INCORRECT_PASSWORD, cause: error.message });
+  }
 
-  return errorResponse;
+  return res.status(500).json(responseData);
 }
 
 /**
@@ -86,28 +91,69 @@ export function verifyUserPermissions(user: any, jwtUserId: string) {
  * @param {string} password - The plaintext password to hash.
  * @returns {Promise<string>} A promise that resolves with the hashed password.
  */
-export async function hashPassword(password: string): Promise<string> {
+export async function hashPassword(password: string) {
   const hashedPassword = await hash(password, SECURITY.BCRYPT_SALT_ROUNDS);
 
   return hashedPassword;
 }
 
 /**
- * Checks if a user with the given email already exists.
+ * Checks if a user with the given email already exists for signup.
  * @param {string} email - The email to check.
  * @param {Response} res - The response object to send back the error response if the user exists.
  * @returns {boolean} - Returns true if the user exists and the response is handled, otherwise false.
  */
-export async function checkUserExists(email: string, res: Response): Promise<boolean> {
-  const existingUser = await validateUserByEmail(email);
+export async function checkUserExistsSignup(email: string, res: Response) {
+  const user = await validateUserByEmail(email);
 
-  if (existingUser) {
+  if (user) {
     sendErrorResponse(res, new Error(ERROR.USER.ALREADY_REGISTERED));
 
     return true;
   }
 
   return false;
+}
+
+/**
+ * Checks if a user with the given email already exists for login.
+ * @param {string} email - The email to check.
+ * @param {Response} res - The response object used to send the error response if the user does not exist.
+ * @returns {Promise<any>} - Returns the user object if found, otherwise null.
+ */
+export async function checkUserExistsLogin(email: string, res: Response) {
+  const user = await validateUserByEmail(email);
+
+  if (!user) {
+    sendErrorResponse(res, new Error(ERROR.USER.NOT_REGISTERED), 401);
+
+    return null;
+  }
+
+  return user;
+}
+
+/**
+ * Validates the provided password against the stored hashed password.
+ * @param {string} password - The plain text password provided by the user.
+ * @param {string} hashedPassword - The hashed password stored in the database.
+ * @param {Response} res - The response object used to send the error response if the password is incorrect.
+ * @returns {Promise<boolean>} - Returns true if the password is correct, otherwise false.
+ */
+export async function validatePassword(
+  password: string,
+  hashedPassword: string,
+  res: Response
+) {
+  const isPasswordCorrect = await compare(password, hashedPassword);
+
+  if (!isPasswordCorrect) {
+    sendErrorResponse(res, new Error(ERROR.USER.INCORRECT_PASSWORD), 401);
+
+    return false;
+  }
+
+  return true;
 }
 
 /**

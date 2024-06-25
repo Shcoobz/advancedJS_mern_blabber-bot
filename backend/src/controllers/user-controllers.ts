@@ -4,7 +4,15 @@ import { hash, compare } from 'bcrypt';
 import { deleteCookie, handleUserCookie } from '../utils/cookie-manager.js';
 
 import User from '../models/User.js';
-import { sendErrorResponse, sendSuccessResponse } from './user-handler.js';
+import {
+  checkUserExists,
+  createAndSaveUser,
+  hashPassword,
+  sendErrorResponse,
+  sendSuccessResponse,
+  validateUserByEmail,
+} from './user-handler.js';
+import { ERROR, SECURITY, SUCCESS } from '../constants/constants.js';
 
 /**
  * Fetches all users from the database.
@@ -25,29 +33,64 @@ export async function getAllUsers(req: Request, res: Response, next: NextFunctio
   }
 }
 
+/**
+ * Handles the user signup process.
+ * @param {Request} req - The request object containing the user details.
+ * @param {Response} res - The response object used to send the response.
+ * @param {NextFunction} next - The next middleware function in the stack.
+ * @returns {Promise<void>} - A promise that resolves to void.
+ */
 export async function userSignup(req: Request, res: Response, next: NextFunction) {
   try {
     const { name, email, password } = req.body;
-    const existingUser = await User.findOne({ email });
 
-    if (existingUser) return res.status(409).send('User already registered!');
+    if (await checkUserExists(email, res)) {
+      return;
+    }
 
-    const hashedPassword = await hash(password, 10);
+    const newUser = await createAndSaveUser(name, email, password);
 
-    const user = new User({ name, email, password: hashedPassword });
+    handleUserCookie(res, newUser);
 
-    await user.save();
-
-    handleUserCookie(res, user);
-
-    return res
-      .status(201)
-      .json({ message: 'Successfully registered!', name: user.name, email: user.email });
+    return sendSuccessResponse(
+      res,
+      {
+        message: SUCCESS.USER.REGISTRATION,
+        name: newUser.name,
+        email: newUser.email,
+      },
+      201
+    );
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: 'Error', cause: error.message });
+
+    return sendErrorResponse(res, error);
   }
 }
+
+// export async function userSignup(req: Request, res: Response, next: NextFunction) {
+//   try {
+//     const { name, email, password } = req.body;
+//     const existingUser = await User.findOne({ email });
+
+//     if (existingUser) return res.status(409).send('User already registered!');
+
+//     const hashedPassword = await hash(password, 10);
+
+//     const user = new User({ name, email, password: hashedPassword });
+
+//     await user.save();
+
+//     handleUserCookie(res, user);
+
+//     return res
+//       .status(201)
+//       .json({ message: 'Successfully registered!', name: user.name, email: user.email });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({ message: 'Error', cause: error.message });
+//   }
+// }
 
 export async function userLogin(req: Request, res: Response, next: NextFunction) {
   try {

@@ -2,6 +2,7 @@ export const ERROR = {
     USER: {
         NOT_REGISTERED: 'User not registered or token malfunction!',
         PERMISSIONS_MISMATCH: "Permissions didn't match!",
+        ALREADY_REGISTERED: 'User already registered!',
     },
     RES: {
         FAIL: 'Something went terribly wrong!',
@@ -9,6 +10,7 @@ export const ERROR = {
 };
 export const SUCCESS = {
     RES: { OK: 'OK!' },
+    USER: { REGISTRATION: 'Successfully registered!' },
 };
 export const ROLE = {
     USER: 'user',
@@ -33,5 +35,8 @@ export const COOKIE_OPTIONS = {
     domain: COOKIE.DOMAIN,
     httpOnly: true,
     signed: true,
+};
+export const SECURITY = {
+    BCRYPT_SALT_ROUNDS: 10,
 };
 //# sourceMappingURL=constants.js.map

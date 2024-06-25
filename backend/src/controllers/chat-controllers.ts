@@ -7,7 +7,7 @@ import { INDEX, OPENAI, ROLE } from '../constants/constants.js';
 import {
   sendErrorResponse,
   sendSuccessResponse,
-  validateUser,
+  validateUserByID,
   verifyUserPermissions,
 } from './user-handler.js';
 
@@ -17,7 +17,7 @@ import {
  * @returns {Promise<any[]>} The chats of the user.
  */
 async function getUserChats(userId: string) {
-  const user = await validateUser(userId);
+  const user = await validateUserByID(userId);
   const chats = user.chats;
 
   return chats;
@@ -96,7 +96,7 @@ export async function generateChatCompletion(
   const { message } = req.body;
 
   try {
-    const user = await validateUser(res.locals.jwtData.id);
+    const user = await validateUserByID(res.locals.jwtData.id);
     verifyUserPermissions(user, res.locals.jwtData.id);
 
     const chats = prepareChats(user, message);
@@ -119,7 +119,7 @@ export async function generateChatCompletion(
  * @throws {Error} If the user is not found.
  */
 async function findUser(userId: string) {
-  const user = validateUser(userId);
+  const user = validateUserByID(userId);
 
   return user;
 }

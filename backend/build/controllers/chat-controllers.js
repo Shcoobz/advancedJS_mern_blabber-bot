@@ -1,14 +1,14 @@
 import { OpenAIApi } from 'openai';
 import { configureOpenAI } from '../config/openai-config.js';
 import { INDEX, OPENAI, ROLE } from '../constants/constants.js';
-import { sendErrorResponse, sendSuccessResponse, validateUser, verifyUserPermissions, } from './user-handler.js';
+import { sendErrorResponse, sendSuccessResponse, validateUserByID, verifyUserPermissions, } from './user-handler.js';
 /**
  * Gets the chats of a user.
  * @param {string} userId - The ID of the user.
  * @returns {Promise<any[]>} The chats of the user.
  */
 async function getUserChats(userId) {
-    const user = await validateUser(userId);
+    const user = await validateUserByID(userId);
     const chats = user.chats;
     return chats;
 }
@@ -71,7 +71,7 @@ async function saveAndRespond(user, res, message) {
 export async function generateChatCompletion(req, res, next) {
     const { message } = req.body;
     try {
-        const user = await validateUser(res.locals.jwtData.id);
+        const user = await validateUserByID(res.locals.jwtData.id);
         verifyUserPermissions(user, res.locals.jwtData.id);
         const chats = prepareChats(user, message);
         const chatResponseMessage = await sendToOpenAI(chats);
@@ -90,7 +90,7 @@ export async function generateChatCompletion(req, res, next) {
  * @throws {Error} If the user is not found.
  */
 async function findUser(userId) {
-    const user = validateUser(userId);
+    const user = validateUserByID(userId);
     return user;
 }
 /**

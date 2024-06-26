@@ -8,6 +8,10 @@ export const ERROR = {
     RES: {
         FAIL: 'Something went terribly wrong!',
     },
+    DB: {
+        CONNECTION_FAILED: 'Connection to MongoDB failed!',
+        DISCONNECTED: 'Disconnected from MongoDB!',
+    },
 };
 export const SUCCESS = {
     RES: {

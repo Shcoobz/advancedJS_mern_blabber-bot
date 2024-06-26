@@ -105,6 +105,7 @@ export async function userLogout(req, res, next) {
  * @param {Request} req - The request object containing the user details.
  * @param {Response} res - The response object used to send the response.
  * @param {NextFunction} next - The next middleware function in the stack.
+ * @returns {Promise<void>} A promise that resolves when the operation is complete.
  */
 export async function verifyUser(req, res, next) {
     try {
@@ -122,32 +123,26 @@ export async function verifyUser(req, res, next) {
         return sendErrorResponse(res, error);
     }
 }
-// export async function verifyUser(req: Request, res: Response, next: NextFunction) {
-//   try {
-//     const user = await User.findById(res.locals.jwtData.id);
-//     if (!user) {
-//       return res.status(401).json({ isAuthenticated: false });
-//     }
-//     if (user._id.toString() !== res.locals.jwtData.id) {
-//       return res.status(403).json({ isAuthenticated: false });
-//     }
-//     return res.status(200).json({ isAuthenticated: true });
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({ message: 'Error', cause: error.message });
-//   }
-// }
+/**
+ * Retrieves user data and sends a success response with user email and name.
+ * @async
+ * @param {Request} req - The Express Request object.
+ * @param {Response} res - The Express Response object.
+ * @returns {Promise<void>} A promise that resolves when the operation is complete.
+ */
 export async function getUserData(req, res) {
     try {
-        const user = await User.findById(res.locals.jwtData.id);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        return res.status(200).json({ email: user.email, name: user.name });
+        const user = await checkUserExists(res.locals.jwtData.id, res, false, true);
+        if (!user)
+            return;
+        return sendSuccessResponse(res, {
+            email: user.email,
+            name: user.name,
+        });
     }
     catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Server error' });
+        return sendErrorResponse(res, error);
     }
 }
 //# sourceMappingURL=user-controllers.js.map

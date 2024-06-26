@@ -13,11 +13,8 @@ import { deleteChats, generateChatCompletion, sendChatsToUser, } from '../contro
  * - DELETE: `/delete` - Deletes chats based on provided criteria, requires authentication.
  */
 const chatRoutes = Router();
-// Route to generate a new chat completion. This route validates the request data using `chatCompletionValidator` before proceeding to token verification and chat generation.
 chatRoutes.post(ROUTE.CHAT.NEW, validate(chatCompletionValidator), verifyToken, generateChatCompletion);
-// Route to get all chats for a user. It requires the user to be authenticated.
 chatRoutes.get(ROUTE.CHAT.ALL, verifyToken, sendChatsToUser);
-// Route to delete chats. This requires the user to be authenticated and only allows deletion of chats associated with the authenticated user.
 chatRoutes.delete(ROUTE.CHAT.DELETE, verifyToken, deleteChats);
 export default chatRoutes;
 //# sourceMappingURL=chat-routes.js.map

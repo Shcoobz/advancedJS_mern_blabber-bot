@@ -64,4 +64,12 @@ export const ROUTE = {
     ALL: '/all-chats',
     DELETE: '/delete',
   },
+  USER: {
+    HOME: '/',
+    AUTH: '/auth-status',
+    DATA: '/get-user-data',
+    LOGOUT: '/logout',
+    SIGNUP: '/signup',
+    LOGIN: '/login',
+  },
 };

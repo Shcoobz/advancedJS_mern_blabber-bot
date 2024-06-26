@@ -50,4 +50,11 @@ export const COOKIE_OPTIONS = {
 export const SECURITY = {
     BCRYPT_SALT_ROUNDS: 10,
 };
+export const ROUTE = {
+    CHAT: {
+        NEW: '/new',
+        ALL: '/all-chats',
+        DELETE: '/delete',
+    },
+};
 //# sourceMappingURL=constants.js.map

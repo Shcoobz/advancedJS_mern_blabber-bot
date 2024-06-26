@@ -98,53 +98,50 @@ export async function hashPassword(password: string) {
 }
 
 /**
- * Checks if a user with the given email already exists for signup.
- * @param {string} email - The email to check.
- * @param {Response} res - The response object to send back the error response if the user exists.
- * @returns {boolean} - Returns true if the user exists and the response is handled, otherwise false.
+ * Checks if a user exists by email or ID, and handles the response based on the context.
+ *
+ * This function checks if a user exists in the database by the provided email or ID.
+ * For signup: If the user exists, it sends a 409 Conflict error response.
+ * For login: If the user does not exist, it sends a 401 Unauthorized error response.
+ *
+ * @param {string} identifier - The email or ID to check.
+ * @param {Response} res - The response object used to send the error response.
+ * @param {boolean} isSignup - A flag indicating whether the check is for signup (true) or login (false).
+ * @param {boolean} isByID - A flag indicating whether the identifier is an ID (true) or an email (false).
+ * @returns {Promise<any>} - Returns the user object if found (for login or by ID), otherwise null.
  */
-export async function checkUserExistsSignup(email: string, res: Response) {
-  const user = await validateUserByEmail(email);
+export async function checkUserExists(
+  identifier: string,
+  res: Response,
+  isSignup: boolean,
+  isByID: boolean = false
+) {
+  let user;
 
-  if (user) {
-    sendErrorResponse(res, new Error(ERROR.USER.ALREADY_REGISTERED));
+  if (isByID) {
+    user = await validateUserByID(identifier);
 
-    return true;
-  }
+    if (!user) {
+      sendErrorResponse(res, new Error(ERROR.USER.NOT_REGISTERED), 401);
 
-  return false;
-}
+      return null;
+    }
+  } else {
+    user = await validateUserByEmail(identifier);
 
-/**
- * Checks if a user with the given email already exists for login.
- * @param {string} email - The email to check.
- * @param {Response} res - The response object used to send the error response if the user does not exist.
- * @returns {Promise<any>} - Returns the user object if found, otherwise null.
- */
-export async function checkUserExistsLogin(email: string, res: Response) {
-  const user = await validateUserByEmail(email);
+    if (isSignup) {
+      if (user) {
+        sendErrorResponse(res, new Error(ERROR.USER.ALREADY_REGISTERED), 409);
 
-  if (!user) {
-    sendErrorResponse(res, new Error(ERROR.USER.NOT_REGISTERED), 401);
+        return null;
+      }
+    } else {
+      if (!user) {
+        sendErrorResponse(res, new Error(ERROR.USER.NOT_REGISTERED), 401);
 
-    return null;
-  }
-
-  return user;
-}
-
-/**
- * Checks if a user with the given ID exists.
- * @param {string} userId - The ID of the user to check.
- * @param {Response} res - The response object used to send the error response if the user does not exist.
- * @returns {Promise<any>} - Returns the user object if found, otherwise null.
- */
-export async function checkUserExistsByID(userId: string, res: Response) {
-  const user = await validateUserByID(userId);
-
-  if (!user) {
-    sendErrorResponse(res, new Error(ERROR.USER.NOT_REGISTERED), 401);
-    return null;
+        return null;
+      }
+    }
   }
 
   return user;

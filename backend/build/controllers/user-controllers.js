@@ -1,6 +1,6 @@
 import { deleteCookie, handleUserCookie } from '../utils/cookie-manager.js';
 import User from '../models/User.js';
-import { checkUserExistsByID, checkUserExistsLogin, checkUserExistsSignup, checkUserPermissions, createAndSaveUser, sendErrorResponse, sendSuccessResponse, validatePassword, } from './user-handler.js';
+import { checkUserExists, checkUserPermissions, createAndSaveUser, sendErrorResponse, sendSuccessResponse, validatePassword, } from './user-handler.js';
 import { SUCCESS } from '../constants/constants.js';
 /**
  * Fetches all users from the database.
@@ -29,7 +29,7 @@ export async function getAllUsers(req, res, next) {
 export async function userSignup(req, res, next) {
     try {
         const { name, email, password } = req.body;
-        if (await checkUserExistsSignup(email, res)) {
+        if (await checkUserExists(email, res, true, false)) {
             return;
         }
         const newUser = await createAndSaveUser(name, email, password);
@@ -55,7 +55,7 @@ export async function userSignup(req, res, next) {
 export async function userLogin(req, res, next) {
     try {
         const { email, password } = req.body;
-        const user = await checkUserExistsLogin(email, res);
+        const user = await checkUserExists(email, res, false, false);
         if (!user)
             return;
         if (!(await validatePassword(password, user.password, res))) {
@@ -82,7 +82,7 @@ export async function userLogin(req, res, next) {
  */
 export async function userLogout(req, res, next) {
     try {
-        const user = await checkUserExistsByID(res.locals.jwtData.id, res);
+        const user = await await checkUserExists(res.locals.jwtData.id, res, false, true);
         if (!user)
             return;
         if (!checkUserPermissions(user, res.locals.jwtData.id, res)) {
@@ -100,24 +100,6 @@ export async function userLogout(req, res, next) {
         return sendErrorResponse(res, error);
     }
 }
-// export async function userLogout(req: Request, res: Response, next: NextFunction) {
-//   try {
-//     const user = await User.findById(res.locals.jwtData.id);
-//     if (!user) {
-//       return res.status(401).send('User not registered or token malfunction!');
-//     }
-//     if (user._id.toString() !== res.locals.jwtData.id) {
-//       return res.status(403).send("Permissions didn't match!");
-//     }
-//     deleteCookie(res);
-//     return res
-//       .status(200)
-//       .json({ message: 'User verified!', name: user.name, email: user.email });
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({ message: 'Error', cause: error.message });
-//   }
-// }
 export async function verifyUser(req, res, next) {
     try {
         const user = await User.findById(res.locals.jwtData.id);

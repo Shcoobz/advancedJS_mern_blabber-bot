@@ -1,7 +1,7 @@
 import { deleteCookie, handleUserCookie } from '../utils/cookie-manager.js';
-import User from '../models/User.js';
-import { checkUserExists, checkUserPermissions, createAndSaveUser, sendErrorResponse, sendSuccessResponse, validatePassword, } from './user-handler.js';
 import { SUCCESS } from '../constants/constants.js';
+import { checkUserExists, checkUserPermissions, createAndSaveUser, sendErrorResponse, sendSuccessResponse, validatePassword, } from './user-handler.js';
+import User from '../models/User.js';
 /**
  * Fetches all users from the database.
  * @param {Request} req - The request object.
@@ -100,22 +100,43 @@ export async function userLogout(req, res, next) {
         return sendErrorResponse(res, error);
     }
 }
+/**
+ * Verifies if the user is authenticated based on the JWT data.
+ * @param {Request} req - The request object containing the user details.
+ * @param {Response} res - The response object used to send the response.
+ * @param {NextFunction} next - The next middleware function in the stack.
+ */
 export async function verifyUser(req, res, next) {
     try {
-        const user = await User.findById(res.locals.jwtData.id);
-        if (!user) {
-            return res.status(401).json({ isAuthenticated: false });
-        }
-        if (user._id.toString() !== res.locals.jwtData.id) {
-            return res.status(403).json({ isAuthenticated: false });
-        }
-        return res.status(200).json({ isAuthenticated: true });
+        const user = await checkUserExists(res.locals.jwtData.id, res, false, true);
+        if (!user)
+            return;
+        if (!checkUserPermissions(user, res.locals.jwtData.id, res))
+            return;
+        return sendSuccessResponse(res, {
+            isAuthenticated: true,
+        });
     }
     catch (error) {
         console.log(error);
-        return res.status(500).json({ message: 'Error', cause: error.message });
+        return sendErrorResponse(res, error);
     }
 }
+// export async function verifyUser(req: Request, res: Response, next: NextFunction) {
+//   try {
+//     const user = await User.findById(res.locals.jwtData.id);
+//     if (!user) {
+//       return res.status(401).json({ isAuthenticated: false });
+//     }
+//     if (user._id.toString() !== res.locals.jwtData.id) {
+//       return res.status(403).json({ isAuthenticated: false });
+//     }
+//     return res.status(200).json({ isAuthenticated: true });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({ message: 'Error', cause: error.message });
+//   }
+// }
 export async function getUserData(req, res) {
     try {
         const user = await User.findById(res.locals.jwtData.id);

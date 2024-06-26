@@ -12,6 +12,11 @@ export const ERROR = {
     CONNECTION_FAILED: 'Connection to MongoDB failed!',
     DISCONNECTED: 'Disconnected from MongoDB!',
   },
+  TOKEN: {
+    NOT_RECEIVED: 'Token not received!',
+    EXPIRED: 'Token expired!',
+    VERIFICATION_FAILED: 'Token verification failed:',
+  },
 };
 
 export const SUCCESS = {
@@ -73,3 +78,5 @@ export const ROUTE = {
     LOGIN: '/login',
   },
 };
+
+export const EMPTY_STRING = '';

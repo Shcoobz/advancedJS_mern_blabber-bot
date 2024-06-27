@@ -17,6 +17,14 @@ export const ERROR = {
     EXPIRED: 'Token expired!',
     VERIFICATION_FAILED: 'Token verification failed:',
   },
+  VALIDATION: {
+    EMAIL: 'E-mail is required!',
+    PASSWORD: 'Password should contain at least 6 characters!',
+    NAME: 'Name is required!',
+    MSG: 'Message is required!',
+    FAILED: 'Validation failed',
+    ERROR_NAME: 'ValidationError',
+  },
 };
 
 export const SUCCESS = {
@@ -80,3 +88,11 @@ export const ROUTE = {
 };
 
 export const EMPTY_STRING = '';
+export const PASSWORD_MIN_LENGTH = 6;
+
+export const FORM_FIELD = {
+  EMAIL: 'email',
+  PASSWORD: 'password',
+  NAME: 'name',
+  MSG: 'message',
+};

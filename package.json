@@ -1,0 +1,10 @@
+{
+  "name": "blabber-bot",
+  "version": "1.0.0",
+  "description": "Full-stack MERN application for Blabber Bot.",
+  "scripts": {
+    "start": "node backend/server.js",
+    "build": "cd frontend && npm install && npm run build"
+  },
+  "dependencies": {}
+}

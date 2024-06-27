@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { body, ValidationChain, validationResult } from 'express-validator';
+
 import { ERROR, FORM_FIELD, PASSWORD_MIN_LENGTH } from '../constants/constants.js';
 import { sendErrorResponse } from '../controllers/user-handler.js';
 

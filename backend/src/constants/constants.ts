@@ -1,3 +1,7 @@
+export const PORT = process.env.PORT || 5000;
+export const EMPTY_STRING = '';
+export const PASSWORD_MIN_LENGTH = 6;
+
 export const ERROR = {
   USER: {
     NOT_REGISTERED: 'User not registered or token malfunction!',
@@ -25,6 +29,9 @@ export const ERROR = {
     FAILED: 'Validation failed',
     ERROR_NAME: 'ValidationError',
   },
+  SERVER: {
+    FAILED_CONNECTION: 'Failed to connect to the database:',
+  },
 };
 
 export const SUCCESS = {
@@ -35,6 +42,9 @@ export const SUCCESS = {
     REGISTRATION: 'Successfully registered!',
     LOGIN: 'Successfully logged in!',
     LOGOUT: 'User verified!',
+  },
+  SERVER: {
+    START: `\nServer listening on Port {{port}} && connected to Database!`,
   },
 };
 
@@ -86,9 +96,6 @@ export const ROUTE = {
     LOGIN: '/login',
   },
 };
-
-export const EMPTY_STRING = '';
-export const PASSWORD_MIN_LENGTH = 6;
 
 export const FORM_FIELD = {
   EMAIL: 'email',

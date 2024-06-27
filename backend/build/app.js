@@ -1,5 +1,5 @@
 import express from 'express';
-import morgan from 'morgan';
+import path from 'path';
 import appRouter from './routes/index.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -32,16 +32,16 @@ app.use(express.json());
  * which helps in securely transmitting sensitive information such as authentication tokens.
  */
 app.use(cookieParser(privateCookieKey));
-/**
- * Middleware to log HTTP requests.
- * 'morgan' is configured to the 'dev' format which provides concise output colored by response status for development use.
- * It should be removed or reconfigured in production environments.
- */
-app.use(morgan('dev'));
+// Serve static files from the React app, assuming the build folder is in the correct relative path
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 /**
  * Main application router.
  * Mounts the primary router for the API under the '/api/v1' base path, organizing the application's routing structure.
  */
 app.use('/api/v1', appRouter);
+// The "catchall" handler for any request that doesn't match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+});
 export default app;
 //# sourceMappingURL=app.js.map

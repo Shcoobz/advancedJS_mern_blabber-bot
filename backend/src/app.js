@@ -1,14 +1,11 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const path_1 = __importDefault(require("path"));
-const index_js_1 = __importDefault(require("./routes/index.js"));
-const cookie_parser_1 = __importDefault(require("cookie-parser"));
-const cors_1 = __importDefault(require("cors"));
-const dotenv_1 = require("dotenv");
+var express_1 = require("express");
+var path_1 = require("path");
+var index_js_1 = require("./routes/index.js");
+var cookie_parser_1 = require("cookie-parser");
+var cors_1 = require("cors");
+var dotenv_1 = require("dotenv");
 /**
  * Configures and initializes the main Express application.
  * Loads environment variables, sets up middlewares for CORS, JSON parsing, cookie parsing,
@@ -16,10 +13,10 @@ const dotenv_1 = require("dotenv");
  */
 // Load environment variables from .env file into process.env
 (0, dotenv_1.config)();
-const app = (0, express_1.default)();
+var app = (0, express_1.default)();
 // Retrieve CORS origin URL and cookie secret key from environment variables
-const corsOrigin = process.env.CORS_ORIGIN;
-const privateCookieKey = process.env.COOKIE_PRIVATE_KEY;
+var corsOrigin = process.env.CORS_ORIGIN;
+var privateCookieKey = process.env.COOKIE_PRIVATE_KEY;
 /**
  * Middleware for handling Cross-Origin Resource Sharing (CORS).
  * Configures the CORS policy of the application to allow requests from the specified origin
@@ -45,8 +42,7 @@ app.use(express_1.default.static(path_1.default.join(__dirname, '../frontend/dis
  */
 app.use('/api/v1', index_js_1.default);
 // The "catchall" handler for any request that doesn't match one above, send back React's index.html file.
-app.get('*', (req, res) => {
+app.get('*', function (req, res) {
     res.sendFile(path_1.default.join(__dirname, '../frontend/dist', 'index.html'));
 });
 exports.default = app;
-//# sourceMappingURL=app.js.map

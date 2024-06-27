@@ -1,8 +1,19 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleUserCookie = exports.deleteCookie = void 0;
-const constants_js_1 = require("../constants/constants.js");
-const token_manager_js_1 = require("./token-manager.js");
+var constants_js_1 = require("../constants/constants.js");
+var token_manager_js_1 = require("./token-manager.js");
 /**
  * Clears a specific cookie from the client browser.
  *
@@ -20,10 +31,9 @@ exports.deleteCookie = deleteCookie;
  */
 function handleUserCookie(res, user) {
     deleteCookie(res);
-    const token = (0, token_manager_js_1.createToken)(user._id.toString(), user.email, constants_js_1.COOKIE.EXPIRES_IN);
-    const expires = new Date();
+    var token = (0, token_manager_js_1.createToken)(user._id.toString(), user.email, constants_js_1.COOKIE.EXPIRES_IN);
+    var expires = new Date();
     expires.setDate(expires.getDate() + 7);
-    res.cookie(constants_js_1.COOKIE.NAME, token, { ...constants_js_1.COOKIE_OPTIONS, expires });
+    res.cookie(constants_js_1.COOKIE.NAME, token, __assign(__assign({}, constants_js_1.COOKIE_OPTIONS), { expires: expires }));
 }
 exports.handleUserCookie = handleUserCookie;
-//# sourceMappingURL=cookie-manager.js.map

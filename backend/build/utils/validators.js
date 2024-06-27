@@ -1,13 +1,16 @@
-import { body, validationResult } from 'express-validator';
-import { ERROR, FORM_FIELD, PASSWORD_MIN_LENGTH } from '../constants/constants.js';
-import { sendErrorResponse } from '../controllers/user-handler.js';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.chatCompletionValidator = exports.signupValidator = exports.loginValidator = exports.validate = void 0;
+const express_validator_1 = require("express-validator");
+const constants_js_1 = require("../constants/constants.js");
+const user_handler_js_1 = require("../controllers/user-handler.js");
 /**
  * Creates and returns an Express middleware that runs a series of validation checks.
  *
  * @param {ValidationChain[]} validations - An array of validation chain instances.
  * @returns {Function} An Express middleware function that processes validations and handles errors.
  */
-export function validate(validations) {
+function validate(validations) {
     const runValidations = async function (req, res, next) {
         for (let validation of validations) {
             const result = await validation.run(req);
@@ -15,43 +18,44 @@ export function validate(validations) {
                 break;
             }
         }
-        const errors = validationResult(req);
+        const errors = (0, express_validator_1.validationResult)(req);
         if (errors.isEmpty()) {
             return next();
         }
         else {
-            const error = new Error(ERROR.VALIDATION.FAILED);
-            error.name = ERROR.VALIDATION.ERROR_NAME;
+            const error = new Error(constants_js_1.ERROR.VALIDATION.FAILED);
+            error.name = constants_js_1.ERROR.VALIDATION.ERROR_NAME;
             error.message = JSON.stringify(errors.array());
-            return sendErrorResponse(res, error, 422);
+            return (0, user_handler_js_1.sendErrorResponse)(res, error, 422);
         }
     };
     return runValidations;
 }
+exports.validate = validate;
 /**
  * Validation rules for logging in.
  * Ensures that the email is a valid email format and that the password meets the minimum length requirement.
  */
-export const loginValidator = [
-    body(FORM_FIELD.EMAIL).trim().isEmail().withMessage(ERROR.VALIDATION.EMAIL),
-    body(FORM_FIELD.PASSWORD)
+exports.loginValidator = [
+    (0, express_validator_1.body)(constants_js_1.FORM_FIELD.EMAIL).trim().isEmail().withMessage(constants_js_1.ERROR.VALIDATION.EMAIL),
+    (0, express_validator_1.body)(constants_js_1.FORM_FIELD.PASSWORD)
         .trim()
-        .isLength({ min: PASSWORD_MIN_LENGTH })
-        .withMessage(ERROR.VALIDATION.PASSWORD),
+        .isLength({ min: constants_js_1.PASSWORD_MIN_LENGTH })
+        .withMessage(constants_js_1.ERROR.VALIDATION.PASSWORD),
 ];
 /**
  * Validation rules for signing up.
  * Includes all validations from `loginValidator` and adds a check for the name field to ensure it is not empty.
  */
-export const signupValidator = [
-    body(FORM_FIELD.NAME).notEmpty().withMessage(ERROR.VALIDATION.NAME),
-    ...loginValidator,
+exports.signupValidator = [
+    (0, express_validator_1.body)(constants_js_1.FORM_FIELD.NAME).notEmpty().withMessage(constants_js_1.ERROR.VALIDATION.NAME),
+    ...exports.loginValidator,
 ];
 /**
  * Validation rules for chat message completion.
  * Ensures that the message field is not empty.
  */
-export const chatCompletionValidator = [
-    body(FORM_FIELD.MSG).notEmpty().withMessage(ERROR.VALIDATION.MSG),
+exports.chatCompletionValidator = [
+    (0, express_validator_1.body)(constants_js_1.FORM_FIELD.MSG).notEmpty().withMessage(constants_js_1.ERROR.VALIDATION.MSG),
 ];
 //# sourceMappingURL=validators.js.map

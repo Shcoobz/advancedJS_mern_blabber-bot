@@ -1,14 +1,17 @@
-import { OpenAIApi } from 'openai';
-import { configureOpenAI } from '../config/openai-config.js';
-import { INDEX, OPENAI, ROLE } from '../constants/constants.js';
-import { sendErrorResponse, sendSuccessResponse, validateUserByID, verifyUserPermissions, } from './user-handler.js';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteChats = exports.sendChatsToUser = exports.generateChatCompletion = void 0;
+const openai_1 = require("openai");
+const openai_config_js_1 = require("../config/openai-config.js");
+const constants_js_1 = require("../constants/constants.js");
+const user_handler_js_1 = require("./user-handler.js");
 /**
  * Gets the chats of a user.
  * @param {string} userId - The ID of the user.
  * @returns {Promise<any[]>} The chats of the user.
  */
 async function getUserChats(userId) {
-    const user = await validateUserByID(userId);
+    const user = await (0, user_handler_js_1.validateUserByID)(userId);
     const chats = user.chats;
     return chats;
 }
@@ -23,8 +26,8 @@ function prepareChats(user, message) {
         role,
         content,
     }));
-    chats.push({ content: message, role: ROLE.USER });
-    user.chats.push({ content: message, role: ROLE.USER });
+    chats.push({ content: message, role: constants_js_1.ROLE.USER });
+    user.chats.push({ content: message, role: constants_js_1.ROLE.USER });
     return chats;
 }
 /**
@@ -33,13 +36,13 @@ function prepareChats(user, message) {
  * @returns {Promise<string>} The response message from OpenAI.
  */
 async function sendToOpenAI(chats) {
-    const config = configureOpenAI();
-    const openai = new OpenAIApi(config);
+    const config = (0, openai_config_js_1.configureOpenAI)();
+    const openai = new openai_1.OpenAIApi(config);
     const chatResponse = await openai.createChatCompletion({
-        model: OPENAI.MODEL,
+        model: constants_js_1.OPENAI.MODEL,
         messages: chats,
     });
-    const message = chatResponse.data.choices[INDEX.FIRST].message;
+    const message = chatResponse.data.choices[constants_js_1.INDEX.FIRST].message;
     return message;
 }
 /**
@@ -53,11 +56,11 @@ async function saveAndRespond(user, res, message) {
     user.chats.push(message);
     try {
         await user.save();
-        const successResponse = sendSuccessResponse(res, { chats: user.chats });
+        const successResponse = (0, user_handler_js_1.sendSuccessResponse)(res, { chats: user.chats });
         return successResponse;
     }
     catch (error) {
-        const errorResponse = sendErrorResponse(res, error);
+        const errorResponse = (0, user_handler_js_1.sendErrorResponse)(res, error);
         return errorResponse;
     }
 }
@@ -68,21 +71,22 @@ async function saveAndRespond(user, res, message) {
  * @param {NextFunction} next - The next middleware function.
  * @returns {Promise<Response>} The response object.
  */
-export async function generateChatCompletion(req, res, next) {
+async function generateChatCompletion(req, res, next) {
     const { message } = req.body;
     try {
-        const user = await validateUserByID(res.locals.jwtData.id);
-        verifyUserPermissions(user, res.locals.jwtData.id);
+        const user = await (0, user_handler_js_1.validateUserByID)(res.locals.jwtData.id);
+        (0, user_handler_js_1.verifyUserPermissions)(user, res.locals.jwtData.id);
         const chats = prepareChats(user, message);
         const chatResponseMessage = await sendToOpenAI(chats);
         const successResponse = await saveAndRespond(user, res, chatResponseMessage);
         return successResponse;
     }
     catch (error) {
-        const errorResponse = sendErrorResponse(res, error);
+        const errorResponse = (0, user_handler_js_1.sendErrorResponse)(res, error);
         return errorResponse;
     }
 }
+exports.generateChatCompletion = generateChatCompletion;
 /**
  * Finds a user by ID.
  * @param {string} userId - The ID of the user to find.
@@ -90,7 +94,7 @@ export async function generateChatCompletion(req, res, next) {
  * @throws {Error} If the user is not found.
  */
 async function findUser(userId) {
-    const user = validateUserByID(userId);
+    const user = (0, user_handler_js_1.validateUserByID)(userId);
     return user;
 }
 /**
@@ -100,18 +104,19 @@ async function findUser(userId) {
  * @param {NextFunction} next - The next middleware function.
  * @returns {Promise<Response>} The response object.
  */
-export async function sendChatsToUser(req, res, next) {
+async function sendChatsToUser(req, res, next) {
     try {
         const user = await findUser(res.locals.jwtData.id);
-        verifyUserPermissions(user, res.locals.jwtData.id);
+        (0, user_handler_js_1.verifyUserPermissions)(user, res.locals.jwtData.id);
         const chats = await getUserChats(res.locals.jwtData.id);
-        return sendSuccessResponse(res, { chats });
+        return (0, user_handler_js_1.sendSuccessResponse)(res, { chats });
     }
     catch (error) {
-        const errorResponse = sendErrorResponse(res, error);
+        const errorResponse = (0, user_handler_js_1.sendErrorResponse)(res, error);
         return errorResponse;
     }
 }
+exports.sendChatsToUser = sendChatsToUser;
 /**
  * Deletes all chat messages of the user.
  * @param {Request} req - The request object.
@@ -119,17 +124,18 @@ export async function sendChatsToUser(req, res, next) {
  * @param {NextFunction} next - The next middleware function.
  * @returns {Promise<Response>} The response object.
  */
-export async function deleteChats(req, res, next) {
+async function deleteChats(req, res, next) {
     try {
         const user = await findUser(res.locals.jwtData.id);
-        verifyUserPermissions(user, res.locals.jwtData.id);
-        user.chats.splice(INDEX.FIRST, user.chats.length);
+        (0, user_handler_js_1.verifyUserPermissions)(user, res.locals.jwtData.id);
+        user.chats.splice(constants_js_1.INDEX.FIRST, user.chats.length);
         await user.save();
-        return sendSuccessResponse(res);
+        return (0, user_handler_js_1.sendSuccessResponse)(res);
     }
     catch (error) {
-        const errorResponse = sendErrorResponse(res, error);
+        const errorResponse = (0, user_handler_js_1.sendErrorResponse)(res, error);
         return errorResponse;
     }
 }
+exports.deleteChats = deleteChats;
 //# sourceMappingURL=chat-controllers.js.map

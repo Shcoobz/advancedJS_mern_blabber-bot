@@ -1,7 +1,13 @@
-import { deleteCookie, handleUserCookie } from '../utils/cookie-manager.js';
-import { SUCCESS } from '../constants/constants.js';
-import { checkUserExists, checkUserPermissions, createAndSaveUser, sendErrorResponse, sendSuccessResponse, validatePassword, } from './user-handler.js';
-import User from '../models/User.js';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getUserData = exports.verifyUser = exports.userLogout = exports.userLogin = exports.userSignup = exports.getAllUsers = void 0;
+const cookie_manager_js_1 = require("../utils/cookie-manager.js");
+const constants_js_1 = require("../constants/constants.js");
+const user_handler_js_1 = require("./user-handler.js");
+const User_js_1 = __importDefault(require("../models/User.js"));
 /**
  * Fetches all users from the database.
  * @param {Request} req - The request object.
@@ -9,16 +15,17 @@ import User from '../models/User.js';
  * @param {NextFunction} next - The next middleware function.
  * @returns {Promise<Response>} - A response with all users or an error message.
  */
-export async function getAllUsers(req, res, next) {
+async function getAllUsers(req, res, next) {
     try {
-        const users = await User.find();
-        return sendSuccessResponse(res, { users });
+        const users = await User_js_1.default.find();
+        return (0, user_handler_js_1.sendSuccessResponse)(res, { users });
     }
     catch (error) {
         console.log(error);
-        return sendErrorResponse(res, error);
+        return (0, user_handler_js_1.sendErrorResponse)(res, error);
     }
 }
+exports.getAllUsers = getAllUsers;
 /**
  * Handles the user signup process.
  * @param {Request} req - The request object containing the user details.
@@ -26,25 +33,26 @@ export async function getAllUsers(req, res, next) {
  * @param {NextFunction} next - The next middleware function in the stack.
  * @returns {Promise<void>} - A promise that resolves to void.
  */
-export async function userSignup(req, res, next) {
+async function userSignup(req, res, next) {
     try {
         const { name, email, password } = req.body;
-        if (await checkUserExists(email, res, true, false)) {
+        if (await (0, user_handler_js_1.checkUserExists)(email, res, true, false)) {
             return;
         }
-        const newUser = await createAndSaveUser(name, email, password);
-        handleUserCookie(res, newUser);
-        return sendSuccessResponse(res, {
-            message: SUCCESS.USER.REGISTRATION,
+        const newUser = await (0, user_handler_js_1.createAndSaveUser)(name, email, password);
+        (0, cookie_manager_js_1.handleUserCookie)(res, newUser);
+        return (0, user_handler_js_1.sendSuccessResponse)(res, {
+            message: constants_js_1.SUCCESS.USER.REGISTRATION,
             name: newUser.name,
             email: newUser.email,
         }, 201);
     }
     catch (error) {
         console.log(error);
-        return sendErrorResponse(res, error);
+        return (0, user_handler_js_1.sendErrorResponse)(res, error);
     }
 }
+exports.userSignup = userSignup;
 /**
  * Handles the user login process.
  * @param {Request} req - The request object containing the user details.
@@ -52,27 +60,28 @@ export async function userSignup(req, res, next) {
  * @param {NextFunction} next - The next middleware function in the stack.
  * @returns {Promise<void>} - A promise that resolves to void.
  */
-export async function userLogin(req, res, next) {
+async function userLogin(req, res, next) {
     try {
         const { email, password } = req.body;
-        const user = await checkUserExists(email, res, false, false);
+        const user = await (0, user_handler_js_1.checkUserExists)(email, res, false, false);
         if (!user)
             return;
-        if (!(await validatePassword(password, user.password, res))) {
+        if (!(await (0, user_handler_js_1.validatePassword)(password, user.password, res))) {
             return;
         }
-        handleUserCookie(res, user);
-        return sendSuccessResponse(res, {
-            message: SUCCESS.USER.LOGIN,
+        (0, cookie_manager_js_1.handleUserCookie)(res, user);
+        return (0, user_handler_js_1.sendSuccessResponse)(res, {
+            message: constants_js_1.SUCCESS.USER.LOGIN,
             name: user.name,
             email: user.email,
         });
     }
     catch (error) {
         console.log(error);
-        return sendErrorResponse(res, error);
+        return (0, user_handler_js_1.sendErrorResponse)(res, error);
     }
 }
+exports.userLogin = userLogin;
 /**
  * Handles the user logout process.
  * @param {Request} req - The request object containing the user details.
@@ -80,26 +89,27 @@ export async function userLogin(req, res, next) {
  * @param {NextFunction} next - The next middleware function in the stack.
  * @returns {Promise<void>} - A promise that resolves to void.
  */
-export async function userLogout(req, res, next) {
+async function userLogout(req, res, next) {
     try {
-        const user = await await checkUserExists(res.locals.jwtData.id, res, false, true);
+        const user = await await (0, user_handler_js_1.checkUserExists)(res.locals.jwtData.id, res, false, true);
         if (!user)
             return;
-        if (!checkUserPermissions(user, res.locals.jwtData.id, res)) {
+        if (!(0, user_handler_js_1.checkUserPermissions)(user, res.locals.jwtData.id, res)) {
             return;
         }
-        deleteCookie(res);
-        return sendSuccessResponse(res, {
-            message: SUCCESS.USER.LOGOUT,
+        (0, cookie_manager_js_1.deleteCookie)(res);
+        return (0, user_handler_js_1.sendSuccessResponse)(res, {
+            message: constants_js_1.SUCCESS.USER.LOGOUT,
             name: user.name,
             email: user.email,
         });
     }
     catch (error) {
         console.log(error);
-        return sendErrorResponse(res, error);
+        return (0, user_handler_js_1.sendErrorResponse)(res, error);
     }
 }
+exports.userLogout = userLogout;
 /**
  * Verifies if the user is authenticated based on the JWT data.
  * @param {Request} req - The request object containing the user details.
@@ -107,22 +117,23 @@ export async function userLogout(req, res, next) {
  * @param {NextFunction} next - The next middleware function in the stack.
  * @returns {Promise<void>} A promise that resolves when the operation is complete.
  */
-export async function verifyUser(req, res, next) {
+async function verifyUser(req, res, next) {
     try {
-        const user = await checkUserExists(res.locals.jwtData.id, res, false, true);
+        const user = await (0, user_handler_js_1.checkUserExists)(res.locals.jwtData.id, res, false, true);
         if (!user)
             return;
-        if (!checkUserPermissions(user, res.locals.jwtData.id, res))
+        if (!(0, user_handler_js_1.checkUserPermissions)(user, res.locals.jwtData.id, res))
             return;
-        return sendSuccessResponse(res, {
+        return (0, user_handler_js_1.sendSuccessResponse)(res, {
             isAuthenticated: true,
         });
     }
     catch (error) {
         console.log(error);
-        return sendErrorResponse(res, error);
+        return (0, user_handler_js_1.sendErrorResponse)(res, error);
     }
 }
+exports.verifyUser = verifyUser;
 /**
  * Retrieves user data and sends a success response with user email and name.
  * @async
@@ -130,19 +141,20 @@ export async function verifyUser(req, res, next) {
  * @param {Response} res - The Express Response object.
  * @returns {Promise<void>} A promise that resolves when the operation is complete.
  */
-export async function getUserData(req, res) {
+async function getUserData(req, res) {
     try {
-        const user = await checkUserExists(res.locals.jwtData.id, res, false, true);
+        const user = await (0, user_handler_js_1.checkUserExists)(res.locals.jwtData.id, res, false, true);
         if (!user)
             return;
-        return sendSuccessResponse(res, {
+        return (0, user_handler_js_1.sendSuccessResponse)(res, {
             email: user.email,
             name: user.name,
         });
     }
     catch (error) {
         console.error(error);
-        return sendErrorResponse(res, error);
+        return (0, user_handler_js_1.sendErrorResponse)(res, error);
     }
 }
+exports.getUserData = getUserData;
 //# sourceMappingURL=user-controllers.js.map

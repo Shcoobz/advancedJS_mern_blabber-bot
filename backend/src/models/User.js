@@ -1,10 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-const crypto_1 = require("crypto");
+var mongoose_1 = require("mongoose");
+var crypto_1 = require("crypto");
 /**
  * Chat Schema for MongoDB.
  * Defines the schema for a chat message within the user document.
@@ -14,7 +11,7 @@ const crypto_1 = require("crypto");
  * - role: Describes the role of the chat participant (e.g., 'user', 'admin').
  * - content: The text content of the chat message.
  */
-const chatSchema = new mongoose_1.default.Schema({
+var chatSchema = new mongoose_1.default.Schema({
     id: {
         type: String,
         default: (0, crypto_1.randomUUID)(),
@@ -38,7 +35,7 @@ const chatSchema = new mongoose_1.default.Schema({
  * - password: The user's password, a required string.
  * - chats: An array of chat messages, defined by the chatSchema.
  */
-const userSchema = new mongoose_1.default.Schema({
+var userSchema = new mongoose_1.default.Schema({
     name: {
         type: String,
         required: true,
@@ -55,4 +52,3 @@ const userSchema = new mongoose_1.default.Schema({
     chats: [chatSchema],
 });
 exports.default = mongoose_1.default.model('User', userSchema);
-//# sourceMappingURL=User.js.map

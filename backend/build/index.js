@@ -1,7 +1,12 @@
-import app from './app.js';
-import { ERROR, PORT } from './constants/constants.js';
-import { connectToDatabase } from './db/connection.js';
-import { getServerStartMessage } from './utils/helper.js';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const app_js_1 = __importDefault(require("./app.js"));
+const constants_js_1 = require("./constants/constants.js");
+const connection_js_1 = require("./db/connection.js");
+const helper_js_1 = require("./utils/helper.js");
 /**
  * Server entry script.
  * Initiates a connection to the database.
@@ -10,9 +15,9 @@ import { getServerStartMessage } from './utils/helper.js';
  *
  * If there is a problem connecting to the database, it logs the error to the console.
  */
-connectToDatabase()
+(0, connection_js_1.connectToDatabase)()
     .then(() => {
-    app.listen(PORT, () => console.log(getServerStartMessage(PORT)));
+    app_js_1.default.listen(constants_js_1.PORT, () => console.log((0, helper_js_1.getServerStartMessage)(constants_js_1.PORT)));
 })
-    .catch((err) => console.log(ERROR.SERVER.FAILED_CONNECTION, err));
+    .catch((err) => console.log(constants_js_1.ERROR.SERVER.FAILED_CONNECTION, err));
 //# sourceMappingURL=index.js.map

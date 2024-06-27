@@ -1,5 +1,8 @@
-import { connect, disconnect } from 'mongoose';
-import { ERROR } from '../constants/constants.js';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.disconnectFromDatabase = exports.connectToDatabase = void 0;
+const mongoose_1 = require("mongoose");
+const constants_js_1 = require("../constants/constants.js");
 /**
  * Attempts to connect to a MongoDB database using the connection URL provided
  * in the environment variables. This function leverages the MongoDB connection
@@ -10,13 +13,14 @@ import { ERROR } from '../constants/constants.js';
  */
 async function connectToDatabase() {
     try {
-        await connect(process.env.MONGODB_URL);
+        await (0, mongoose_1.connect)(process.env.MONGODB_URL);
     }
     catch (error) {
         console.log(error);
-        throw new Error(ERROR.DB.CONNECTION_FAILED);
+        throw new Error(constants_js_1.ERROR.DB.CONNECTION_FAILED);
     }
 }
+exports.connectToDatabase = connectToDatabase;
 /**
  * Attempts to disconnect from the MongoDB database. This function is typically called
  * when shutting down your application to cleanly close the database connection.
@@ -26,12 +30,12 @@ async function connectToDatabase() {
  */
 async function disconnectFromDatabase() {
     try {
-        await disconnect();
+        await (0, mongoose_1.disconnect)();
     }
     catch (error) {
         console.log(error);
-        throw new Error(ERROR.DB.DISCONNECTED);
+        throw new Error(constants_js_1.ERROR.DB.DISCONNECTED);
     }
 }
-export { connectToDatabase, disconnectFromDatabase };
+exports.disconnectFromDatabase = disconnectFromDatabase;
 //# sourceMappingURL=connection.js.map

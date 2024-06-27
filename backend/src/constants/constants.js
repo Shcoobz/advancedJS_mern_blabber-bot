@@ -57,7 +57,7 @@ exports.SUCCESS = {
         LOGOUT: 'User verified!',
     },
     SERVER: {
-        START: `\nServer listening on Port {{port}} && connected to Database!`,
+        START: "\nServer listening on Port {{port}} && connected to Database!",
     },
 };
 /**
@@ -132,4 +132,3 @@ exports.FORM_FIELD = {
     NAME: 'name',
     MSG: 'message',
 };
-//# sourceMappingURL=constants.js.map

@@ -1,6 +1,12 @@
-import jwt from 'jsonwebtoken';
-import { COOKIE, EMPTY_STRING, ERROR } from '../constants/constants.js';
-import { sendErrorResponse } from '../controllers/user-handler.js';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.verifyToken = exports.createToken = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const constants_js_1 = require("../constants/constants.js");
+const user_handler_js_1 = require("../controllers/user-handler.js");
 /**
  * Generates a JWT (JSON Web Token) for a user.
  *
@@ -11,12 +17,13 @@ import { sendErrorResponse } from '../controllers/user-handler.js';
  *
  * @throws {Error} - Throws an error if the private key is not defined in the environment variables.
  */
-export function createToken(id, email, expiresIn) {
+function createToken(id, email, expiresIn) {
     const privateKey = process.env.JWT_PRIVATE_KEY;
     const payload = { id, email };
-    const token = jwt.sign(payload, privateKey, { expiresIn });
+    const token = jsonwebtoken_1.default.sign(payload, privateKey, { expiresIn });
     return token;
 }
+exports.createToken = createToken;
 /**
  * Middleware to verify JWT tokens stored in signed cookies.
  *
@@ -24,20 +31,21 @@ export function createToken(id, email, expiresIn) {
  * @param {Response} res - The response object used to send responses back to the client.
  * @param {NextFunction} next - The next middleware function in the stack.
  */
-export async function verifyToken(req, res, next) {
+async function verifyToken(req, res, next) {
     const privateKey = process.env.JWT_PRIVATE_KEY;
-    const token = req.signedCookies[`${COOKIE.NAME}`];
-    if (!token || token.trim() === EMPTY_STRING) {
-        return sendErrorResponse(res, new Error(ERROR.TOKEN.NOT_RECEIVED), 401);
+    const token = req.signedCookies[`${constants_js_1.COOKIE.NAME}`];
+    if (!token || token.trim() === constants_js_1.EMPTY_STRING) {
+        return (0, user_handler_js_1.sendErrorResponse)(res, new Error(constants_js_1.ERROR.TOKEN.NOT_RECEIVED), 401);
     }
     try {
-        const decoded = await jwt.verify(token, privateKey);
+        const decoded = await jsonwebtoken_1.default.verify(token, privateKey);
         res.locals.jwtData = decoded;
         next();
     }
     catch (err) {
-        console.error(ERROR.TOKEN.VERIFICATION_FAILED, err);
-        return sendErrorResponse(res, new Error(ERROR.TOKEN.EXPIRED), 401);
+        console.error(constants_js_1.ERROR.TOKEN.VERIFICATION_FAILED, err);
+        return (0, user_handler_js_1.sendErrorResponse)(res, new Error(constants_js_1.ERROR.TOKEN.EXPIRED), 401);
     }
 }
+exports.verifyToken = verifyToken;
 //# sourceMappingURL=token-manager.js.map

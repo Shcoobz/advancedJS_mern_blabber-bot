@@ -41,7 +41,7 @@ app.use(express.json());
 app.use(cookieParser(privateCookieKey));
 
 // Serve static files from the React app, assuming the build folder is in the correct relative path
-app.use(express.static(path.join(__dirname, '../frontend/build')));
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 /**
  * Main application router.
@@ -51,7 +51,7 @@ app.use('/api/v1', appRouter);
 
 // The "catchall" handler for any request that doesn't match one above, send back React's index.html file.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
 });
 
 export default app;

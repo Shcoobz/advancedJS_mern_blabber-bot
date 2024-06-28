@@ -121,7 +121,7 @@ export const URL = {
   },
 
   API_BASE: 'http://localhost:5000/api/v1',
-  RENDER: 'https://advancedjs-mern-blabber-bot.onrender.com/',
+  RENDER: 'https://advancedjs-mern-blabber-bot.onrender.com',
 };
 
 export const ENVIRONMENT = 'production';

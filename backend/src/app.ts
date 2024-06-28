@@ -18,10 +18,7 @@ config();
 const app = express();
 
 // Retrieve CORS origin URL and cookie secret key from environment variables
-const corsOrigin =
-  process.env.NODE_ENV === ENVIRONMENT
-    ? process.env.CORS_ORIGIN_RENDER
-    : process.env.CORS_ORIGIN_LOCAL;
+const corsOrigin = process.env.CORS_ORIGIN;
 
 console.log('CORS Origin:', corsOrigin);
 

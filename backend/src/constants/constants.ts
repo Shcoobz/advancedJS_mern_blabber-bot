@@ -106,7 +106,6 @@ export const COOKIE_OPTIONS = {
   domain: COOKIE.DOMAIN,
   httpOnly: true,
   signed: true,
-  secure: process.env.NODE_ENV === ENVIRONMENT,
 };
 
 /**

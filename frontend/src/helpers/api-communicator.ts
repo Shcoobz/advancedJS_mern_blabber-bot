@@ -5,6 +5,8 @@ const axiosInstance = axios.create({
   baseURL: BASE_URL,
 });
 
+console.log('Axios instance created with baseURL:', BASE_URL);
+
 axiosInstance.interceptors.request.use(
   (config) => {
     console.log('Making request to:', `${config.baseURL}${config.url}`);

@@ -100,8 +100,8 @@ export const SEQUENCE_DETAILS = {
  * Base URLs for various API endpoints and routes
  */
 const API_VERSION = '/api/v1';
-const USER_BASE_URL = `${API_VERSION}/user`;
-const CHAT_BASE_URL = `${API_VERSION}/chat`;
+const USER_BASE_URL = '/user';
+const CHAT_BASE_URL = '/chat';
 
 /**
  * URL constants for user and chat-related endpoints.
@@ -121,14 +121,20 @@ export const URL = {
     DELETE_CHATS: `${CHAT_BASE_URL}/delete`,
   },
 
-  LOCAL: 'http://localhost:5000',
-  RENDER: 'https://advancedjs-mern-blabber-bot.onrender.com',
+  LOCAL: `http://localhost:5000${API_VERSION}`,
+  RENDER: `https://advancedjs-mern-blabber-bot.onrender.com${API_VERSION}`,
 };
 
+/**
+ * Environment configuration for determining base URL.
+ */
 export const ENVIRONMENT = 'production';
 
-export const BASE_URL =
-  (process.env.NODE_ENV === ENVIRONMENT ? URL.RENDER : URL.LOCAL) + API_VERSION;
+/**
+ * Base URL for API requests based on environment.
+ * Uses Render URL for production and local URL for development.
+ */
+export const BASE_URL = process.env.NODE_ENV === ENVIRONMENT ? URL.RENDER : URL.LOCAL;
 
 /**
  * Error messages for various operations.

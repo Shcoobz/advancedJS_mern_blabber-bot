@@ -11,6 +11,8 @@ The application consists of two main parts:
 - **Frontend**: Built with React, offering a dynamic and responsive user interface.
 - **Backend**: Node.js and Express.js server, handling API requests, authentication, and data management with MongoDB.
 
+<br>
+
 ## Features
 
 ### User Authentication
@@ -35,6 +37,8 @@ The application consists of two main parts:
 - **Node.js**: Runtime environment for the backend server.
 - **JWT**: Used for authentication tokens.
 - **Bcrypt**: For hashing and securing user passwords.
+
+<br>
 
 ## Getting Started
 

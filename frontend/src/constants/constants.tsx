@@ -9,8 +9,6 @@ import Chat from '../pages/Chat';
 
 /**
  * Defines the Material-UI theme for the application, specifying typography settings.
- * @constant
- * @type {object}
  */
 export const THEME: object = createTheme({
   typography: {
@@ -22,14 +20,6 @@ export const THEME: object = createTheme({
 /**
  * An object that contains route configurations for the application.
  * Each property represents a route with a specific path and component to render.
- *
- * @constant
- * @type {object}
- * @property {JSX.Element} HOME - Route for the home page.
- * @property {JSX.Element} LOGIN - Route for the login page.
- * @property {JSX.Element} SIGNUP - Route for the signup page.
- * @property {JSX.Element} CHAT - Route for the chat page.
- * @property {JSX.Element} ERROR - Route for handling 404 errors.
  */
 export const ROUTE = {
   HOME: <Route path='/' element={<Home />} />,
@@ -41,21 +31,11 @@ export const ROUTE = {
 
 /**
  * The key value used to detect the 'Enter' key press.
- * This is used for submitting forms or triggering actions when the 'Enter' key is pressed.
- * @constant
- * @type {string}
  */
 export const SUBMIT_KEY = 'Enter';
 
 /**
  * Constants used throughout the application for various text processing tasks.
- * @constant
- * @type {object}
- * @property {RegExp} WHITESPACE - Matches one or more whitespace characters.
- * @property {RegExp} CODE_BLOCK_DELIMITER - Matches Markdown code block delimiters (``` syntax).
- * @property {RegExp} CODE_BLOCK - Matches common code block indicators such as =, ;, [, ], {, }, #, //, and <...>.
- * @property {RegExp} LIST_ITEM - Matches Markdown list items, including ordered and unordered lists.
- * @property {RegExp} NEWLINE - Matches newline characters.
  */
 export const REGEX = {
   WHITESPACE: /\s+/,
@@ -67,12 +47,6 @@ export const REGEX = {
 
 /**
  * String constants used throughout the application for consistent text representation.
- * @constant
- * @type {object}
- * @property {string} NEWLINE - Represents a newline character.
- * @property {string} CODE_BLOCK_START - Represents the start delimiter for a Markdown code block (``` syntax).
- * @property {string} CODE_BLOCK_END - Represents the end delimiter for a Markdown code block (``` syntax).
- * @property {string} LIST_TYPE - Represents the type for list items.
  */
 export const STRING = {
   NEWLINE: '\n',
@@ -84,10 +58,6 @@ export const STRING = {
 
 /**
  * Index constants used for string and array manipulation.
- * @constant
- * @type {object}
- * @property {number} FIRST_CHAR - Index of the first character.
- * @property {number} START_REST - Index to start the rest of the string.
  */
 export const INDEX = {
   FIRST_CHAR: 0,
@@ -96,10 +66,6 @@ export const INDEX = {
 
 /**
  * Length constants used for array length comparisons.
- * @constant
- * @type {object}
- * @property {number} SINGLE_PART - Length indicating a single part.
- * @property {number} LAST_PART - Indicator for the last part in an array.
  */
 export const LENGTH = {
   SINGLE_PART: 1,
@@ -108,16 +74,6 @@ export const LENGTH = {
 
 /**
  * General information constants used throughout the application.
- * @constant
- * @type {object}
- * @property {string} TITLE - The title of the application.
- * @property {string} DESCRIPTION - The description of the application.
- * @property {string} MODEL_VERSION - The version of the AI model being used.
- * @property {string} PLACEHOLDER - Placeholder text for input fields.
- * @property {string} TECH_DESC - Short description of the technology stack.
- * @property {string} HYPHEN - A hyphen for concatenation.
- * @property {string} PROJ_NAME - The name of the project.
- * @property {string} PLAINTEXT - Default text type.
  */
 export const INFO = {
   TITLE: 'Chat with Blabber Bot!',
@@ -132,12 +88,6 @@ export const INFO = {
 
 /**
  * Typing animation sequence details.
- * @constant
- * @type {object}
- * @property {object} SEQ_1 - The first sequence with message and delay.
- * @property {object} SEQ_2 - The second sequence with message and delay.
- * @property {object} SEQ_3 - The third sequence with message and delay.
- * @property {object} SEQ_4 - The fourth sequence with message and delay.
  */
 export const SEQUENCE_DETAILS = {
   SEQ_1: { message: `${INFO.PROJ_NAME} - AI at your fingertips`, delay: 1000 },
@@ -154,8 +104,6 @@ const CHAT_BASE_URL = '/chat';
 
 /**
  * URL constants for user and chat-related endpoints.
- * @constant
- * @type {object}
  */
 export const URL = {
   USER: {
@@ -177,8 +125,6 @@ export const URL = {
 
 /**
  * Error messages for various operations.
- * @constant
- * @type {object}
  */
 export const ERROR = {
   USER: {
@@ -200,8 +146,6 @@ export const ERROR = {
 
 /**
  * Form field names used in the application.
- * @constant
- * @type {object}
  */
 export const FORM_FIELD = {
   NAME: 'name',
@@ -211,8 +155,6 @@ export const FORM_FIELD = {
 
 /**
  * Navigation paths for routing within the application.
- * @constant
- * @type {object}
  */
 export const NAVIGATION = {
   HOME: '/',
@@ -223,8 +165,6 @@ export const NAVIGATION = {
 
 /**
  * Button labels used throughout the application.
- * @constant
- * @type {object}
  */
 export const BUTTON = {
   LOGIN: 'Login',
@@ -236,8 +176,6 @@ export const BUTTON = {
 
 /**
  * Toast messages for various operations, categorized by operation type.
- * @constant
- * @type {object}
  */
 export const TOAST = {
   SIGNUP: {
@@ -271,8 +209,6 @@ export const TOAST = {
 
 /**
  * User roles within the application.
- * @constant
- * @type {object}
  */
 export const ROLE = {
   ASSISTANT: 'assistant',
@@ -281,21 +217,15 @@ export const ROLE = {
 
 /**
  * URL to the project portfolio on GitHub.
- * @constant
- * @type {string}
  */
 export const GITHUB_URL = 'https://shcoobz.github.io/';
 
 /**
  * Text for the footer credit.
- * @constant
- * @type {string}
  */
 export const FOOTER_CREDIT_TEXT = 'Build by';
 
 /**
  * Creator's name for the footer credit.
- * @constant
- * @type {string}
  */
 export const CREATOR = 'Shcoobz';

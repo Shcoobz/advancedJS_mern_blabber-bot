@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.configureOpenAI = void 0;
+exports.configureOpenAI = configureOpenAI;
 const openai_1 = require("openai");
 /**
  * Configures the OpenAI API with the provided API key and organization ID.
@@ -16,5 +16,4 @@ function configureOpenAI() {
     });
     return config;
 }
-exports.configureOpenAI = configureOpenAI;
 //# sourceMappingURL=openai-config.js.map

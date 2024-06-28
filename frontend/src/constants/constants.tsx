@@ -171,6 +171,8 @@ export const URL = {
     ALL_CHATS: `${CHAT_BASE_URL}/all-chats`,
     DELETE_CHATS: `${CHAT_BASE_URL}/delete`,
   },
+
+  API_BASE: 'http://localhost:5000/api/v1',
 };
 
 /**

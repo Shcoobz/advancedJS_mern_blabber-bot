@@ -57,7 +57,8 @@ exports.SUCCESS = {
         LOGOUT: 'User verified!',
     },
     SERVER: {
-        START: `\nServer listening on Port {{port}} && connected to Database!`,
+        BASE_URL: 'http://localhost:',
+        START: `\nServer listening on Port {{port}} && connected to Database! Visit: {{url}}`,
     },
 };
 /**

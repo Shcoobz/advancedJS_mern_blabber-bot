@@ -3,7 +3,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createAndSaveUser = exports.validatePassword = exports.checkUserPermissions = exports.checkUserExists = exports.hashPassword = exports.verifyUserPermissions = exports.validateUserByEmail = exports.validateUserByID = exports.sendErrorResponse = exports.sendSuccessResponse = void 0;
+exports.sendSuccessResponse = sendSuccessResponse;
+exports.sendErrorResponse = sendErrorResponse;
+exports.validateUserByID = validateUserByID;
+exports.validateUserByEmail = validateUserByEmail;
+exports.verifyUserPermissions = verifyUserPermissions;
+exports.hashPassword = hashPassword;
+exports.checkUserExists = checkUserExists;
+exports.checkUserPermissions = checkUserPermissions;
+exports.validatePassword = validatePassword;
+exports.createAndSaveUser = createAndSaveUser;
 const constants_js_1 = require("../constants/constants.js");
 const User_js_1 = __importDefault(require("../models/User.js"));
 const bcrypt_1 = require("bcrypt");
@@ -19,7 +28,6 @@ function sendSuccessResponse(res, data = {}, statusCode = 200) {
     const successResponse = res.status(statusCode).json(responseData);
     return successResponse;
 }
-exports.sendSuccessResponse = sendSuccessResponse;
 /**
  * Sends a standardized error response with customizable status code.
  * @param {Response} res - The response object.
@@ -37,7 +45,6 @@ function sendErrorResponse(res, error, statusCode = 500) {
     }
     return res.status(500).json(responseData);
 }
-exports.sendErrorResponse = sendErrorResponse;
 /**
  * Validates if a user exists by ID.
  * @param {string} userId - The ID of the user to validate.
@@ -51,7 +58,6 @@ async function validateUserByID(userId) {
     }
     return user;
 }
-exports.validateUserByID = validateUserByID;
 /**
  * Validates if a user exists by email and throws an error if not found.
  * @param {string} email - The email of the user to validate.
@@ -61,7 +67,6 @@ async function validateUserByEmail(email) {
     const user = await User_js_1.default.findOne({ email });
     return user;
 }
-exports.validateUserByEmail = validateUserByEmail;
 /**
  * Verifies if the user's ID matches the one in the JWT.
  * @param {any} user - The user object.
@@ -73,7 +78,6 @@ function verifyUserPermissions(user, jwtUserId) {
         throw new Error(constants_js_1.ERROR.USER.PERMISSIONS_MISMATCH);
     }
 }
-exports.verifyUserPermissions = verifyUserPermissions;
 /**
  * Hashes the password using bcrypt with predefined salt rounds. This function
  * takes a plain text password and applies a cryptographic hash function to
@@ -87,7 +91,6 @@ async function hashPassword(password) {
     const hashedPassword = await (0, bcrypt_1.hash)(password, constants_js_1.SECURITY.BCRYPT_SALT_ROUNDS);
     return hashedPassword;
 }
-exports.hashPassword = hashPassword;
 /**
  * Checks if a user exists by email or ID, and handles the response based on the context.
  *
@@ -127,7 +130,6 @@ async function checkUserExists(identifier, res, isSignup, isByID = false) {
     }
     return user;
 }
-exports.checkUserExists = checkUserExists;
 /**
  * Verifies user permissions and sends an error response if the permissions do not match.
  * @param {any} user - The user object.
@@ -145,7 +147,6 @@ function checkUserPermissions(user, jwtUserId, res) {
         return false;
     }
 }
-exports.checkUserPermissions = checkUserPermissions;
 /**
  * Validates the provided password against the stored hashed password.
  * @param {string} password - The plain text password provided by the user.
@@ -161,7 +162,6 @@ async function validatePassword(password, hashedPassword, res) {
     }
     return true;
 }
-exports.validatePassword = validatePassword;
 /**
  * Hashes the given password, creates a new user with the provided details, and saves it to the database.
  * @param {string} name - The name of the user.
@@ -175,5 +175,4 @@ async function createAndSaveUser(name, email, password) {
     await newUser.save();
     return newUser;
 }
-exports.createAndSaveUser = createAndSaveUser;
 //# sourceMappingURL=user-handler.js.map

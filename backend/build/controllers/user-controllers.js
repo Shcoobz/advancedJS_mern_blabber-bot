@@ -3,7 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserData = exports.verifyUser = exports.userLogout = exports.userLogin = exports.userSignup = exports.getAllUsers = void 0;
+exports.getAllUsers = getAllUsers;
+exports.userSignup = userSignup;
+exports.userLogin = userLogin;
+exports.userLogout = userLogout;
+exports.verifyUser = verifyUser;
+exports.getUserData = getUserData;
 const cookie_manager_js_1 = require("../utils/cookie-manager.js");
 const constants_js_1 = require("../constants/constants.js");
 const user_handler_js_1 = require("./user-handler.js");
@@ -25,7 +30,6 @@ async function getAllUsers(req, res, next) {
         return (0, user_handler_js_1.sendErrorResponse)(res, error);
     }
 }
-exports.getAllUsers = getAllUsers;
 /**
  * Handles the user signup process.
  * @param {Request} req - The request object containing the user details.
@@ -52,7 +56,6 @@ async function userSignup(req, res, next) {
         return (0, user_handler_js_1.sendErrorResponse)(res, error);
     }
 }
-exports.userSignup = userSignup;
 /**
  * Handles the user login process.
  * @param {Request} req - The request object containing the user details.
@@ -81,7 +84,6 @@ async function userLogin(req, res, next) {
         return (0, user_handler_js_1.sendErrorResponse)(res, error);
     }
 }
-exports.userLogin = userLogin;
 /**
  * Handles the user logout process.
  * @param {Request} req - The request object containing the user details.
@@ -109,7 +111,6 @@ async function userLogout(req, res, next) {
         return (0, user_handler_js_1.sendErrorResponse)(res, error);
     }
 }
-exports.userLogout = userLogout;
 /**
  * Verifies if the user is authenticated based on the JWT data.
  * @param {Request} req - The request object containing the user details.
@@ -133,7 +134,6 @@ async function verifyUser(req, res, next) {
         return (0, user_handler_js_1.sendErrorResponse)(res, error);
     }
 }
-exports.verifyUser = verifyUser;
 /**
  * Retrieves user data and sends a success response with user email and name.
  * @async
@@ -156,5 +156,4 @@ async function getUserData(req, res) {
         return (0, user_handler_js_1.sendErrorResponse)(res, error);
     }
 }
-exports.getUserData = getUserData;
 //# sourceMappingURL=user-controllers.js.map

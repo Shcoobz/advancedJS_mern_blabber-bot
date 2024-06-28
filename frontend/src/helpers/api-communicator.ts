@@ -1,6 +1,10 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import { URL, ERROR } from '../constants/constants';
 
+const axiosInstance = axios.create({
+  baseURL: URL.API_BASE,
+});
+
 const silentAxios = createSilentAxios();
 
 /**
@@ -10,7 +14,7 @@ const silentAxios = createSilentAxios();
  */
 export async function fetchUserData() {
   try {
-    const res = await axios.get(URL.USER.GET_USER_DATA);
+    const res = await axiosInstance.get(URL.USER.GET_USER_DATA);
 
     if (res.status !== 200) {
       throw new Error(ERROR.USER.FETCH_DATA + res.status);
@@ -34,7 +38,7 @@ export async function fetchUserData() {
  */
 export async function signupUser(name: string, email: string, password: string) {
   try {
-    const res = await axios.post(URL.USER.SIGNUP, { name, email, password });
+    const res = await axiosInstance.post(URL.USER.SIGNUP, { name, email, password });
 
     if (res.status !== 201) {
       throw new Error(ERROR.USER.SIGNUP + res.status);
@@ -57,7 +61,7 @@ export async function signupUser(name: string, email: string, password: string) 
  */
 export async function loginUser(email: string, password: string) {
   try {
-    const res = await axios.post(URL.USER.LOGIN, { email, password });
+    const res = await axiosInstance.post(URL.USER.LOGIN, { email, password });
 
     if (res.status !== 200) {
       throw new Error(ERROR.USER.LOGIN + res.status);
@@ -78,7 +82,7 @@ export async function loginUser(email: string, password: string) {
  */
 export async function logoutUser() {
   try {
-    const res = await axios.get(URL.USER.LOGOUT);
+    const res = await axiosInstance.get(URL.USER.LOGOUT);
 
     if (res.status !== 200) {
       throw new Error(ERROR.USER.LOGOUT + res.status);
@@ -142,7 +146,7 @@ export async function checkAuthStatus() {
  */
 export async function sendChatRequest(message: string) {
   try {
-    const res = await axios.post(URL.CHAT.NEW_MSG, { message });
+    const res = await axiosInstance.post(URL.CHAT.NEW_MSG, { message });
 
     if (res.status !== 200) {
       throw new Error(ERROR.CHAT.NEW + res.status);
@@ -163,7 +167,7 @@ export async function sendChatRequest(message: string) {
  */
 export async function getUserChats() {
   try {
-    const res = await axios.get(URL.CHAT.ALL_CHATS);
+    const res = await axiosInstance.get(URL.CHAT.ALL_CHATS);
 
     if (res.status !== 200) {
       throw new Error(ERROR.CHAT.FETCH_ALL + res.status);
@@ -184,7 +188,7 @@ export async function getUserChats() {
  */
 export async function deleteUserChats() {
   try {
-    const res = await axios.delete(URL.CHAT.DELETE_CHATS);
+    const res = await axiosInstance.delete(URL.CHAT.DELETE_CHATS);
 
     if (res.status !== 200) {
       throw new Error(ERROR.CHAT.DELETE + res.status);

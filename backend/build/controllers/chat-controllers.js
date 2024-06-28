@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteChats = exports.sendChatsToUser = exports.generateChatCompletion = void 0;
+exports.generateChatCompletion = generateChatCompletion;
+exports.sendChatsToUser = sendChatsToUser;
+exports.deleteChats = deleteChats;
 const openai_1 = require("openai");
 const openai_config_js_1 = require("../config/openai-config.js");
 const constants_js_1 = require("../constants/constants.js");
@@ -86,7 +88,6 @@ async function generateChatCompletion(req, res, next) {
         return errorResponse;
     }
 }
-exports.generateChatCompletion = generateChatCompletion;
 /**
  * Finds a user by ID.
  * @param {string} userId - The ID of the user to find.
@@ -116,7 +117,6 @@ async function sendChatsToUser(req, res, next) {
         return errorResponse;
     }
 }
-exports.sendChatsToUser = sendChatsToUser;
 /**
  * Deletes all chat messages of the user.
  * @param {Request} req - The request object.
@@ -137,5 +137,4 @@ async function deleteChats(req, res, next) {
         return errorResponse;
     }
 }
-exports.deleteChats = deleteChats;
 //# sourceMappingURL=chat-controllers.js.map

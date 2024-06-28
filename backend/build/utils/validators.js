@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.chatCompletionValidator = exports.signupValidator = exports.loginValidator = exports.validate = void 0;
+exports.chatCompletionValidator = exports.signupValidator = exports.loginValidator = void 0;
+exports.validate = validate;
 const express_validator_1 = require("express-validator");
 const constants_js_1 = require("../constants/constants.js");
 const user_handler_js_1 = require("../controllers/user-handler.js");
@@ -31,7 +32,6 @@ function validate(validations) {
     };
     return runValidations;
 }
-exports.validate = validate;
 /**
  * Validation rules for logging in.
  * Ensures that the email is a valid email format and that the password meets the minimum length requirement.

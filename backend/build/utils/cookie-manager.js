@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleUserCookie = exports.deleteCookie = void 0;
+exports.deleteCookie = deleteCookie;
+exports.handleUserCookie = handleUserCookie;
 const constants_js_1 = require("../constants/constants.js");
 const token_manager_js_1 = require("./token-manager.js");
 /**
@@ -11,7 +12,6 @@ const token_manager_js_1 = require("./token-manager.js");
 function deleteCookie(res) {
     res.clearCookie(constants_js_1.COOKIE.NAME, constants_js_1.COOKIE_OPTIONS);
 }
-exports.deleteCookie = deleteCookie;
 /**
  * Manages user session cookies by refreshing or setting a new cookie.
  *
@@ -25,5 +25,4 @@ function handleUserCookie(res, user) {
     expires.setDate(expires.getDate() + 7);
     res.cookie(constants_js_1.COOKIE.NAME, token, { ...constants_js_1.COOKIE_OPTIONS, expires });
 }
-exports.handleUserCookie = handleUserCookie;
 //# sourceMappingURL=cookie-manager.js.map

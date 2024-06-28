@@ -3,7 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyToken = exports.createToken = void 0;
+exports.createToken = createToken;
+exports.verifyToken = verifyToken;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const constants_js_1 = require("../constants/constants.js");
 const user_handler_js_1 = require("../controllers/user-handler.js");
@@ -23,7 +24,6 @@ function createToken(id, email, expiresIn) {
     const token = jsonwebtoken_1.default.sign(payload, privateKey, { expiresIn });
     return token;
 }
-exports.createToken = createToken;
 /**
  * Middleware to verify JWT tokens stored in signed cookies.
  *
@@ -47,5 +47,4 @@ async function verifyToken(req, res, next) {
         return (0, user_handler_js_1.sendErrorResponse)(res, new Error(constants_js_1.ERROR.TOKEN.EXPIRED), 401);
     }
 }
-exports.verifyToken = verifyToken;
 //# sourceMappingURL=token-manager.js.map

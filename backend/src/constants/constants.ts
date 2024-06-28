@@ -93,7 +93,7 @@ export const INDEX = {
  */
 export const COOKIE = {
   EXPIRES_IN: '7d',
-  DOMAIN: 'localhost',
+  DOMAIN: process.env.COOKIE_DOMAIN,
   NAME: 'auth_token',
   PATH: '/',
 };
@@ -106,6 +106,7 @@ export const COOKIE_OPTIONS = {
   domain: COOKIE.DOMAIN,
   httpOnly: true,
   signed: true,
+  secure: process.env.NODE_ENV === ENVIRONMENT,
 };
 
 /**

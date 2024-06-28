@@ -25,6 +25,9 @@ const corsOrigin =
 
 console.log('CORS Origin:', corsOrigin);
 
+const cookieDomain = process.env.COOKIE_DOMAIN;
+console.log('Cookie Domain:', cookieDomain);
+
 const privateCookieKey = process.env.COOKIE_PRIVATE_KEY;
 
 /**

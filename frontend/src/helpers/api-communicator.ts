@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
-import { URL, ERROR } from '../constants/constants';
+import { URL, ERROR, baseURL } from '../constants/constants';
 
 const axiosInstance = axios.create({
-  baseURL: URL.API_BASE,
+  baseURL,
 });
 
 const silentAxios = createSilentAxios();

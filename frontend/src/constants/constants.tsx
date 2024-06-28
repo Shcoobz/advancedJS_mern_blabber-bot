@@ -121,7 +121,12 @@ export const URL = {
   },
 
   API_BASE: 'http://localhost:5000/api/v1',
+  RENDER: 'https://advancedjs-mern-blabber-bot.onrender.com/',
 };
+
+export const ENVIRONMENT = 'production';
+
+export const baseURL = process.env.NODE_ENV === ENVIRONMENT ? URL.RENDER : URL.API_BASE;
 
 /**
  * Error messages for various operations.

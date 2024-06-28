@@ -6,7 +6,7 @@
  * Network and environment configurations.
  */
 
-export const PORT = process.env.PORT || 5000;
+export const PORT = process.env.PORT;
 export const EMPTY_STRING = '';
 export const PASSWORD_MIN_LENGTH = 6;
 

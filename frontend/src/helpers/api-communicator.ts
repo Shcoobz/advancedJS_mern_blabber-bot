@@ -5,7 +5,20 @@ const axiosInstance = axios.create({
   baseURL,
 });
 
+axiosInstance.interceptors.request.use(
+  (config) => {
+    console.log('Making request to:', `${config.baseURL}${config.url}`);
+    return config;
+  },
+  (error) => {
+    console.error('Request error:', error);
+    return Promise.reject(error);
+  }
+);
+
 const silentAxios = createSilentAxios();
+
+console.log('Current baseURL:', baseURL);
 
 /**
  * Fetches user data from the server.
@@ -59,19 +72,37 @@ export async function signupUser(name: string, email: string, password: string) 
  * @returns {Promise<any>} The data returned from the login request.
  * @throws {Error} If the response status is not 200 or if there is an error during the request.
  */
+// export async function loginUser(email: string, password: string) {
+//   try {
+//     const res = await axiosInstance.post(URL.USER.LOGIN, { email, password });
+
+//     if (res.status !== 200) {
+//       throw new Error(ERROR.USER.LOGIN + res.status);
+//     }
+
+//     const data = await res.data;
+
+//     return data;
+//   } catch (error) {
+//     console.error(ERROR.USER.LOGIN, error);
+//   }
+// }
+
 export async function loginUser(email: string, password: string) {
+  console.log('Attempting login with URL:', `${baseURL}${URL.USER.LOGIN}`);
   try {
     const res = await axiosInstance.post(URL.USER.LOGIN, { email, password });
+    console.log('Login response:', res);
 
     if (res.status !== 200) {
       throw new Error(ERROR.USER.LOGIN + res.status);
     }
 
     const data = await res.data;
-
+    console.log('Login successful, received data:', data);
     return data;
   } catch (error) {
-    console.error(ERROR.USER.LOGIN, error);
+    console.error('Login error:', error);
   }
 }
 
@@ -126,14 +157,28 @@ function createSilentAxios(): AxiosInstance {
  * Checks the authentication status of the user.
  * @returns {Promise<boolean>} True if the user is authenticated, false otherwise.
  */
+// export async function checkAuthStatus() {
+//   try {
+//     const res = await silentAxios.get(URL.USER.AUTH_STATUS, {
+//       withCredentials: true,
+//     });
+
+//     return res.data.isAuthenticated ?? false;
+//   } catch (error) {
+//     return false;
+//   }
+// }
+
 export async function checkAuthStatus() {
+  console.log('Checking auth status with URL:', `${baseURL}${URL.USER.AUTH_STATUS}`);
   try {
     const res = await silentAxios.get(URL.USER.AUTH_STATUS, {
       withCredentials: true,
     });
-
+    console.log('Auth status response:', res);
     return res.data.isAuthenticated ?? false;
   } catch (error) {
+    console.error('Auth status check error:', error);
     return false;
   }
 }

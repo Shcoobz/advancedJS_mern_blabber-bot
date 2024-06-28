@@ -1,4 +1,4 @@
-# advancedJS_mern_Blabber Bot:
+# advancedJS_mern_Blabber Bot
 
 ![Blabber Bot](assets/advancedJS_mern_blabber-bot.png)
 

@@ -31,18 +31,23 @@ export function createToken(id: string, email: string, expiresIn: string) {
  * @param {NextFunction} next - The next middleware function in the stack.
  */
 export async function verifyToken(req: Request, res: Response, next: NextFunction) {
+  console.log('Verifying token...');
   const privateKey = process.env.JWT_PRIVATE_KEY;
   const token = req.signedCookies[`${COOKIE.NAME}`];
 
   if (!token || token.trim() === EMPTY_STRING) {
+    console.error('Token not received or empty');
     return sendErrorResponse(res, new Error(ERROR.TOKEN.NOT_RECEIVED), 401);
   }
 
+  console.log('Token received:', token);
   try {
     const decoded = await jwt.verify(token, privateKey);
+    console.log('Token decoded successfully:', decoded);
     res.locals.jwtData = decoded;
     next();
   } catch (err) {
+    console.error('Token verification failed:', err);
     console.error(ERROR.TOKEN.VERIFICATION_FAILED, err);
 
     return sendErrorResponse(res, new Error(ERROR.TOKEN.EXPIRED), 401);

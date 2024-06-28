@@ -132,14 +132,21 @@ async function findUser(userId: string) {
  * @returns {Promise<Response>} The response object.
  */
 export async function sendChatsToUser(req: Request, res: Response, next: NextFunction) {
+  console.log('Sending chats to user...');
   try {
+    const userId = res.locals.jwtData.id;
+    console.log('User ID from token:', userId);
+
     const user = await findUser(res.locals.jwtData.id);
     verifyUserPermissions(user, res.locals.jwtData.id);
+    console.log('User permissions verified for user:', user);
 
     const chats = await getUserChats(res.locals.jwtData.id);
+    console.log('Chats retrieved for user:', chats);
 
     return sendSuccessResponse(res, { chats });
   } catch (error) {
+    console.error('Error in sendChatsToUser:', error);
     const errorResponse = sendErrorResponse(res, error);
 
     return errorResponse;

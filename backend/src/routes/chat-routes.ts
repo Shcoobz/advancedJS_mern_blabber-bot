@@ -32,7 +32,7 @@ export function logRequest(req, res, next) {
   next();
 }
 
-router.get(ROUTE.CHAT.ALL, logRequest, verifyToken, sendChatsToUser);
+chatRoutes.get(ROUTE.CHAT.ALL, logRequest, verifyToken, sendChatsToUser);
 
 // chatRoutes.get(ROUTE.CHAT.ALL, verifyToken, sendChatsToUser);
 chatRoutes.delete(ROUTE.CHAT.DELETE, verifyToken, deleteChats);

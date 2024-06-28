@@ -4,6 +4,7 @@ import appRouter from './routes/index.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { config } from 'dotenv';
+import { ENVIRONMENT } from './constants/constants.js';
 
 /**
  * Configures and initializes the main Express application.
@@ -17,7 +18,13 @@ config();
 const app = express();
 
 // Retrieve CORS origin URL and cookie secret key from environment variables
-const corsOrigin = process.env.CORS_ORIGIN;
+const corsOrigin =
+  process.env.NODE_ENV === ENVIRONMENT
+    ? process.env.CORS_ORIGIN_RENDER
+    : process.env.CORS_ORIGIN_LOCAL;
+
+console.log('CORS Origin:', corsOrigin);
+
 const privateCookieKey = process.env.COOKIE_PRIVATE_KEY;
 
 /**

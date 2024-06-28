@@ -21,6 +21,7 @@ node_modules
 *.sln
 *.sw?
 
+dist
 package-lock.json
 .env
 TODO.tsx

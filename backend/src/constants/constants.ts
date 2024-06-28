@@ -9,6 +9,7 @@
 export const PORT = process.env.PORT;
 export const EMPTY_STRING = '';
 export const PASSWORD_MIN_LENGTH = 6;
+export const ENVIRONMENT = 'production';
 
 /**
  * Error message constants structured by context and usage.

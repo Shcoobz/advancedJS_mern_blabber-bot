@@ -1,6 +1,8 @@
-# advancedJS_mern_Blabber Bot: [LIVE DEMO](https://github.com/Shcoobz/mern_blabber-bot)
+# advancedJS_mern_Blabber Bot:
 
 ![Blabber Bot](assets/advancedJS_mern_blabber-bot.png)
+
+<br>
 
 ## Summary
 

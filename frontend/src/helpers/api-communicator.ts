@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
-import { URL, ERROR, baseURL } from '../constants/constants';
+import { URL, ERROR, BASE_URL } from '../constants/constants';
 
 const axiosInstance = axios.create({
-  baseURL,
+  baseURL: BASE_URL,
 });
 
 axiosInstance.interceptors.request.use(
@@ -18,7 +18,7 @@ axiosInstance.interceptors.request.use(
 
 const silentAxios = createSilentAxios();
 
-console.log('Current baseURL:', baseURL);
+console.log('Current baseURL:', BASE_URL);
 
 /**
  * Fetches user data from the server.
@@ -89,7 +89,7 @@ export async function signupUser(name: string, email: string, password: string) 
 // }
 
 export async function loginUser(email: string, password: string) {
-  console.log('Attempting login with URL:', `${baseURL}${URL.USER.LOGIN}`);
+  console.log('Attempting login with URL:', `${BASE_URL}${URL.USER.LOGIN}`);
   try {
     const res = await axiosInstance.post(URL.USER.LOGIN, { email, password });
     console.log('Login response:', res);
@@ -170,7 +170,7 @@ function createSilentAxios(): AxiosInstance {
 // }
 
 export async function checkAuthStatus() {
-  console.log('Checking auth status with URL:', `${baseURL}${URL.USER.AUTH_STATUS}`);
+  console.log('Checking auth status with URL:', `${BASE_URL}${URL.USER.AUTH_STATUS}`);
   try {
     const res = await silentAxios.get(URL.USER.AUTH_STATUS, {
       withCredentials: true,

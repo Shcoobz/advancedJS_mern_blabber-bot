@@ -93,14 +93,15 @@ export const SEQUENCE_DETAILS = {
   SEQ_1: { message: `${INFO.PROJ_NAME} - AI at your fingertips`, delay: 1000 },
   SEQ_2: { message: `${INFO.PROJ_NAME} - Experience advanced AI chat`, delay: 2000 },
   SEQ_3: { message: `${INFO.PROJ_NAME} - Powered by Chat GPT 3.5`, delay: 1500 },
-  SEQ_4: { message: `${INFO.PROJ_NAME} - Built by Shcoobz`, delay: 2000 },
+  SEQ_4: { message: `${INFO.PROJ_NAME} - Build by Shcoobz`, delay: 2000 },
 };
 
 /**
  * Base URLs for various API endpoints and routes
  */
-const USER_BASE_URL = '/user';
-const CHAT_BASE_URL = '/chat';
+const API_VERSION = '/api/v1';
+const USER_BASE_URL = `${API_VERSION}/user`;
+const CHAT_BASE_URL = `${API_VERSION}/chat`;
 
 /**
  * URL constants for user and chat-related endpoints.
@@ -120,13 +121,13 @@ export const URL = {
     DELETE_CHATS: `${CHAT_BASE_URL}/delete`,
   },
 
-  API_BASE: 'http://localhost:5000/api/v1',
+  LOCAL: 'http://localhost:5000',
   RENDER: 'https://advancedjs-mern-blabber-bot.onrender.com',
 };
 
 export const ENVIRONMENT = 'production';
 
-export const baseURL = process.env.NODE_ENV === ENVIRONMENT ? URL.RENDER : URL.API_BASE;
+export const BASE_URL = process.env.NODE_ENV === ENVIRONMENT ? URL.RENDER : URL.LOCAL;
 
 /**
  * Error messages for various operations.

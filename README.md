@@ -29,12 +29,12 @@ The application consists of two main parts:
 
 ### Technologies
 
-MongoDB: NoSQL database for storing user data and chat logs.
-Express.js: Backend framework for managing routes and requests.
-React: Frontend library for building the user interface.
-Node.js: Runtime environment for the backend server.
-JWT: Used for authentication tokens.
-Bcrypt: For hashing and securing user passwords.
+- **MongoDB**: NoSQL database for storing user data and chat logs.
+- **Express.js**: Backend framework for managing routes and requests.
+- **React**: Frontend library for building the user interface.
+- **Node.js**: Runtime environment for the backend server.
+- **JWT**: Used for authentication tokens.
+- **Bcrypt**: For hashing and securing user passwords.
 
 ---
 

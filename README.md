@@ -105,11 +105,3 @@ Follow these instructions to set up the project locally.
 ---
 
 _Note: This document provides an overview of Blabber Bot. For detailed instructions and more information, please refer to the source code documentation and the GitHub repository._
-
-```
-
-```
-
-```
-
-```

@@ -27,7 +27,14 @@ chatRoutes.post(
   generateChatCompletion
 );
 
-chatRoutes.get(ROUTE.CHAT.ALL, verifyToken, sendChatsToUser);
+export function logRequest(req, res, next) {
+  console.log(`Request received at ${req.originalUrl} - Method: ${req.method}`);
+  next();
+}
+
+router.get(ROUTE.CHAT.ALL, logRequest, verifyToken, sendChatsToUser);
+
+// chatRoutes.get(ROUTE.CHAT.ALL, verifyToken, sendChatsToUser);
 chatRoutes.delete(ROUTE.CHAT.DELETE, verifyToken, deleteChats);
 
 export default chatRoutes;

@@ -127,7 +127,8 @@ export const URL = {
 
 export const ENVIRONMENT = 'production';
 
-export const BASE_URL = process.env.NODE_ENV === ENVIRONMENT ? URL.RENDER : URL.LOCAL;
+export const BASE_URL =
+  (process.env.NODE_ENV === ENVIRONMENT ? URL.RENDER : URL.LOCAL) + API_VERSION;
 
 /**
  * Error messages for various operations.

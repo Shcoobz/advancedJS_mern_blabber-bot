@@ -12,5 +12,6 @@ export function configureOpenAI() {
     apiKey: process.env.OPEN_AI_API_KEY,
     organization: process.env.OPEN_AI_ORGANIZATION_ID,
   });
+
   return config;
 }

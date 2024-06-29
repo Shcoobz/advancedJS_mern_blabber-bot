@@ -16,7 +16,7 @@ import './css/index.css';
 /**
  * Set axios default base URL and enable credentials
  */
-axios.defaults.baseURL = import.meta.env.FRONTEND_BASE_URL;
+axios.defaults.baseURL = import.meta.env.VITE_FRONTEND_BASE_URL;
 axios.defaults.withCredentials = true;
 
 /**

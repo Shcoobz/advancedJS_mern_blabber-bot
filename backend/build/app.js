@@ -48,8 +48,9 @@ app.use((0, cookie_parser_1.default)(privateCookieKey));
 /**
  * Serve static files from the React app, assuming the build folder is in the correct relative path
  */
-console.log('Serving static files from:', path_1.default.join(__dirname, '../frontend/dist'));
-app.use(express_1.default.static(path_1.default.join(__dirname, '../frontend/dist')));
+const staticFilesPath = path_1.default.join(__dirname, '../../frontend/dist');
+console.log('Serving static files from:', staticFilesPath);
+app.use(express_1.default.static(staticFilesPath));
 /**
  * Main application router.
  * Mounts the primary router for the API under the 'ROUTE.API.VERSION,' base path, organizing the application's routing structure.

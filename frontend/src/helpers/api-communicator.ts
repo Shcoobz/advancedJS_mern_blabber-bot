@@ -3,6 +3,7 @@ import { URL, ERROR, BASE_URL } from '../constants/constants';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
+  withCredentials: true,
 });
 
 console.log('Axios instance created with baseURL:', BASE_URL);
@@ -215,6 +216,7 @@ export async function sendChatRequest(message: string) {
 export async function getUserChats() {
   try {
     const res = await axiosInstance.get(URL.CHAT.ALL_CHATS);
+    console.log('Response from get all chats:', res.data);
 
     if (res.status !== 200) {
       throw new Error(ERROR.CHAT.FETCH_ALL + res.status);
@@ -225,6 +227,7 @@ export async function getUserChats() {
     return data;
   } catch (error) {
     console.error(ERROR.CHAT.FETCH_ALL, error);
+    throw error;
   }
 }
 

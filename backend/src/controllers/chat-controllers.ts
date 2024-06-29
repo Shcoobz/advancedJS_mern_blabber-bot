@@ -144,7 +144,8 @@ export async function sendChatsToUser(req: Request, res: Response, next: NextFun
     const chats = await getUserChats(res.locals.jwtData.id);
     console.log('Chats retrieved for user:', chats);
 
-    return sendSuccessResponse(res, { chats });
+    // return sendSuccessResponse(res, { chats });
+    return sendSuccessResponse(res, { chats: chats || [] });
   } catch (error) {
     console.error('Error in sendChatsToUser:', error);
     const errorResponse = sendErrorResponse(res, error);

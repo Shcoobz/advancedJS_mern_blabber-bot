@@ -31,6 +31,9 @@ export function createToken(id: string, email: string, expiresIn: string) {
  * @param {NextFunction} next - The next middleware function in the stack.
  */
 export async function verifyToken(req: Request, res: Response, next: NextFunction) {
+  console.log('Cookies received:', req.cookies);
+  console.log('Signed cookies received:', req.signedCookies);
+
   console.log('Verifying token...');
   const privateKey = process.env.JWT_PRIVATE_KEY;
   const token = req.signedCookies[`${COOKIE.NAME}`];

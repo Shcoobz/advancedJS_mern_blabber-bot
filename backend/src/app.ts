@@ -32,7 +32,16 @@ const privateCookieKey = process.env.COOKIE_PRIVATE_KEY;
  * Configures the CORS policy of the application to allow requests from the specified origin
  * and to handle credentials like cookies and headers properly.
  */
-app.use(cors({ origin: corsOrigin, credentials: true }));
+// app.use(cors({ origin: corsOrigin, credentials: true }));
+
+app.use(
+  cors({
+    origin: corsOrigin,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
 
 /**
  * Built-in middleware to parse incoming requests with JSON payloads.

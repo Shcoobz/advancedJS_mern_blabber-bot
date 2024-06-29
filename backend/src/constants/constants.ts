@@ -59,7 +59,6 @@ export const SUCCESS = {
     LOGOUT: 'User verified!',
   },
   SERVER: {
-    BASE_URL: 'http://localhost:',
     START: `\nServer listening on Port {{port}} && connected to Database! Visit: {{url}}`,
   },
 };

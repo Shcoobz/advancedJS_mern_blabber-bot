@@ -46,7 +46,8 @@ The application consists of two main parts:
 
 ### Enhancing Mobile Responsiveness
 
-- TODO: Plans are underway to make Blabber Bot more responsive and mobile-friendly. This includes optimizing the frontend layout for various screen sizes, enhancing touch interactions, and improving the overall mobile user experience.
+- TODO:
+  - Plans are underway to make Blabber Bot more responsive and mobile-friendly. This includes optimizing the frontend layout for various screen sizes, enhancing touch interactions, and improving the overall mobile user experience.
 
 ### Bugfixing:
 

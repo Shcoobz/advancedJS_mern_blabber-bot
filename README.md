@@ -42,6 +42,20 @@ The application consists of two main parts:
 
 <br>
 
+## Future Improvements
+
+### Enhancing Mobile Responsiveness
+
+- TODO: Plans are underway to make Blabber Bot more responsive and mobile-friendly. This includes optimizing the frontend layout for various screen sizes, enhancing touch interactions, and improving the overall mobile user experience.
+
+### Bugfixing:
+
+- TODO:
+  - Fix wrong toast msg when non existing user tries to log in
+  - Fix wrong toast msg when existing user tries to sign up
+
+<br>
+
 ## Getting Started
 
 Follow these instructions to set up the project locally.

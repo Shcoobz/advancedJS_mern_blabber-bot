@@ -17,9 +17,6 @@ import '../../css/components/chat/ChatItem.css';
 
 /**
  * Describes the properties expected by the ChatItem component.
- * @interface
- * @property {string} content - The chat message content that can include plain text or formatted code blocks.
- * @property {ROLE.USER|ROLE.ASSISTANT} role - Specifies the role of the chat item, influencing the styling and behavior. It accepts values from the ROLE constant, either ROLE.USER or ROLE.ASSISTANT.
  */
 interface ChatItemProps {
   content: string;

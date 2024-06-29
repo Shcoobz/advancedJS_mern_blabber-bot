@@ -93,12 +93,18 @@ Follow these instructions to set up the project locally.
 
    ```bash
    PORT=PORT
+   BACKEND_BASE_URL=BACKEND_BASE_URL
    MONGODB_URL=your_mongodb_connection_string
    JWT_PRIVATE_KEY=your_jwt_private_key
    COOKIE_PRIVATE_KEY=your_cookie_private_key
    CORS_ORIGIN=http://localhost:PORT
    OPEN_AI_API_KEY=your_openai_api_key
    OPEN_AI_ORGANIZATION_ID=your_openai_organization_id
+   ```
+
+2. Create a .env file in the frontend directory with the following environment variables:
+   ```bash
+   VITE_FRONTEND_BASE_URL=VITE_FRONTEND_BASE_URL
    ```
 
 ### Building and Running

@@ -100,7 +100,7 @@ export const SEQUENCE_DETAILS = {
  * Base URLs for various API endpoints and routes
  */
 export const API_VERSION = '/api/v1';
-export const FRONTEND_BASE_URL = process.env.FRONTEND_BASE_URL;
+export const FRONTEND_BASE_URL = import.meta.env.VITE_FRONTEND_BASE_URL;
 export const USER_BASE_URL = '/user';
 export const CHAT_BASE_URL = '/chat';
 

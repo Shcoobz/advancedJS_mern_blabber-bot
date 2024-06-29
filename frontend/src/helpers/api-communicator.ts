@@ -3,13 +3,13 @@ import axios, { AxiosError } from 'axios';
 import { URL, ERROR } from '../constants/constants';
 
 /**
- * Axios instance configured for regular API calls.
+ * Default Axios instance with the baseURL and withCredentials already set in main.tsx
  */
-const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_FRONTEND_BASE_URL,
-  withCredentials: true,
-});
+const apiClient = axios.create();
 
+/**
+ * Function to create a silent Axios instance
+ */
 const silentAxios = createSilentAxios();
 
 /**

@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance } from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { URL, ERROR, BASE_URL } from '../constants/constants';
 

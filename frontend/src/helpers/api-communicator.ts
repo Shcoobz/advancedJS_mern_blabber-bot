@@ -1,12 +1,14 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import { URL, ERROR, BASE_URL } from '../constants/constants';
 
+const baseURL = process.env.BASE_URL;
+
 const axiosInstance = axios.create({
-  baseURL: process.env.BASE_URL,
+  baseURL: baseURL,
   withCredentials: true,
 });
 
-console.log('Axios instance created with baseURL:', process.env.BASE_URL);
+console.log('Axios instance created with baseURL:', baseURL);
 
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -21,7 +23,7 @@ axiosInstance.interceptors.request.use(
 
 const silentAxios = createSilentAxios();
 
-console.log('Current baseURL:', process.env.BASE_URL);
+console.log('Current baseURL:', baseURL);
 
 /**
  * Fetches user data from the server.

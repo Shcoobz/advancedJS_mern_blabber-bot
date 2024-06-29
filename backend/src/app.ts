@@ -34,9 +34,18 @@ const privateCookieKey = process.env.COOKIE_PRIVATE_KEY;
  */
 // app.use(cors({ origin: corsOrigin, credentials: true }));
 
+// app.use(
+//   cors({
+//     origin: corsOrigin,
+//     credentials: true,
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+//   })
+// );
+
 app.use(
   cors({
-    origin: corsOrigin,
+    origin: 'https://advancedjs-mern-blabber-bot.onrender.com',
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],

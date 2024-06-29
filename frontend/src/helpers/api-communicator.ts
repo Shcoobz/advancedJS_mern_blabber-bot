@@ -2,8 +2,6 @@ import axios, { AxiosError } from 'axios';
 
 import { URL, ERROR, BASE_URL } from '../constants/constants';
 
-const silentAxios = createSilentAxios();
-
 /**
  * Axios instance configured for regular API calls.
  */
@@ -11,6 +9,8 @@ const apiClient = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
 });
+
+const silentAxios = createSilentAxios();
 
 /**
  * Fetches user data from the server.

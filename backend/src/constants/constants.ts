@@ -1,10 +1,12 @@
-import path from 'path';
+import { config } from 'dotenv';
+
+config();
 
 /**
  * Network and environment configurations.
  */
 export const PORT = process.env.PORT || 3000;
-export const BASE_URL = process.env.BASE_URL;
+export const BACKEND_BASE_URL = process.env.BACKEND_BASE_URL;
 export const EMPTY_STRING = '';
 export const PASSWORD_MIN_LENGTH = 6;
 export const HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE'];
@@ -61,7 +63,7 @@ export const SUCCESS = {
     LOGOUT: 'User verified!',
   },
   SERVER: {
-    START: `\nServer listening on ${PORT} && connected to Database!\nVisit: ${BASE_URL}`,
+    START: `\nServer listening on ${PORT} && connected to Database!\nVisit: ${BACKEND_BASE_URL}`,
   },
 };
 

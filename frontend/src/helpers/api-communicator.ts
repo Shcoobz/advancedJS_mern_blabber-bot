@@ -175,7 +175,7 @@ function createSilentAxios(): AxiosInstance {
 // }
 
 export async function checkAuthStatus() {
-  console.log('Checking auth status with URL:', `${BASE_URL}${URL.USER.AUTH_STATUS}`);
+  console.log('Checking auth status with URL:', `${baseURL}${URL.USER.AUTH_STATUS}`);
   try {
     const res = await silentAxios.get(URL.USER.AUTH_STATUS, {
       withCredentials: true,

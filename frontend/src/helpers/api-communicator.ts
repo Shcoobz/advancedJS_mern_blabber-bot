@@ -1,12 +1,12 @@
 import axios, { AxiosError } from 'axios';
 
-import { URL, ERROR, FRONTEND_BASE_URL } from '../constants/constants';
+import { URL, ERROR } from '../constants/constants';
 
 /**
  * Axios instance configured for regular API calls.
  */
 const apiClient = axios.create({
-  baseURL: FRONTEND_BASE_URL,
+  baseURL: import.meta.env.VITE_FRONTEND_BASE_URL,
   withCredentials: true,
 });
 

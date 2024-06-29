@@ -61,6 +61,9 @@ app.use(cookieParser(privateCookieKey));
 /**
  * Serve static files from the React app, assuming the build folder is in the correct relative path
  */
+console.log('__dirname:', __dirname);
+console.log('STATIC_PATH_FRONTEND:', STATIC_PATH_FRONTEND);
+
 app.use(express.static(STATIC_PATH_FRONTEND));
 
 /**

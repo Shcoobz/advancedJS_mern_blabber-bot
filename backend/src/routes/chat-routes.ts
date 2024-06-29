@@ -12,11 +12,6 @@ import {
 /**
  * Router for chat-related endpoints.
  * Utilizes middleware for validation and authentication, and controllers to handle the request logic.
- *
- * Routes:
- * - POST: `/new` - Creates a new chat completion. Requires validation and authentication.
- * - GET: `/all-chats` - Retrieves all chats for the authenticated user.
- * - DELETE: `/delete` - Deletes chats based on provided criteria, requires authentication.
  */
 const chatRoutes = Router();
 

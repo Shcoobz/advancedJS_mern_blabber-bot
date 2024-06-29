@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
-import { URL, ERROR, BASE_URL, API_VERSION } from '../constants/constants';
+import { URL, ERROR, BASE_URL } from '../constants/constants';
 
 const axiosInstance = axios.create({
-  baseURL: `${BASE_URL}${API_VERSION}`,
+  baseURL: BASE_URL,
   withCredentials: true,
 });
 
@@ -84,10 +84,9 @@ export async function signupUser(name: string, email: string, password: string) 
 // }
 
 export async function loginUser(email: string, password: string) {
-  console.log(
-    'Attempting login with URL:',
-    `${axiosInstance.defaults.baseURL}${URL.USER.LOGIN}`
-  );
+  const fullUrl = `${axiosInstance.defaults.baseURL}${URL.USER.LOGIN}`;
+
+  console.log('Attempting login with URL:', fullUrl);
   try {
     const res = await axiosInstance.post(URL.USER.LOGIN, { email, password });
     console.log('Login response:', res);

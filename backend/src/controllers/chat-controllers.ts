@@ -13,8 +13,6 @@ import {
 
 /**
  * Gets the chats of a user.
- * @param {string} userId - The ID of the user.
- * @returns {Promise<any[]>} The chats of the user.
  */
 async function getUserChats(userId: string) {
   const user = await validateUserByID(userId);
@@ -25,9 +23,6 @@ async function getUserChats(userId: string) {
 
 /**
  * Prepares the chat messages by adding a new user message.
- * @param {any} user - The user object.
- * @param {string} message - The new message content.
- * @returns {ChatCompletionRequestMessage[]} The prepared chat messages.
  */
 function prepareChats(user: any, message: string) {
   const chats = user.chats.map(({ role, content }) => ({
@@ -43,8 +38,6 @@ function prepareChats(user: any, message: string) {
 
 /**
  * Sends chat messages to OpenAI and gets the response.
- * @param {ChatCompletionRequestMessage[]} chats - The chat messages.
- * @returns {Promise<string>} The response message from OpenAI.
  */
 async function sendToOpenAI(chats: ChatCompletionRequestMessage[]) {
   const config = configureOpenAI();
@@ -60,10 +53,6 @@ async function sendToOpenAI(chats: ChatCompletionRequestMessage[]) {
 
 /**
  * Saves the user and sends an appropriate response.
- * @param {any} user - The user object to save.
- * @param {Response} res - The response object.
- * @param {any} message - The message to add to the user's chats.
- * @returns {Promise<Response>} The response object.
  */
 async function saveAndRespond(user: any, res: Response, message: any) {
   user.chats.push(message);
@@ -83,10 +72,6 @@ async function saveAndRespond(user: any, res: Response, message: any) {
 
 /**
  * Generates a chat completion and saves it to the user's chats.
- * @param {Request} req - The request object.
- * @param {Response} res - The response object.
- * @param {NextFunction} next - The next middleware function.
- * @returns {Promise<Response>} The response object.
  */
 export async function generateChatCompletion(
   req: Request,
@@ -114,9 +99,6 @@ export async function generateChatCompletion(
 
 /**
  * Finds a user by ID.
- * @param {string} userId - The ID of the user to find.
- * @returns {Promise<any>} The user if found.
- * @throws {Error} If the user is not found.
  */
 async function findUser(userId: string) {
   const user = validateUserByID(userId);
@@ -126,10 +108,6 @@ async function findUser(userId: string) {
 
 /**
  * Sends the chats of the user to the client.
- * @param {Request} req - The request object.
- * @param {Response} res - The response object.
- * @param {NextFunction} next - The next middleware function.
- * @returns {Promise<Response>} The response object.
  */
 export async function sendChatsToUser(req: Request, res: Response, next: NextFunction) {
   console.log('Sending chats to user...');
@@ -156,10 +134,6 @@ export async function sendChatsToUser(req: Request, res: Response, next: NextFun
 
 /**
  * Deletes all chat messages of the user.
- * @param {Request} req - The request object.
- * @param {Response} res - The response object.
- * @param {NextFunction} next - The next middleware function.
- * @returns {Promise<Response>} The response object.
  */
 export async function deleteChats(req: Request, res: Response, next: NextFunction) {
   try {

@@ -1,9 +1,5 @@
 import path from 'path';
 
-// This module defines and exports constants used throughout the application.
-// These constants include configuration values, error messages, success messages,
-// roles, and more, which are used to maintain consistency and manage configurations centrally.
-
 /**
  * Network and environment configurations.
  */

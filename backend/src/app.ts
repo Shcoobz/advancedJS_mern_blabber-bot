@@ -31,10 +31,6 @@ const app = express();
 const corsOrigin = process.env.CORS_ORIGIN;
 const privateCookieKey = process.env.COOKIE_PRIVATE_KEY;
 
-console.log('__dirname:', __dirname);
-console.log('STATIC_PATH_FRONTEND:', STATIC_PATH_FRONTEND);
-console.log('Full file path:', path.join(STATIC_PATH_FRONTEND, INDEX_FILE_PATH));
-
 /**
  * Middleware for handling Cross-Origin Resource Sharing (CORS).
  * Configures the CORS policy of the application to allow requests from the specified origin
@@ -65,7 +61,7 @@ app.use(cookieParser(privateCookieKey));
 /**
  * Serve static files from the React app, assuming the build folder is in the correct relative path
  */
-app.use(express.static(STATIC_PATH_FRONTEND));
+app.use(express.static(path.join(__dirname, '../../frontend/dist')));
 
 /**
  * Main application router.
@@ -77,11 +73,11 @@ app.use(ROUTE.API.VERSION, appRouter);
  * The "catchall" handler for any request that doesn't match one above, send back React's index.html file.
  */
 app.get(ROUTE.GLOBAL.WILDCARD, (req, res) => {
-  const filePath = path.join(STATIC_PATH_FRONTEND, INDEX_FILE_PATH);
+  const filePath = path.join(__dirname, '../../frontend/dist/index.html');
 
   res.sendFile(filePath, (err) => {
     if (err) {
-      console.error(` ${ERROR.SERVING.FAIL} ${INDEX_FILE_PATH} ${err.message}`);
+      console.error(` ${ERROR.SERVING.FAIL} index.html ${err.message}`);
       res.status(500).send(err);
     }
   });

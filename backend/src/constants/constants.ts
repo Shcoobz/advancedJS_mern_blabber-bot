@@ -7,10 +7,8 @@ export const PORT = process.env.PORT || 3000;
 export const BASE_URL = process.env.BASE_URL;
 export const EMPTY_STRING = '';
 export const PASSWORD_MIN_LENGTH = 6;
-export const STATIC_PATH_FRONTEND = path.join(__dirname, '../../../frontend/dist');
 export const HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE'];
 export const ALLOWED_HEADERS = ['Content-Type', 'Authorization'];
-export const INDEX_FILE_PATH = 'index.html';
 
 /**
  * Error message constants structured by context and usage.

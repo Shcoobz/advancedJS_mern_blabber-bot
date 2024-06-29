@@ -6,9 +6,6 @@ import { sendErrorResponse } from '../controllers/user-handler.js';
 
 /**
  * Creates and returns an Express middleware that runs a series of validation checks.
- *
- * @param {ValidationChain[]} validations - An array of validation chain instances.
- * @returns {Function} An Express middleware function that processes validations and handles errors.
  */
 export function validate(validations: ValidationChain[]) {
   const runValidations = async function (
@@ -18,6 +15,7 @@ export function validate(validations: ValidationChain[]) {
   ) {
     for (let validation of validations) {
       const result = await validation.run(req);
+
       if (!result.isEmpty()) {
         break;
       }
@@ -32,7 +30,9 @@ export function validate(validations: ValidationChain[]) {
       error.name = ERROR.VALIDATION.ERROR_NAME;
       error.message = JSON.stringify(errors.array());
 
-      return sendErrorResponse(res, error, 422);
+      const errorResponse = sendErrorResponse(res, error, 422);
+
+      return errorResponse;
     }
   };
 

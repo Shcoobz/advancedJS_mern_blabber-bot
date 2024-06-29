@@ -5,9 +5,9 @@ import { configureOpenAI } from '../config/openai-config.js';
 import { INDEX, OPENAI, ROLE } from '../constants/constants.js';
 
 import {
+  findUserByID,
   sendErrorResponse,
   sendSuccessResponse,
-  validateUserByID,
   verifyUserPermissions,
 } from './user-handler.js';
 
@@ -15,7 +15,7 @@ import {
  * Gets the chats of a user.
  */
 async function getUserChats(userId: string) {
-  const user = await validateUserByID(userId);
+  const user = await findUserByID(userId);
   const chats = user.chats;
 
   return chats;
@@ -46,6 +46,7 @@ async function sendToOpenAI(chats: ChatCompletionRequestMessage[]) {
     model: OPENAI.MODEL,
     messages: chats,
   });
+
   const message = chatResponse.data.choices[INDEX.FIRST].message;
 
   return message;
@@ -81,7 +82,7 @@ export async function generateChatCompletion(
   const { message } = req.body;
 
   try {
-    const user = await validateUserByID(res.locals.jwtData.id);
+    const user = await findUserByID(res.locals.jwtData.id);
     verifyUserPermissions(user, res.locals.jwtData.id);
 
     const chats = prepareChats(user, message);
@@ -98,34 +99,19 @@ export async function generateChatCompletion(
 }
 
 /**
- * Finds a user by ID.
- */
-async function findUser(userId: string) {
-  const user = validateUserByID(userId);
-
-  return user;
-}
-
-/**
  * Sends the chats of the user to the client.
  */
 export async function sendChatsToUser(req: Request, res: Response, next: NextFunction) {
-  console.log('Sending chats to user...');
   try {
-    const userId = res.locals.jwtData.id;
-    console.log('User ID from token:', userId);
-
-    const user = await findUser(res.locals.jwtData.id);
+    const user = await findUserByID(res.locals.jwtData.id);
     verifyUserPermissions(user, res.locals.jwtData.id);
-    console.log('User permissions verified for user:', user);
 
     const chats = await getUserChats(res.locals.jwtData.id);
-    console.log('Chats retrieved for user:', chats);
 
-    // return sendSuccessResponse(res, { chats });
-    return sendSuccessResponse(res, { chats: chats || [] });
+    const successResponse = sendSuccessResponse(res, { chats: chats || [] });
+
+    return successResponse;
   } catch (error) {
-    console.error('Error in sendChatsToUser:', error);
     const errorResponse = sendErrorResponse(res, error);
 
     return errorResponse;
@@ -137,7 +123,7 @@ export async function sendChatsToUser(req: Request, res: Response, next: NextFun
  */
 export async function deleteChats(req: Request, res: Response, next: NextFunction) {
   try {
-    const user = await findUser(res.locals.jwtData.id);
+    const user = await findUserByID(res.locals.jwtData.id);
     verifyUserPermissions(user, res.locals.jwtData.id);
 
     user.chats.splice(INDEX.FIRST, user.chats.length);

@@ -1,30 +1,34 @@
 import express from 'express';
 import path from 'path';
-import appRouter from './routes/index.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+
 import { config } from 'dotenv';
-import { ENVIRONMENT } from './constants/constants.js';
+
+import appRouter from './routes/index.js';
+import {
+  ALLOWED_HEADERS,
+  ERROR,
+  HTTP_METHODS,
+  INDEX_FILE_PATH,
+  ROUTE,
+  STATIC_PATH_FRONTEND,
+} from './constants/constants.js';
 
 /**
- * Configures and initializes the main Express application.
- * Loads environment variables, sets up middlewares for CORS, JSON parsing, cookie parsing,
- * and request logging, and mounts the main router for API endpoints.
+ * Load environment variables from .env file into process.env
  */
-
-// Load environment variables from .env file into process.env
 config();
 
+/**
+ * Initializes main Express application
+ */
 const app = express();
 
-// Retrieve CORS origin URL and cookie secret key from environment variables
+/**
+ * Retrieve CORS origin URL and cookie secret key from environment variables
+ */
 const corsOrigin = process.env.CORS_ORIGIN;
-
-console.log('CORS Origin:', corsOrigin);
-
-const cookieDomain = process.env.COOKIE_DOMAIN;
-console.log('Cookie Domain:', cookieDomain);
-
 const privateCookieKey = process.env.COOKIE_PRIVATE_KEY;
 
 /**
@@ -32,23 +36,12 @@ const privateCookieKey = process.env.COOKIE_PRIVATE_KEY;
  * Configures the CORS policy of the application to allow requests from the specified origin
  * and to handle credentials like cookies and headers properly.
  */
-// app.use(cors({ origin: corsOrigin, credentials: true }));
-
-// app.use(
-//   cors({
-//     origin: corsOrigin,
-//     credentials: true,
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//     allowedHeaders: ['Content-Type', 'Authorization'],
-//   })
-// );
-
 app.use(
   cors({
-    origin: 'https://advancedjs-mern-blabber-bot.onrender.com',
+    origin: corsOrigin,
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: HTTP_METHODS,
+    allowedHeaders: ALLOWED_HEADERS,
   })
 );
 
@@ -65,38 +58,29 @@ app.use(express.json());
  */
 app.use(cookieParser(privateCookieKey));
 
-// Serve static files from the React app, assuming the build folder is in the correct relative path
-// app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
-const staticPath = path.join(__dirname, '../../frontend/dist');
-console.log(`Serving static files from ${staticPath}`);
-app.use(express.static(staticPath));
+/**
+ * Serve static files from the React app, assuming the build folder is in the correct relative path
+ */
+app.use(express.static(STATIC_PATH_FRONTEND));
 
 /**
  * Main application router.
- * Mounts the primary router for the API under the '/api/v1' base path, organizing the application's routing structure.
+ * Mounts the primary router for the API under the 'ROUTE.API.VERSION,' base path, organizing the application's routing structure.
  */
-app.use('/api/v1', appRouter);
+app.use(ROUTE.API.VERSION, appRouter);
 
-// The "catchall" handler for any request that doesn't match one above, send back React's index.html file.
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
-// });
+/**
+ * The "catchall" handler for any request that doesn't match one above, send back React's index.html file.
+ */
+app.get(ROUTE.GLOBAL.WILDCARD, (req, res) => {
+  const filePath = path.join(STATIC_PATH_FRONTEND, INDEX_FILE_PATH);
 
-app.get('*', (req, res) => {
-  const filePath = path.join(staticPath, 'index.html');
-  console.log(`Serving index.html from ${filePath}`);
   res.sendFile(filePath, (err) => {
     if (err) {
-      console.error(`Error serving index.html: ${err.message}`);
+      console.error(` ${ERROR.SERVING.FAIL} ${INDEX_FILE_PATH} ${err.message}`);
       res.status(500).send(err);
     }
   });
-});
-
-app.use((req, res, next) => {
-  console.log(`Request URL: ${req.url}`);
-  next();
 });
 
 export default app;

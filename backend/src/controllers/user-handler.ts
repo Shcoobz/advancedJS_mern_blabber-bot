@@ -1,15 +1,11 @@
 import { Response } from 'express';
+import { compare, hash } from 'bcrypt';
 
 import { ERROR, SECURITY, SUCCESS } from '../constants/constants.js';
 import User from '../models/User.js';
-import { compare, hash } from 'bcrypt';
 
 /**
  * Sends a standardized success response with customizable status code.
- * @param {Response} res - The response object.
- * @param {any} data - The data to include in the response.
- * @param {number} [statusCode=200] - The HTTP status code for the response (defaults to 200).
- * @returns {Response} The response object with the success message.
  */
 export function sendSuccessResponse(
   res: Response,
@@ -24,10 +20,6 @@ export function sendSuccessResponse(
 
 /**
  * Sends a standardized error response with customizable status code.
- * @param {Response} res - The response object.
- * @param {Error} error - The error object.
- * @param {number} [statusCode=500] - The HTTP status code for the response (defaults to 500).
- * @returns {Response} The response object with the error message.
  */
 export function sendErrorResponse(res: Response, error: Error, statusCode: number = 500) {
   const responseData = { message: ERROR.RES.FAIL, cause: error.message };
@@ -40,14 +32,22 @@ export function sendErrorResponse(res: Response, error: Error, statusCode: numbe
       .json({ message: ERROR.USER.INCORRECT_PASSWORD, cause: error.message });
   }
 
-  return res.status(500).json(responseData);
+  const errorResponse = res.status(500).json(responseData);
+
+  return errorResponse;
+}
+
+/**
+ * Finds a user by ID.
+ */
+export async function findUserByID(userId: string) {
+  const user = validateUserByID(userId);
+
+  return user;
 }
 
 /**
  * Validates if a user exists by ID.
- * @param {string} userId - The ID of the user to validate.
- * @returns {Promise<any>} The user if found.
- * @throws {Error} If the user is not found.
  */
 export async function validateUserByID(userId: string) {
   const user = await User.findById(userId);
@@ -61,8 +61,6 @@ export async function validateUserByID(userId: string) {
 
 /**
  * Validates if a user exists by email and throws an error if not found.
- * @param {string} email - The email of the user to validate.
- * @returns {Promise<any>} The user if found.
  */
 export async function validateUserByEmail(email: string) {
   const user = await User.findOne({ email });
@@ -72,9 +70,6 @@ export async function validateUserByEmail(email: string) {
 
 /**
  * Verifies if the user's ID matches the one in the JWT.
- * @param {any} user - The user object.
- * @param {string} jwtUserId - The user ID from the JWT.
- * @throws {Error} If the user's ID does not match the one in the JWT.
  */
 export function verifyUserPermissions(user: any, jwtUserId: string) {
   if (user._id.toString() !== jwtUserId) {
@@ -87,9 +82,6 @@ export function verifyUserPermissions(user: any, jwtUserId: string) {
  * takes a plain text password and applies a cryptographic hash function to
  * it using bcrypt. The 'SECURITY.BCRYPT_SALT_ROUNDS' constant determines the
  * computational cost of hashing, enhancing security against brute-force attacks.
- *
- * @param {string} password - The plaintext password to hash.
- * @returns {Promise<string>} A promise that resolves with the hashed password.
  */
 export async function hashPassword(password: string) {
   const hashedPassword = await hash(password, SECURITY.BCRYPT_SALT_ROUNDS);
@@ -99,16 +91,6 @@ export async function hashPassword(password: string) {
 
 /**
  * Checks if a user exists by email or ID, and handles the response based on the context.
- *
- * This function checks if a user exists in the database by the provided email or ID.
- * For signup: If the user exists, it sends a 409 Conflict error response.
- * For login: If the user does not exist, it sends a 401 Unauthorized error response.
- *
- * @param {string} identifier - The email or ID to check.
- * @param {Response} res - The response object used to send the error response.
- * @param {boolean} isSignup - A flag indicating whether the check is for signup (true) or login (false).
- * @param {boolean} isByID - A flag indicating whether the identifier is an ID (true) or an email (false).
- * @returns {Promise<any>} - Returns the user object if found (for login or by ID), otherwise null.
  */
 export async function checkUserExists(
   identifier: string,
@@ -149,10 +131,6 @@ export async function checkUserExists(
 
 /**
  * Verifies user permissions and sends an error response if the permissions do not match.
- * @param {any} user - The user object.
- * @param {string} jwtUserId - The user ID from the JWT.
- * @param {Response} res - The response object used to send the error response if the permissions do not match.
- * @returns {boolean} - Returns true if permissions match, otherwise false.
  */
 export function checkUserPermissions(user: any, jwtUserId: string, res: Response) {
   try {
@@ -168,10 +146,6 @@ export function checkUserPermissions(user: any, jwtUserId: string, res: Response
 
 /**
  * Validates the provided password against the stored hashed password.
- * @param {string} password - The plain text password provided by the user.
- * @param {string} hashedPassword - The hashed password stored in the database.
- * @param {Response} res - The response object used to send the error response if the password is incorrect.
- * @returns {Promise<boolean>} - Returns true if the password is correct, otherwise false.
  */
 export async function validatePassword(
   password: string,
@@ -191,10 +165,6 @@ export async function validatePassword(
 
 /**
  * Hashes the given password, creates a new user with the provided details, and saves it to the database.
- * @param {string} name - The name of the user.
- * @param {string} email - The email of the user.
- * @param {string} password - The plain text password of the user.
- * @returns {Promise<User>} - The created and saved user object.
  */
 export async function createAndSaveUser(name: string, email: string, password: string) {
   const hashedPassword = await hashPassword(password);

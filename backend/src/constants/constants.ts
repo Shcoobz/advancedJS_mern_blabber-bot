@@ -1,3 +1,5 @@
+import path from 'path';
+
 // This module defines and exports constants used throughout the application.
 // These constants include configuration values, error messages, success messages,
 // roles, and more, which are used to maintain consistency and manage configurations centrally.
@@ -5,11 +7,14 @@
 /**
  * Network and environment configurations.
  */
-
-export const PORT = process.env.PORT;
+export const PORT = process.env.PORT || 3000;
+export const BASE_URL = process.env.BASE_URL;
 export const EMPTY_STRING = '';
 export const PASSWORD_MIN_LENGTH = 6;
-export const ENVIRONMENT = 'production';
+export const STATIC_PATH_FRONTEND = path.join(__dirname, '../../frontend/dist');
+export const HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE'];
+export const ALLOWED_HEADERS = ['Content-Type', 'Authorization'];
+export const INDEX_FILE_PATH = 'index.html';
 
 /**
  * Error message constants structured by context and usage.
@@ -19,7 +24,7 @@ export const ERROR = {
     NOT_REGISTERED: 'User not registered or token malfunction!',
     PERMISSIONS_MISMATCH: "Permissions didn't match!",
     ALREADY_REGISTERED: 'User already registered!',
-    INCORRECT_PASSWORD: 'Incorrect Password!',
+    INCORRECT_PASSWORD: 'Email and Password do not match!',
   },
   RES: {
     FAIL: 'Something went terribly wrong!',
@@ -44,6 +49,9 @@ export const ERROR = {
   SERVER: {
     FAILED_CONNECTION: 'Failed to connect to the database:',
   },
+  SERVING: {
+    FAIL: 'Error serving ',
+  },
 };
 
 /**
@@ -59,7 +67,7 @@ export const SUCCESS = {
     LOGOUT: 'User verified!',
   },
   SERVER: {
-    START: `\nServer listening on Port {{port}} && connected to Database! Visit: {{url}}`,
+    START: `\nServer listening on ${PORT} && connected to Database!\nVisit: ${BASE_URL}`,
   },
 };
 
@@ -69,8 +77,6 @@ export const SUCCESS = {
 export const ROLE = {
   USER: 'user' as 'user',
   ASSISTANT: 'assistant' as 'assistant',
-  SYSTEM: 'system' as 'system',
-  FUNCTION: 'function' as 'function',
 };
 
 /**
@@ -118,6 +124,9 @@ export const SECURITY = {
  * Route constants for defining API endpoints clearly and centrally.
  */
 export const ROUTE = {
+  API: {
+    VERSION: '/api/v1',
+  },
   CHAT: {
     NEW: '/new',
     ALL: '/all-chats',
@@ -130,6 +139,9 @@ export const ROUTE = {
     LOGOUT: '/logout',
     SIGNUP: '/signup',
     LOGIN: '/login',
+  },
+  GLOBAL: {
+    WILDCARD: '*',
   },
 };
 

@@ -31,6 +31,10 @@ const app = express();
 const corsOrigin = process.env.CORS_ORIGIN;
 const privateCookieKey = process.env.COOKIE_PRIVATE_KEY;
 
+console.log('__dirname:', __dirname);
+console.log('STATIC_PATH_FRONTEND:', STATIC_PATH_FRONTEND);
+console.log('Full file path:', path.join(STATIC_PATH_FRONTEND, INDEX_FILE_PATH));
+
 /**
  * Middleware for handling Cross-Origin Resource Sharing (CORS).
  * Configures the CORS policy of the application to allow requests from the specified origin
@@ -61,9 +65,6 @@ app.use(cookieParser(privateCookieKey));
 /**
  * Serve static files from the React app, assuming the build folder is in the correct relative path
  */
-console.log('__dirname:', __dirname);
-console.log('STATIC_PATH_FRONTEND:', STATIC_PATH_FRONTEND);
-
 app.use(express.static(STATIC_PATH_FRONTEND));
 
 /**

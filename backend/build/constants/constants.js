@@ -1,21 +1,17 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FORM_FIELD = exports.ROUTE = exports.SECURITY = exports.COOKIE_OPTIONS = exports.COOKIE = exports.INDEX = exports.OPENAI = exports.ROLE = exports.SUCCESS = exports.ERROR = exports.INDEX_FILE_PATH = exports.ALLOWED_HEADERS = exports.HTTP_METHODS = exports.STATIC_PATH_FRONTEND = exports.PASSWORD_MIN_LENGTH = exports.EMPTY_STRING = exports.BASE_URL = exports.PORT = void 0;
-const path_1 = __importDefault(require("path"));
+exports.FORM_FIELD = exports.ROUTE = exports.SECURITY = exports.COOKIE_OPTIONS = exports.COOKIE = exports.INDEX = exports.OPENAI = exports.ROLE = exports.SUCCESS = exports.ERROR = exports.ALLOWED_HEADERS = exports.HTTP_METHODS = exports.PASSWORD_MIN_LENGTH = exports.EMPTY_STRING = exports.BACKEND_BASE_URL = exports.PORT = void 0;
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
 /**
  * Network and environment configurations.
  */
 exports.PORT = process.env.PORT || 3000;
-exports.BASE_URL = process.env.BASE_URL;
+exports.BACKEND_BASE_URL = process.env.BACKEND_BASE_URL;
 exports.EMPTY_STRING = '';
 exports.PASSWORD_MIN_LENGTH = 6;
-exports.STATIC_PATH_FRONTEND = path_1.default.join(__dirname, '../../frontend/dist');
 exports.HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE'];
 exports.ALLOWED_HEADERS = ['Content-Type', 'Authorization'];
-exports.INDEX_FILE_PATH = 'index.html';
 /**
  * Error message constants structured by context and usage.
  */
@@ -66,7 +62,7 @@ exports.SUCCESS = {
         LOGOUT: 'User verified!',
     },
     SERVER: {
-        START: `\nServer listening on ${exports.PORT} && connected to Database!\nVisit: ${exports.BASE_URL}`,
+        START: `\nServer listening on ${exports.PORT} && connected to Database!\nVisit: ${exports.BACKEND_BASE_URL}`,
     },
 };
 /**

@@ -48,7 +48,7 @@ app.use((0, cookie_parser_1.default)(privateCookieKey));
 /**
  * Serve static files from the React app, assuming the build folder is in the correct relative path
  */
-app.use(express_1.default.static(constants_js_1.STATIC_PATH_FRONTEND));
+app.use(express_1.default.static(path_1.default.join(__dirname, '../frontend/dist')));
 /**
  * Main application router.
  * Mounts the primary router for the API under the 'ROUTE.API.VERSION,' base path, organizing the application's routing structure.
@@ -58,10 +58,10 @@ app.use(constants_js_1.ROUTE.API.VERSION, index_js_1.default);
  * The "catchall" handler for any request that doesn't match one above, send back React's index.html file.
  */
 app.get(constants_js_1.ROUTE.GLOBAL.WILDCARD, (req, res) => {
-    const filePath = path_1.default.join(constants_js_1.STATIC_PATH_FRONTEND, constants_js_1.INDEX_FILE_PATH);
+    const filePath = path_1.default.join(__dirname, '../frontend/dist/index.html');
     res.sendFile(filePath, (err) => {
         if (err) {
-            console.error(` ${constants_js_1.ERROR.SERVING.FAIL} ${constants_js_1.INDEX_FILE_PATH} ${err.message}`);
+            console.error(` ${constants_js_1.ERROR.SERVING.FAIL} index.html ${err.message}`);
             res.status(500).send(err);
         }
     });

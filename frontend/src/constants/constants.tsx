@@ -121,21 +121,7 @@ export const URL = {
     ALL_CHATS: `${API_VERSION}${CHAT_BASE_URL}/all-chats`,
     DELETE_CHATS: `${API_VERSION}${CHAT_BASE_URL}/delete`,
   },
-
-  LOCAL: `http://localhost:5000`,
-  RENDER: `https://advancedjs-mern-blabber-bot.onrender.com`,
 };
-
-/**
- * Environment configuration for determining base URL.
- */
-export const ENVIRONMENT = 'production';
-
-/**
- * Base URL for API requests based on environment.
- * Uses Render URL for production and local URL for development.
- */
-// export const BASE_URL = process.env.NODE_ENV === ENVIRONMENT ? URL.RENDER : URL.LOCAL;
 
 /**
  * Error messages for various operations.
@@ -198,21 +184,18 @@ export const TOAST = {
     SUCCESS: 'Signed up successfully!',
     ERROR: 'Sign up failed! :(',
   },
-
   LOGIN: {
     ID: 'login',
     LOADING: 'Logging in!',
     SUCCESS: 'Log in successfully!',
     ERROR: 'Log in failed! :(',
   },
-
   CHATS: {
     ID: 'loadchats',
     LOADING: 'Loading chats!',
     SUCCESS: 'Successfully loaded chats!',
     ERROR: 'Loading chats failed! :(',
   },
-
   DELETION: {
     ID: 'deletechats',
     LOADING: 'Deleting chats!',
@@ -230,16 +213,13 @@ export const ROLE = {
 };
 
 /**
- * URL to the project portfolio on GitHub.
+ * Constants for footer configuration used throughout the application.
  */
-export const GITHUB_URL = 'https://shcoobz.github.io/';
-
-/**
- * Text for the footer credit.
- */
-export const FOOTER_CREDIT_TEXT = 'Build by';
-
-/**
- * Creator's name for the footer credit.
- */
-export const CREATOR = 'Shcoobz';
+export const FOOTER = {
+  CREDIT_TEXT: 'Build by',
+  CREATOR: 'Shcoobz',
+  GITHUB_PROFILE: 'https://github.com/Shcoobz',
+  SEPARATOR: ' | ',
+  PROJECT_PORTFOLIO_NAME: 'Project Portfolio',
+  PROJECT_PORTFOLIO: 'https://shcoobz.github.io/',
+};

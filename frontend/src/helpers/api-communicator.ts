@@ -1,35 +1,23 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
+
 import { URL, ERROR, BASE_URL } from '../constants/constants';
 
-const axiosInstance = axios.create({
+const silentAxios = createSilentAxios();
+
+/**
+ * Axios instance configured for regular API calls.
+ */
+const apiClient = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
 });
 
-console.log('Axios instance created with baseURL:', axiosInstance.defaults.baseURL);
-
-axiosInstance.interceptors.request.use(
-  (config) => {
-    console.log('Making request to:', `${config.baseURL}${config.url}`);
-    return config;
-  },
-  (error) => {
-    console.error('Request error:', error);
-    return Promise.reject(error);
-  }
-);
-
-const silentAxios = createSilentAxios();
-
-console.log('Current baseURL:', axiosInstance.defaults.baseURL);
-
 /**
  * Fetches user data from the server.
- * @throws {Error} If the response status is not 200.
  */
 export async function fetchUserData() {
   try {
-    const res = await axiosInstance.get(URL.USER.GET_USER_DATA);
+    const res = await apiClient.get(URL.USER.GET_USER_DATA);
 
     if (res.status !== 200) {
       throw new Error(ERROR.USER.FETCH_DATA + res.status);
@@ -45,11 +33,10 @@ export async function fetchUserData() {
 
 /**
  * Signs up a new user with the provided name, email, and password.
- * @throws {Error} If the response status is not 201 or if there is an error during the request.
  */
 export async function signupUser(name: string, email: string, password: string) {
   try {
-    const res = await axiosInstance.post(URL.USER.SIGNUP, { name, email, password });
+    const res = await apiClient.post(URL.USER.SIGNUP, { name, email, password });
 
     if (res.status !== 201) {
       throw new Error(ERROR.USER.SIGNUP + res.status);
@@ -65,51 +52,29 @@ export async function signupUser(name: string, email: string, password: string) 
 
 /**
  * Logs in a user with the provided email and password.
- * @throws {Error} If the response status is not 200 or if there is an error during the request.
  */
-// export async function loginUser(email: string, password: string) {
-//   try {
-//     const res = await axiosInstance.post(URL.USER.LOGIN, { email, password });
-
-//     if (res.status !== 200) {
-//       throw new Error(ERROR.USER.LOGIN + res.status);
-//     }
-
-//     const data = await res.data;
-
-//     return data;
-//   } catch (error) {
-//     console.error(ERROR.USER.LOGIN, error);
-//   }
-// }
-
 export async function loginUser(email: string, password: string) {
-  const fullUrl = `${axiosInstance.defaults.baseURL}${URL.USER.LOGIN}`;
-
-  console.log('Attempting login with URL:', fullUrl);
   try {
-    const res = await axiosInstance.post(URL.USER.LOGIN, { email, password });
-    console.log('Login response:', res);
+    const res = await apiClient.post(URL.USER.LOGIN, { email, password });
 
     if (res.status !== 200) {
       throw new Error(ERROR.USER.LOGIN + res.status);
     }
 
     const data = await res.data;
-    console.log('Login successful, received data:', data);
+
     return data;
   } catch (error) {
-    console.error('Login error:', error);
+    console.error(ERROR.USER.LOGIN, error);
   }
 }
 
 /**
  * Logs out the current user.
- * @throws {Error} If the response status is not 200 or if there is an error during the request.
  */
 export async function logoutUser() {
   try {
-    const res = await axiosInstance.get(URL.USER.LOGOUT);
+    const res = await apiClient.get(URL.USER.LOGOUT);
 
     if (res.status !== 200) {
       throw new Error(ERROR.USER.LOGOUT + res.status);
@@ -125,9 +90,8 @@ export async function logoutUser() {
 
 /**
  * Creates an Axios instance with silent request and response handling.
- * @returns {AxiosInstance} The configured Axios instance.
  */
-function createSilentAxios(): AxiosInstance {
+function createSilentAxios() {
   const instance = axios.create();
   const isStatusValid = (status: number) => status >= 200 && status < 600;
 
@@ -152,42 +116,25 @@ function createSilentAxios(): AxiosInstance {
 /**
  * Checks the authentication status of the user.
  */
-// export async function checkAuthStatus() {
-//   try {
-//     const res = await silentAxios.get(URL.USER.AUTH_STATUS, {
-//       withCredentials: true,
-//     });
-
-//     return res.data.isAuthenticated ?? false;
-//   } catch (error) {
-//     return false;
-//   }
-// }
-
 export async function checkAuthStatus() {
-  console.log(
-    'Checking auth status with URL:',
-    `${axiosInstance.defaults.baseURL}${URL.USER.AUTH_STATUS}`
-  );
   try {
     const res = await silentAxios.get(URL.USER.AUTH_STATUS, {
       withCredentials: true,
     });
-    console.log('Auth status response:', res);
+
     return res.data.isAuthenticated ?? false;
   } catch (error) {
-    console.error('Auth status check error:', error);
+    console.error(ERROR.USER.AUTH_STATUS, error);
     return false;
   }
 }
 
 /**
  * Sends a chat message to the server.
- * @throws {Error} If the response status is not 200 or if there is an error during the request.
  */
 export async function sendChatRequest(message: string) {
   try {
-    const res = await axiosInstance.post(URL.CHAT.NEW_MSG, { message });
+    const res = await apiClient.post(URL.CHAT.NEW_MSG, { message });
 
     if (res.status !== 200) {
       throw new Error(ERROR.CHAT.NEW + res.status);
@@ -203,12 +150,10 @@ export async function sendChatRequest(message: string) {
 
 /**
  * Retrieves all chat messages for the user.
- * @throws {Error} If the response status is not 200 or if there is an error during the request.
  */
 export async function getUserChats() {
   try {
-    const res = await axiosInstance.get(URL.CHAT.ALL_CHATS);
-    console.log('Response from get all chats:', res.data);
+    const res = await apiClient.get(URL.CHAT.ALL_CHATS);
 
     if (res.status !== 200) {
       throw new Error(ERROR.CHAT.FETCH_ALL + res.status);
@@ -225,11 +170,10 @@ export async function getUserChats() {
 
 /**
  * Deletes all chat messages for the user.
- * @throws {Error} If the response status is not 200 or if there is an error during the request.
  */
 export async function deleteUserChats() {
   try {
-    const res = await axiosInstance.delete(URL.CHAT.DELETE_CHATS);
+    const res = await apiClient.delete(URL.CHAT.DELETE_CHATS);
 
     if (res.status !== 200) {
       throw new Error(ERROR.CHAT.DELETE + res.status);

@@ -1,6 +1,7 @@
 import { Box, Avatar, Typography, Button, IconButton } from '@mui/material';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { IoMdSend } from 'react-icons/io';
+
 import toast from 'react-hot-toast';
 
 import { useAuth } from '../context/useAuth';
@@ -18,9 +19,6 @@ import '../css/pages/Chat.css';
 
 /**
  * Represents a chat message with a specific role and content.
- * @typedef {Object} Message
- * @property {('user'|'assistant')} role - The role of the message sender, either user or assistant.
- * @property {string} content - The content of the chat message.
  */
 type Message = {
   role: typeof ROLE.USER | typeof ROLE.ASSISTANT;
@@ -30,7 +28,6 @@ type Message = {
 /**
  * Chat component that handles the chat interface, including fetching, displaying,
  * and sending chat messages, as well as deleting chat history.
- * @returns {JSX.Element} The chat component.
  */
 function Chat() {
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
@@ -71,21 +68,6 @@ function Chat() {
   }, [chatMessages]);
 
   /**
-   * Renders chat items from the list of chat messages.
-   * @param {Message[]} chatMessages - Array of chat messages to render.
-   * @returns {JSX.Element[]} The rendered chat items.
-   */
-  function renderChatItems(chatMessages: Message[]) {
-    return (
-      <>
-        {chatMessages.map((chat, index) => (
-          <ChatItem content={chat.content} role={chat.role} key={index} />
-        ))}
-      </>
-    );
-  }
-
-  /**
    * Handles the submission of a new chat message.
    * Sends the message to the server and updates the chat messages state.
    */
@@ -106,7 +88,6 @@ function Chat() {
   /**
    * Handles the key press event in the chat input.
    * Submits the chat message if the submit key is pressed.
-   * @param {React.KeyboardEvent<HTMLInputElement>} e - The keyboard event.
    */
   async function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === SUBMIT_KEY) {
@@ -152,6 +133,19 @@ function Chat() {
       </Box>
     </Box>
   );
+
+  /**
+   * Renders chat items from the list of chat messages.
+   */
+  function renderChatItems(chatMessages: Message[]) {
+    return (
+      <>
+        {chatMessages.map((chat, index) => (
+          <ChatItem content={chat.content} role={chat.role} key={index} />
+        ))}
+      </>
+    );
+  }
 
   /**
    * Chat window containing model title, messages, and input area.

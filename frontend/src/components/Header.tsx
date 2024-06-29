@@ -11,10 +11,6 @@ import '../css/components/Header.css';
 /**
  * Header component that displays the application's logo and navigation links.
  * The navigation links are dynamically rendered based on the user's authentication status.
- * - Authenticated users see links for chatting and logging out.
- * - Guest users see links for logging in and signing up.
- *
- * @returns {JSX.Element} The header section with navigation links.
  */
 function Header() {
   const auth = useAuth();

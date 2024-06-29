@@ -9,9 +9,8 @@ import '../../css/components/shared/Logo.css';
 /**
  * Logo component displays the company logo along with some descriptive text.
  * This component is used for branding and navigation purposes.
- * @returns {JSX.Element} A logo component with navigational and descriptive text.
  */
-function Logo(): JSX.Element {
+function Logo() {
   /**
    * logoContent holds the JSX for the logo and its accompanying text, providing a clickable image that
    * navigates to the home page and a description of the technology or project.

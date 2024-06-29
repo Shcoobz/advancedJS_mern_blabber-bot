@@ -9,8 +9,6 @@ import '../css/pages/Home.css';
 /**
  * Home component that renders the homepage of the application.
  * The homepage includes a typing animation, several images, a project screenshot, and a footer.
- *
- * @returns {JSX.Element} The JSX content for the homepage.
  */
 function Home() {
   /**

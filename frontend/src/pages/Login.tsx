@@ -13,10 +13,6 @@ import '../css/pages/Login.css';
 
 /**
  * Login component that handles user authentication.
- * It includes a form for entering email and password, and displays a robot image.
- * On successful login, the user is navigated to the chat page.
- *
- * @returns {JSX.Element} The JSX content for the login page.
  */
 function Login() {
   const navigate = useNavigate();
@@ -33,10 +29,6 @@ function Login() {
 
   /**
    * Handles the form submission for login.
-   * Extracts email and password from the form data and attempts to log the user in.
-   * Displays appropriate toast notifications for loading, success, and error states.
-   *
-   * @param {React.FormEvent<HTMLFormElement>} e - The form submission event.
    */
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

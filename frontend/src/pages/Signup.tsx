@@ -13,10 +13,6 @@ import '../css/pages/Signup.css';
 
 /**
  * Signup component that handles user registration.
- * It includes a form for entering name, email, and password, and displays a greeting robot image.
- * On successful signup, the user is navigated to the chat page.
- *
- * @returns {JSX.Element} The JSX content for the signup page.
  */
 function Signup() {
   const navigate = useNavigate();
@@ -33,10 +29,6 @@ function Signup() {
 
   /**
    * Handles the form submission for signup.
-   * Extracts name, email, and password from the form data and attempts to register the user.
-   * Displays appropriate toast notifications for loading, success, and error states.
-   *
-   * @param {React.FormEvent<HTMLFormElement>} e - The form submission event.
    */
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

@@ -7,7 +7,7 @@ import { SUCCESS } from '../constants/constants.js';
 //   return SUCCESS.SERVER.START.replace('{{port}}', port).replace('{{url}}', url);
 // }
 
-export function getServerStartMessage(port) {
+export function getServerStartMessage() {
   const baseUrl = process.env.BASE_URL;
   return `Server listening && connected to Database! Visit: ${baseUrl}`;
 }

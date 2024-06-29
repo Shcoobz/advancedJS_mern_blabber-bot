@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
-import { URL, ERROR, BASE_URL } from '../constants/constants';
+import { URL, ERROR } from '../constants/constants';
 
 const baseURL = process.env.BASE_URL;
 
@@ -94,7 +94,7 @@ export async function signupUser(name: string, email: string, password: string) 
 // }
 
 export async function loginUser(email: string, password: string) {
-  console.log('Attempting login with URL:', `${BASE_URL}${URL.USER.LOGIN}`);
+  console.log('Attempting login with URL:', `${baseURL}${URL.USER.LOGIN}`);
   try {
     const res = await axiosInstance.post(URL.USER.LOGIN, { email, password });
     console.log('Login response:', res);

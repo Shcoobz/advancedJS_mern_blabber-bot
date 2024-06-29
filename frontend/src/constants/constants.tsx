@@ -134,7 +134,7 @@ export const ENVIRONMENT = 'production';
  * Base URL for API requests based on environment.
  * Uses Render URL for production and local URL for development.
  */
-export const BASE_URL = process.env.NODE_ENV === ENVIRONMENT ? URL.RENDER : URL.LOCAL;
+// export const BASE_URL = process.env.NODE_ENV === ENVIRONMENT ? URL.RENDER : URL.LOCAL;
 
 /**
  * Error messages for various operations.

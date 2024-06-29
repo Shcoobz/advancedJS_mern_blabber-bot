@@ -12,8 +12,16 @@ import { getServerStartMessage } from './utils/helper.js';
  *
  * If there is a problem connecting to the database, it logs the error to the console.
  */
+// connectToDatabase()
+//   .then(() => {
+//     app.listen(() => console.log(getServerStartMessage()));
+//   })
+//   .catch((err) => console.log(ERROR.SERVER.FAILED_CONNECTION, err));
+
 connectToDatabase()
   .then(() => {
-    app.listen(() => console.log(getServerStartMessage()));
+    app.listen(PORT, () => {
+      console.log(getServerStartMessage());
+    });
   })
-  .catch((err) => console.log(ERROR.SERVER.FAILED_CONNECTION, err));
+  .catch((err) => console.log('Failed to connect to database:', err));

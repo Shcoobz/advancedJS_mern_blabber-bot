@@ -6,14 +6,7 @@ import cors from 'cors';
 import { config } from 'dotenv';
 
 import appRouter from './routes/index.js';
-import {
-  ALLOWED_HEADERS,
-  ERROR,
-  HTTP_METHODS,
-  INDEX_FILE_PATH,
-  ROUTE,
-  STATIC_PATH_FRONTEND,
-} from './constants/constants.js';
+import { ALLOWED_HEADERS, ERROR, HTTP_METHODS, ROUTE } from './constants/constants.js';
 
 /**
  * Load environment variables from .env file into process.env

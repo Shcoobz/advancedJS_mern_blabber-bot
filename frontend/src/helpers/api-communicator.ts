@@ -25,7 +25,6 @@ console.log('Current baseURL:', axiosInstance.defaults.baseURL);
 
 /**
  * Fetches user data from the server.
- * @returns {Promise<any>} The user data retrieved from the server.
  * @throws {Error} If the response status is not 200.
  */
 export async function fetchUserData() {
@@ -46,10 +45,6 @@ export async function fetchUserData() {
 
 /**
  * Signs up a new user with the provided name, email, and password.
- * @param {string} name - The name of the user.
- * @param {string} email - The email of the user.
- * @param {string} password - The password of the user.
- * @returns {Promise<any>} The data returned from the signup request.
  * @throws {Error} If the response status is not 201 or if there is an error during the request.
  */
 export async function signupUser(name: string, email: string, password: string) {
@@ -70,9 +65,6 @@ export async function signupUser(name: string, email: string, password: string) 
 
 /**
  * Logs in a user with the provided email and password.
- * @param {string} email - The email of the user.
- * @param {string} password - The password of the user.
- * @returns {Promise<any>} The data returned from the login request.
  * @throws {Error} If the response status is not 200 or if there is an error during the request.
  */
 // export async function loginUser(email: string, password: string) {
@@ -114,7 +106,6 @@ export async function loginUser(email: string, password: string) {
 
 /**
  * Logs out the current user.
- * @returns {Promise<any>} The data returned from the logout request.
  * @throws {Error} If the response status is not 200 or if there is an error during the request.
  */
 export async function logoutUser() {
@@ -161,7 +152,6 @@ function createSilentAxios(): AxiosInstance {
 
 /**
  * Checks the authentication status of the user.
- * @returns {Promise<boolean>} True if the user is authenticated, false otherwise.
  */
 // export async function checkAuthStatus() {
 //   try {
@@ -194,8 +184,6 @@ export async function checkAuthStatus() {
 
 /**
  * Sends a chat message to the server.
- * @param {string} message - The chat message to be sent.
- * @returns {Promise<any>} The data returned from the chat request.
  * @throws {Error} If the response status is not 200 or if there is an error during the request.
  */
 export async function sendChatRequest(message: string) {
@@ -216,7 +204,6 @@ export async function sendChatRequest(message: string) {
 
 /**
  * Retrieves all chat messages for the user.
- * @returns {Promise<any>} The data returned from the get all chats request.
  * @throws {Error} If the response status is not 200 or if there is an error during the request.
  */
 export async function getUserChats() {
@@ -239,7 +226,6 @@ export async function getUserChats() {
 
 /**
  * Deletes all chat messages for the user.
- * @returns {Promise<any>} The data returned from the delete chats request.
  * @throws {Error} If the response status is not 200 or if there is an error during the request.
  */
 export async function deleteUserChats() {

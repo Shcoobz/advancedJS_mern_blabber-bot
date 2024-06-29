@@ -63,7 +63,7 @@ export const SUCCESS = {
     LOGOUT: 'User verified!',
   },
   SERVER: {
-    START: `\nServer listening on ${PORT} && connected to Database!\nVisit: ${BACKEND_BASE_URL}`,
+    START: `\nServer listening on PORT ${PORT} && connected to Database!\nVisit: ${BACKEND_BASE_URL}`,
   },
 };
 

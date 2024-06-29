@@ -8,11 +8,6 @@ const chat_controllers_js_1 = require("../controllers/chat-controllers.js");
 /**
  * Router for chat-related endpoints.
  * Utilizes middleware for validation and authentication, and controllers to handle the request logic.
- *
- * Routes:
- * - POST: `/new` - Creates a new chat completion. Requires validation and authentication.
- * - GET: `/all-chats` - Retrieves all chats for the authenticated user.
- * - DELETE: `/delete` - Deletes chats based on provided criteria, requires authentication.
  */
 const chatRoutes = (0, express_1.Router)();
 chatRoutes.post(constants_js_1.ROUTE.CHAT.NEW, (0, validators_js_1.validate)(validators_js_1.chatCompletionValidator), token_manager_js_1.verifyToken, chat_controllers_js_1.generateChatCompletion);

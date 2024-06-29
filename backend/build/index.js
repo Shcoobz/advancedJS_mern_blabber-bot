@@ -10,14 +10,12 @@ const helper_js_1 = require("./utils/helper.js");
 /**
  * Server entry script.
  * Initiates a connection to the database.
- * If the connection is successful, the Express application starts listening on the specified PORT.
- * It logs a message indicating that the server is running and connected to the database.
- *
- * If there is a problem connecting to the database, it logs the error to the console.
  */
 (0, connection_js_1.connectToDatabase)()
     .then(() => {
-    app_js_1.default.listen(constants_js_1.PORT, () => console.log((0, helper_js_1.getServerStartMessage)(constants_js_1.PORT)));
+    app_js_1.default.listen(constants_js_1.PORT, () => {
+        console.log((0, helper_js_1.getServerStartMessage)());
+    });
 })
     .catch((err) => console.log(constants_js_1.ERROR.SERVER.FAILED_CONNECTION, err));
 //# sourceMappingURL=index.js.map

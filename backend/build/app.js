@@ -5,19 +5,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
-const index_js_1 = __importDefault(require("./routes/index.js"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = require("dotenv");
+const index_js_1 = __importDefault(require("./routes/index.js"));
+const constants_js_1 = require("./constants/constants.js");
 /**
- * Configures and initializes the main Express application.
- * Loads environment variables, sets up middlewares for CORS, JSON parsing, cookie parsing,
- * and request logging, and mounts the main router for API endpoints.
+ * Load environment variables from .env file into process.env
  */
-// Load environment variables from .env file into process.env
 (0, dotenv_1.config)();
+/**
+ * Initializes main Express application
+ */
 const app = (0, express_1.default)();
-// Retrieve CORS origin URL and cookie secret key from environment variables
+/**
+ * Retrieve CORS origin URL and cookie secret key from environment variables
+ */
 const corsOrigin = process.env.CORS_ORIGIN;
 const privateCookieKey = process.env.COOKIE_PRIVATE_KEY;
 /**
@@ -25,7 +28,12 @@ const privateCookieKey = process.env.COOKIE_PRIVATE_KEY;
  * Configures the CORS policy of the application to allow requests from the specified origin
  * and to handle credentials like cookies and headers properly.
  */
-app.use((0, cors_1.default)({ origin: corsOrigin, credentials: true }));
+app.use((0, cors_1.default)({
+    origin: corsOrigin,
+    credentials: true,
+    methods: constants_js_1.HTTP_METHODS,
+    allowedHeaders: constants_js_1.ALLOWED_HEADERS,
+}));
 /**
  * Built-in middleware to parse incoming requests with JSON payloads.
  * This is necessary for the application to properly read and understand JSON formatted request bodies.
@@ -37,33 +45,26 @@ app.use(express_1.default.json());
  * which helps in securely transmitting sensitive information such as authentication tokens.
  */
 app.use((0, cookie_parser_1.default)(privateCookieKey));
-// Serve static files from the React app, assuming the build folder is in the correct relative path
-// app.use(express.static(path.join(__dirname, '../frontend/dist')));
-const staticPath = path_1.default.join(__dirname, '../../frontend/dist');
-console.log(`Serving static files from ${staticPath}`);
-app.use(express_1.default.static(staticPath));
+/**
+ * Serve static files from the React app, assuming the build folder is in the correct relative path
+ */
+app.use(express_1.default.static(constants_js_1.STATIC_PATH_FRONTEND));
 /**
  * Main application router.
- * Mounts the primary router for the API under the '/api/v1' base path, organizing the application's routing structure.
+ * Mounts the primary router for the API under the 'ROUTE.API.VERSION,' base path, organizing the application's routing structure.
  */
-app.use('/api/v1', index_js_1.default);
-// The "catchall" handler for any request that doesn't match one above, send back React's index.html file.
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
-// });
-app.get('*', (req, res) => {
-    const filePath = path_1.default.join(staticPath, 'index.html');
-    console.log(`Serving index.html from ${filePath}`);
+app.use(constants_js_1.ROUTE.API.VERSION, index_js_1.default);
+/**
+ * The "catchall" handler for any request that doesn't match one above, send back React's index.html file.
+ */
+app.get(constants_js_1.ROUTE.GLOBAL.WILDCARD, (req, res) => {
+    const filePath = path_1.default.join(constants_js_1.STATIC_PATH_FRONTEND, constants_js_1.INDEX_FILE_PATH);
     res.sendFile(filePath, (err) => {
         if (err) {
-            console.error(`Error serving index.html: ${err.message}`);
+            console.error(` ${constants_js_1.ERROR.SERVING.FAIL} ${constants_js_1.INDEX_FILE_PATH} ${err.message}`);
             res.status(500).send(err);
         }
     });
-});
-app.use((req, res, next) => {
-    console.log(`Request URL: ${req.url}`);
-    next();
 });
 exports.default = app;
 //# sourceMappingURL=app.js.map

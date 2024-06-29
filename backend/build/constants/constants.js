@@ -1,15 +1,21 @@
 "use strict";
-// This module defines and exports constants used throughout the application.
-// These constants include configuration values, error messages, success messages,
-// roles, and more, which are used to maintain consistency and manage configurations centrally.
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FORM_FIELD = exports.ROUTE = exports.SECURITY = exports.COOKIE_OPTIONS = exports.COOKIE = exports.INDEX = exports.OPENAI = exports.ROLE = exports.SUCCESS = exports.ERROR = exports.PASSWORD_MIN_LENGTH = exports.EMPTY_STRING = exports.PORT = void 0;
+exports.FORM_FIELD = exports.ROUTE = exports.SECURITY = exports.COOKIE_OPTIONS = exports.COOKIE = exports.INDEX = exports.OPENAI = exports.ROLE = exports.SUCCESS = exports.ERROR = exports.INDEX_FILE_PATH = exports.ALLOWED_HEADERS = exports.HTTP_METHODS = exports.STATIC_PATH_FRONTEND = exports.PASSWORD_MIN_LENGTH = exports.EMPTY_STRING = exports.BASE_URL = exports.PORT = void 0;
+const path_1 = __importDefault(require("path"));
 /**
  * Network and environment configurations.
  */
-exports.PORT = process.env.PORT || 5000;
+exports.PORT = process.env.PORT || 3000;
+exports.BASE_URL = process.env.BASE_URL;
 exports.EMPTY_STRING = '';
 exports.PASSWORD_MIN_LENGTH = 6;
+exports.STATIC_PATH_FRONTEND = path_1.default.join(__dirname, '../../frontend/dist');
+exports.HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE'];
+exports.ALLOWED_HEADERS = ['Content-Type', 'Authorization'];
+exports.INDEX_FILE_PATH = 'index.html';
 /**
  * Error message constants structured by context and usage.
  */
@@ -18,7 +24,7 @@ exports.ERROR = {
         NOT_REGISTERED: 'User not registered or token malfunction!',
         PERMISSIONS_MISMATCH: "Permissions didn't match!",
         ALREADY_REGISTERED: 'User already registered!',
-        INCORRECT_PASSWORD: 'Incorrect Password!',
+        INCORRECT_PASSWORD: 'Email and Password do not match!',
     },
     RES: {
         FAIL: 'Something went terribly wrong!',
@@ -43,6 +49,9 @@ exports.ERROR = {
     SERVER: {
         FAILED_CONNECTION: 'Failed to connect to the database:',
     },
+    SERVING: {
+        FAIL: 'Error serving ',
+    },
 };
 /**
  * Success message constants structured by context.
@@ -57,8 +66,7 @@ exports.SUCCESS = {
         LOGOUT: 'User verified!',
     },
     SERVER: {
-        BASE_URL: 'http://localhost:',
-        START: `\nServer listening on Port {{port}} && connected to Database! Visit: {{url}}`,
+        START: `\nServer listening on ${exports.PORT} && connected to Database!\nVisit: ${exports.BASE_URL}`,
     },
 };
 /**
@@ -67,8 +75,6 @@ exports.SUCCESS = {
 exports.ROLE = {
     USER: 'user',
     ASSISTANT: 'assistant',
-    SYSTEM: 'system',
-    FUNCTION: 'function',
 };
 /**
  * Constants related to OpenAI configurations.
@@ -87,7 +93,7 @@ exports.INDEX = {
  */
 exports.COOKIE = {
     EXPIRES_IN: '7d',
-    DOMAIN: 'localhost',
+    DOMAIN: process.env.COOKIE_DOMAIN,
     NAME: 'auth_token',
     PATH: '/',
 };
@@ -110,6 +116,9 @@ exports.SECURITY = {
  * Route constants for defining API endpoints clearly and centrally.
  */
 exports.ROUTE = {
+    API: {
+        VERSION: '/api/v1',
+    },
     CHAT: {
         NEW: '/new',
         ALL: '/all-chats',
@@ -122,6 +131,9 @@ exports.ROUTE = {
         LOGOUT: '/logout',
         SIGNUP: '/signup',
         LOGIN: '/login',
+    },
+    GLOBAL: {
+        WILDCARD: '*',
     },
 };
 /**

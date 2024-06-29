@@ -7,9 +7,6 @@ const constants_js_1 = require("../constants/constants.js");
 const user_handler_js_1 = require("../controllers/user-handler.js");
 /**
  * Creates and returns an Express middleware that runs a series of validation checks.
- *
- * @param {ValidationChain[]} validations - An array of validation chain instances.
- * @returns {Function} An Express middleware function that processes validations and handles errors.
  */
 function validate(validations) {
     const runValidations = async function (req, res, next) {
@@ -27,7 +24,8 @@ function validate(validations) {
             const error = new Error(constants_js_1.ERROR.VALIDATION.FAILED);
             error.name = constants_js_1.ERROR.VALIDATION.ERROR_NAME;
             error.message = JSON.stringify(errors.array());
-            return (0, user_handler_js_1.sendErrorResponse)(res, error, 422);
+            const errorResponse = (0, user_handler_js_1.sendErrorResponse)(res, error, 422);
+            return errorResponse;
         }
     };
     return runValidations;

@@ -8,11 +8,6 @@ const crypto_1 = require("crypto");
 /**
  * Chat Schema for MongoDB.
  * Defines the schema for a chat message within the user document.
- *
- * Properties:
- * - id: Unique identifier for the chat message, defaults to a UUID.
- * - role: Describes the role of the chat participant (e.g., 'user', 'admin').
- * - content: The text content of the chat message.
  */
 const chatSchema = new mongoose_1.default.Schema({
     id: {
@@ -31,12 +26,6 @@ const chatSchema = new mongoose_1.default.Schema({
 /**
  * User Schema for MongoDB.
  * Defines the schema for user data stored in MongoDB.
- *
- * Properties:
- * - name: The name of the user, a required string.
- * - email: The user's email address, required and must be unique.
- * - password: The user's password, a required string.
- * - chats: An array of chat messages, defined by the chatSchema.
  */
 const userSchema = new mongoose_1.default.Schema({
     name: {

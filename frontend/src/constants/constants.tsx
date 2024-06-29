@@ -122,8 +122,8 @@ export const URL = {
     DELETE_CHATS: `${API_VERSION}${CHAT_BASE_URL}/delete`,
   },
 
-  LOCAL: `http://localhost:5000${API_VERSION}`,
-  RENDER: `https://advancedjs-mern-blabber-bot.onrender.com${API_VERSION}`,
+  LOCAL: `http://localhost:5000`,
+  RENDER: `https://advancedjs-mern-blabber-bot.onrender.com`,
 };
 
 /**

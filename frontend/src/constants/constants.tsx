@@ -99,26 +99,27 @@ export const SEQUENCE_DETAILS = {
 /**
  * Base URLs for various API endpoints and routes
  */
-const API_VERSION = '/api/v1';
-const USER_BASE_URL = '/user';
-const CHAT_BASE_URL = '/chat';
+export const API_VERSION = '/api/v1';
+export const BASE_URL = process.env.REACT_APP_BASE_URL;
+export const USER_BASE_URL = '/user';
+export const CHAT_BASE_URL = '/chat';
 
 /**
  * URL constants for user and chat-related endpoints.
  */
 export const URL = {
   USER: {
-    SIGNUP: `${API_VERSION}${USER_BASE_URL}/signup`,
-    LOGIN: `${API_VERSION}${USER_BASE_URL}/login`,
-    LOGOUT: `${API_VERSION}${USER_BASE_URL}/logout`,
-    AUTH_STATUS: `${API_VERSION}${USER_BASE_URL}/auth-status`,
-    GET_USER_DATA: `${API_VERSION}${USER_BASE_URL}/get-user-data`,
+    SIGNUP: `${USER_BASE_URL}/signup`,
+    LOGIN: `${USER_BASE_URL}/login`,
+    LOGOUT: `${USER_BASE_URL}/logout`,
+    AUTH_STATUS: `${USER_BASE_URL}/auth-status`,
+    GET_USER_DATA: `${USER_BASE_URL}/get-user-data`,
   },
 
   CHAT: {
-    NEW_MSG: `${API_VERSION}${CHAT_BASE_URL}/new`,
-    ALL_CHATS: `${API_VERSION}${CHAT_BASE_URL}/all-chats`,
-    DELETE_CHATS: `${API_VERSION}${CHAT_BASE_URL}/delete`,
+    NEW_MSG: `${CHAT_BASE_URL}/new`,
+    ALL_CHATS: `${CHAT_BASE_URL}/all-chats`,
+    DELETE_CHATS: `${CHAT_BASE_URL}/delete`,
   },
 
   LOCAL: `http://localhost:5000${API_VERSION}`,

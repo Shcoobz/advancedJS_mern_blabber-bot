@@ -1,14 +1,12 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
-import { URL, ERROR } from '../constants/constants';
-
-const baseURL = process.env.REACT_APP_BASE_URL;
+import { URL, ERROR, BASE_URL, API_VERSION } from '../constants/constants';
 
 const axiosInstance = axios.create({
-  baseURL: baseURL,
+  baseURL: `${BASE_URL}${API_VERSION}`,
   withCredentials: true,
 });
 
-console.log('Axios instance created with baseURL:', baseURL);
+console.log('Axios instance created with baseURL:', axiosInstance.defaults.baseURL);
 
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -23,7 +21,7 @@ axiosInstance.interceptors.request.use(
 
 const silentAxios = createSilentAxios();
 
-console.log('Current baseURL:', baseURL);
+console.log('Current baseURL:', axiosInstance.defaults.baseURL);
 
 /**
  * Fetches user data from the server.
@@ -94,7 +92,10 @@ export async function signupUser(name: string, email: string, password: string) 
 // }
 
 export async function loginUser(email: string, password: string) {
-  console.log('Attempting login with URL:', `${baseURL}${URL.USER.LOGIN}`);
+  console.log(
+    'Attempting login with URL:',
+    `${axiosInstance.defaults.baseURL}${URL.USER.LOGIN}`
+  );
   try {
     const res = await axiosInstance.post(URL.USER.LOGIN, { email, password });
     console.log('Login response:', res);

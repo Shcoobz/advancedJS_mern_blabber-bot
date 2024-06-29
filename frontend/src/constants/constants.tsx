@@ -108,17 +108,17 @@ const CHAT_BASE_URL = '/chat';
  */
 export const URL = {
   USER: {
-    SIGNUP: `${USER_BASE_URL}/signup`,
-    LOGIN: `${USER_BASE_URL}/login`,
-    LOGOUT: `${USER_BASE_URL}/logout`,
-    AUTH_STATUS: `${USER_BASE_URL}/auth-status`,
-    GET_USER_DATA: `${USER_BASE_URL}/get-user-data`,
+    SIGNUP: `${API_VERSION}${USER_BASE_URL}/signup`,
+    LOGIN: `${API_VERSION}${USER_BASE_URL}/login`,
+    LOGOUT: `${API_VERSION}${USER_BASE_URL}/logout`,
+    AUTH_STATUS: `${API_VERSION}${USER_BASE_URL}/auth-status`,
+    GET_USER_DATA: `${API_VERSION}${USER_BASE_URL}/get-user-data`,
   },
 
   CHAT: {
-    NEW_MSG: `${CHAT_BASE_URL}/new`,
-    ALL_CHATS: `${CHAT_BASE_URL}/all-chats`,
-    DELETE_CHATS: `${CHAT_BASE_URL}/delete`,
+    NEW_MSG: `${API_VERSION}${CHAT_BASE_URL}/new`,
+    ALL_CHATS: `${API_VERSION}${CHAT_BASE_URL}/all-chats`,
+    DELETE_CHATS: `${API_VERSION}${CHAT_BASE_URL}/delete`,
   },
 
   LOCAL: `http://localhost:5000${API_VERSION}`,

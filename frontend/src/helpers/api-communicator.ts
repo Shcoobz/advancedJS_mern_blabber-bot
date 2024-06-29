@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import { URL, ERROR } from '../constants/constants';
 
-const baseURL = process.env.BASE_URL;
+const baseURL = process.env.REACT_APP_BASE_URL;
 
 const axiosInstance = axios.create({
   baseURL: baseURL,

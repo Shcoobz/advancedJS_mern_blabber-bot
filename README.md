@@ -1,6 +1,6 @@
 # advancedJS_mern_Blabber Bot: [LIVE DEMO](https://advancedjs-mern-blabber-bot.onrender.com/)
 
-![Blabber Bot](assets/advancedJS_mern_blabber-bot.png)
+![Blabber Bot](frontend/public/advancedJS_mern_blabber-bot.png)
 
 <br>
 

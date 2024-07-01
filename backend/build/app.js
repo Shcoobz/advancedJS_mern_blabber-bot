@@ -49,7 +49,6 @@ app.use((0, cookie_parser_1.default)(privateCookieKey));
  * Serve static files from the React app, assuming the build folder is in the correct relative path
  */
 const staticFilesPath = path_1.default.join(__dirname, '../../frontend/dist');
-console.log('Serving static files from:', staticFilesPath);
 app.use(express_1.default.static(staticFilesPath));
 /**
  * Main application router.
@@ -61,7 +60,6 @@ app.use(constants_js_1.ROUTE.API.VERSION, index_js_1.default);
  */
 app.get(constants_js_1.ROUTE.GLOBAL.WILDCARD, (req, res) => {
     const filePath = path_1.default.join(__dirname, '../frontend/dist/index.html');
-    console.log('Serving index.html from:', filePath);
     res.sendFile(filePath, (err) => {
         if (err) {
             console.error(` ${constants_js_1.ERROR.SERVING.FAIL} index.html ${err.message}`);

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { useAuth } from '../context/useAuth';
-import { NAVIGATION, BUTTON, FORM_FIELD, TOAST } from '../constants/constants';
+import { NAVIGATION, BUTTON, FORM_FIELD, TOAST, ERROR } from '../constants/constants';
 import { SUBMIT_ICON, GREETING_ROBOT_IMG } from '../constants/assets';
 
 import CustomInput from '../components/shared/CustomInput';
@@ -37,13 +37,17 @@ function Login() {
     const email = formData.get(FORM_FIELD.EMAIL) as string;
     const password = formData.get(FORM_FIELD.PASSWORD) as string;
 
+    toast.loading(TOAST.LOGIN.LOADING, { id: TOAST.LOGIN.ID });
+
     try {
-      toast.loading(TOAST.LOGIN.LOADING, { id: TOAST.LOGIN.ID });
       await auth?.login(email, password);
-      toast.success(TOAST.LOGIN.SUCCESS, { id: TOAST.LOGIN.ID });
+
+      toast.dismiss(TOAST.LOGIN.ID);
+      toast.success(TOAST.LOGIN.SUCCESS);
     } catch (error) {
-      console.log(error);
-      toast.error(TOAST.LOGIN.ERROR, { id: TOAST.LOGIN.ID });
+      console.error(ERROR.USER.LOGIN);
+      toast.dismiss(TOAST.LOGIN.ID);
+      toast.error(TOAST.LOGIN.ERROR || ERROR.USER.LOGIN, { id: TOAST.LOGIN.ID });
     }
   }
 

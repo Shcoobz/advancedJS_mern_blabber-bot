@@ -141,6 +141,9 @@ export const ERROR = {
   PAGE: {
     NOT_FOUND: '404 Error: Page Not Found',
   },
+  SERVER: {
+    NO_RESPONSE: 'No response from the server! Try again later!',
+  },
 };
 
 /**

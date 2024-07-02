@@ -34,7 +34,7 @@ function sendErrorResponse(res, error, statusCode = 500) {
     if (statusCode === 401) {
         return res
             .status(401)
-            .json({ message: constants_js_1.ERROR.USER.INCORRECT_PASSWORD, cause: error.message });
+            .json({ message: constants_js_1.ERROR.USER.UNAUTHORIZED, cause: error.message });
     }
     const errorResponse = res.status(500).json(responseData);
     return errorResponse;
@@ -129,7 +129,7 @@ function checkUserPermissions(user, jwtUserId, res) {
 async function validatePassword(password, hashedPassword, res) {
     const isPasswordCorrect = await (0, bcrypt_1.compare)(password, hashedPassword);
     if (!isPasswordCorrect) {
-        sendErrorResponse(res, new Error(constants_js_1.ERROR.USER.INCORRECT_PASSWORD), 401);
+        sendErrorResponse(res, new Error(constants_js_1.ERROR.USER.UNAUTHORIZED), 401);
         return false;
     }
     return true;

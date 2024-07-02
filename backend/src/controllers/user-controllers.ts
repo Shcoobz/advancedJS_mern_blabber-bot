@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 import { deleteCookie, handleUserCookie } from '../utils/cookie-manager.js';
-import { SUCCESS } from '../constants/constants.js';
+import { ERROR, SUCCESS } from '../constants/constants.js';
 import {
   checkUserExists,
   checkUserPermissions,
@@ -76,10 +76,10 @@ export async function userLogin(req: Request, res: Response, next: NextFunction)
 
     const user = await checkUserExists(email, res, false, false);
 
-    if (!user) return;
+    if (!user || !(await validatePassword(password, user.password, res))) {
+      const errorResponse = sendErrorResponse(res, new Error(), 401);
 
-    if (!(await validatePassword(password, user.password, res))) {
-      return;
+      return errorResponse;
     }
 
     handleUserCookie(res, user);

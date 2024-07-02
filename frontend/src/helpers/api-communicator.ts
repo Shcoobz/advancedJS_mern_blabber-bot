@@ -57,15 +57,19 @@ export async function loginUser(email: string, password: string) {
   try {
     const res = await apiClient.post(URL.USER.LOGIN, { email, password });
 
-    if (res.status !== 200) {
-      throw new Error(ERROR.USER.LOGIN + res.status);
+    return res.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        throw new Error(ERROR.USER.LOGIN);
+      } else if (error.request) {
+        throw new Error(ERROR.SERVER.NO_RESPONSE);
+      } else {
+        throw new Error(ERROR.USER.LOGIN);
+      }
+    } else {
+      throw new Error(ERROR.USER.LOGIN);
     }
-
-    const data = await res.data;
-
-    return data;
-  } catch (error) {
-    console.error(ERROR.USER.LOGIN, error);
   }
 }
 

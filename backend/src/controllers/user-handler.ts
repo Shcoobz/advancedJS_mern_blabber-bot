@@ -29,7 +29,7 @@ export function sendErrorResponse(res: Response, error: Error, statusCode: numbe
   if (statusCode === 401) {
     return res
       .status(401)
-      .json({ message: ERROR.USER.INCORRECT_PASSWORD, cause: error.message });
+      .json({ message: ERROR.USER.UNAUTHORIZED, cause: error.message });
   }
 
   const errorResponse = res.status(500).json(responseData);
@@ -155,7 +155,7 @@ export async function validatePassword(
   const isPasswordCorrect = await compare(password, hashedPassword);
 
   if (!isPasswordCorrect) {
-    sendErrorResponse(res, new Error(ERROR.USER.INCORRECT_PASSWORD), 401);
+    sendErrorResponse(res, new Error(ERROR.USER.UNAUTHORIZED), 401);
 
     return false;
   }

@@ -59,10 +59,9 @@ async function userLogin(req, res, next) {
     try {
         const { email, password } = req.body;
         const user = await (0, user_handler_js_1.checkUserExists)(email, res, false, false);
-        if (!user)
-            return;
-        if (!(await (0, user_handler_js_1.validatePassword)(password, user.password, res))) {
-            return;
+        if (!user || !(await (0, user_handler_js_1.validatePassword)(password, user.password, res))) {
+            const errorResponse = (0, user_handler_js_1.sendErrorResponse)(res, new Error(), 401);
+            return errorResponse;
         }
         (0, cookie_manager_js_1.handleUserCookie)(res, user);
         const successResponse = (0, user_handler_js_1.sendSuccessResponse)(res, {

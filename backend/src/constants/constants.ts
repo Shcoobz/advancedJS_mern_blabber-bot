@@ -20,7 +20,7 @@ export const ERROR = {
     NOT_REGISTERED: 'User not registered or token malfunction!',
     PERMISSIONS_MISMATCH: "Permissions didn't match!",
     ALREADY_REGISTERED: 'User already registered!',
-    INCORRECT_PASSWORD: 'Email and Password do not match!',
+    UNAUTHORIZED: 'Invalid email or password.',
   },
   RES: {
     FAIL: 'Something went terribly wrong!',

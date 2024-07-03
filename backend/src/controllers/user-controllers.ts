@@ -39,7 +39,7 @@ export async function userSignup(req: Request, res: Response, next: NextFunction
   try {
     const { name, email, password } = req.body;
 
-    if (await checkUserExists(email, res, true, false)) {
+    if (await checkUserExists(email, true, false)) {
       return;
     }
 
@@ -70,60 +70,12 @@ export async function userSignup(req: Request, res: Response, next: NextFunction
 /**
  * Handles the user login process.
  */
-// export async function userLogin(req: Request, res: Response, next: NextFunction) {
-//   try {
-//     console.log('Login request received:', req.body);
-//     const { email, password } = req.body;
-
-//     const user = await checkUserExists(email, false, false);
-
-//     console.log('Login attempt for email:', email);
-//     console.log('User found:', !!user);
-
-//     if (!user) {
-//       console.log('User not found, sending error response.');
-//       return sendErrorResponse(res, new Error('User not found'), 404);
-//     }
-
-//     // Validate password once
-//     const passwordIsValid = await validatePassword(password, user.password);
-//     console.log('Password validation result:', passwordIsValid);
-
-//     if (!passwordIsValid) {
-//       console.log('Invalid password, sending error response.');
-//       return sendErrorResponse(res, new Error('Invalid password'), 401);
-//     }
-
-//     handleUserCookie(res, user);
-
-//     const successResponse = sendSuccessResponse(res, {
-//       message: SUCCESS.USER.LOGIN,
-//       name: user.name,
-//       email: user.email,
-//     });
-
-//     return successResponse;
-//   } catch (error) {
-//     console.log(error);
-
-//     const errorResponse = sendErrorResponse(res, error);
-
-//     return errorResponse;
-//   }
-// }
-
 export async function userLogin(req: Request, res: Response, next: NextFunction) {
   try {
-    console.log('Login request received:', req.body);
     const { email, password } = req.body;
-
     const user = await checkUserExists(email, false, false);
 
-    console.log('Login attempt for email:', email);
-    console.log('User found:', !!user);
-
     await validatePassword(password, user.password);
-    console.log('Password validated successfully');
 
     handleUserCookie(res, user);
 
@@ -147,7 +99,7 @@ export async function userLogin(req: Request, res: Response, next: NextFunction)
  */
 export async function userLogout(req: Request, res: Response, next: NextFunction) {
   try {
-    const user = await checkUserExists(res.locals.jwtData.id, res, false, true);
+    const user = await checkUserExists(res.locals.jwtData.id, false, true);
 
     if (!user) return;
 
@@ -178,7 +130,7 @@ export async function userLogout(req: Request, res: Response, next: NextFunction
  */
 export async function verifyUser(req: Request, res: Response, next: NextFunction) {
   try {
-    const user = await checkUserExists(res.locals.jwtData.id, res, false, true);
+    const user = await checkUserExists(res.locals.jwtData.id, false, true);
 
     if (!user) return;
 
@@ -205,7 +157,7 @@ export async function verifyUser(req: Request, res: Response, next: NextFunction
  */
 export async function getUserData(req: Request, res: Response) {
   try {
-    const user = await checkUserExists(res.locals.jwtData.id, res, false, true);
+    const user = await checkUserExists(res.locals.jwtData.id, false, true);
 
     if (!user) return;
 

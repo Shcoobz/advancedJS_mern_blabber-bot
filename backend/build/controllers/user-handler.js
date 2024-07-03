@@ -84,35 +84,6 @@ async function hashPassword(password) {
 /**
  * Checks if a user exists by email or ID, and handles the response based on the context.
  */
-// export async function checkUserExists(
-//   identifier: string,
-//   res: Response,
-//   isSignup: boolean,
-//   isByID: boolean = false
-// ) {
-//   let user;
-//   if (isByID) {
-//     user = await validateUserByID(identifier);
-//     if (!user) {
-//       sendErrorResponse(res, new Error(ERROR.USER.NOT_REGISTERED), 401);
-//       return null;
-//     }
-//   } else {
-//     user = await validateUserByEmail(identifier);
-//     if (isSignup) {
-//       if (user) {
-//         sendErrorResponse(res, new Error(ERROR.USER.ALREADY_REGISTERED), 409);
-//         return null;
-//       }
-//     } else {
-//       if (!user) {
-//         sendErrorResponse(res, new Error(ERROR.USER.NOT_REGISTERED), 401);
-//         return null;
-//       }
-//     }
-//   }
-//   return user;
-// }
 async function checkUserExists(identifier, isSignup, isByID = false) {
     let user;
     if (isByID) {
@@ -152,18 +123,6 @@ function checkUserPermissions(user, jwtUserId, res) {
 /**
  * Validates the provided password against the stored hashed password.
  */
-// export async function validatePassword(
-//   password: string,
-//   hashedPassword: string,
-//   res: Response
-// ) {
-//   const isPasswordCorrect = await compare(password, hashedPassword);
-//   if (!isPasswordCorrect) {
-//     sendErrorResponse(res, new Error(ERROR.USER.UNAUTHORIZED), 401);
-//     return false;
-//   }
-//   return true;
-// }
 async function validatePassword(password, hashedPassword) {
     const isPasswordCorrect = await (0, bcrypt_1.compare)(password, hashedPassword);
     if (!isPasswordCorrect) {

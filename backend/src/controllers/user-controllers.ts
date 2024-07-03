@@ -72,14 +72,30 @@ export async function userSignup(req: Request, res: Response, next: NextFunction
  */
 export async function userLogin(req: Request, res: Response, next: NextFunction) {
   try {
+    console.log('Login request received:', req.body);
     const { email, password } = req.body;
 
     const user = await checkUserExists(email, res, false, false);
 
-    if (!user || !(await validatePassword(password, user.password, res))) {
-      const errorResponse = sendErrorResponse(res, new Error(), 401);
+    console.log('Login attempt for email:', email);
+    console.log('User found:', !!user);
+    console.log(
+      'Password validation result:',
+      await validatePassword(password, user.password, res)
+    );
 
-      return errorResponse;
+    if (!user) {
+      console.log('User not found, sending error response.');
+      return sendErrorResponse(res, new Error('User not found'), 404);
+    }
+
+    // Validate password once
+    const passwordIsValid = await validatePassword(password, user.password, res);
+    console.log('Password validation result:', passwordIsValid);
+
+    if (!passwordIsValid) {
+      console.log('Invalid password, sending error response.');
+      return sendErrorResponse(res, new Error('Invalid password'), 401);
     }
 
     handleUserCookie(res, user);

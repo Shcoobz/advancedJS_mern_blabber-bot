@@ -24,8 +24,9 @@ async function verifyToken(req, res, next) {
     const privateKey = process.env.JWT_PRIVATE_KEY;
     const token = req.signedCookies[`${constants_js_1.COOKIE.NAME}`];
     if (!token || token.trim() === constants_js_1.EMPTY_STRING) {
-        const errorResponse = (0, user_handler_js_1.sendErrorResponse)(res, new Error(constants_js_1.ERROR.TOKEN.NOT_RECEIVED), 401);
-        return errorResponse;
+        console.log('No token received, continuing as guest');
+        next();
+        return;
     }
     try {
         const decoded = await jsonwebtoken_1.default.verify(token, privateKey);

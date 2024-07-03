@@ -23,7 +23,6 @@ type User = {
 type UserAuth = {
   isLoggedIn: boolean;
   user: User | null;
-
   login: (email: string, password: string) => Promise<void>;
   signup: (name: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -75,13 +74,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
    */
   async function login(email: string, password: string) {
     try {
+      console.log('AuthContext: Attempting login');
       const data = await loginUser(email, password);
+      console.log('AuthContext: Login response:', data);
 
       if (data) {
         setUser({ email: data.email, name: data.name });
         setIsLoggedIn(true);
       }
     } catch (error) {
+      console.error('AuthContext: Login error:', error);
       throw error;
     }
   }

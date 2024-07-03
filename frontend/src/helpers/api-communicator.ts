@@ -5,7 +5,10 @@ import { URL, ERROR } from '../constants/constants';
 /**
  * Default Axios instance with the baseURL and withCredentials already set in main.tsx
  */
-const apiClient = axios.create();
+const apiClient = axios.create({
+  baseURL: import.meta.env.VITE_FRONTEND_BASE_URL,
+  withCredentials: true,
+});
 
 /**
  * Function to create a silent Axios instance
@@ -55,13 +58,18 @@ export async function signupUser(name: string, email: string, password: string) 
  */
 export async function loginUser(email: string, password: string) {
   try {
+    console.log('Login URL:', `${axios.defaults.baseURL} ${URL.USER.LOGIN}`);
+    console.log('Login payload:', { email, password });
+    console.log('Login apiClient: ', apiClient);
     const res = await apiClient.post(URL.USER.LOGIN, { email, password });
+    console.log('Login response:', res.data);
 
     return res.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       if (error.response) {
-        throw new Error(ERROR.USER.LOGIN);
+        console.error('API: Error response:', error.response.data);
+        throw new Error(error.response.data.message || ERROR.USER.LOGIN);
       } else if (error.request) {
         throw new Error(ERROR.SERVER.NO_RESPONSE);
       } else {

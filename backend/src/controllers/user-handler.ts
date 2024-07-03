@@ -163,6 +163,13 @@ export async function validatePassword(
   return true;
 }
 
+// export async function validatePassword(
+//   password: string,
+//   hashedPassword: string
+// ): Promise<boolean> {
+//   return await compare(password, hashedPassword);
+// }
+
 /**
  * Hashes the given password, creates a new user with the provided details, and saves it to the database.
  */

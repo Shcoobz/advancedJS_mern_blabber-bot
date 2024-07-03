@@ -40,6 +40,7 @@ function Login() {
     toast.loading(TOAST.LOGIN.LOADING, { id: TOAST.LOGIN.ID });
 
     try {
+      console.log('Attempting login with email:', email);
       await auth?.login(email, password);
 
       toast.dismiss(TOAST.LOGIN.ID);

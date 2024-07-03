@@ -41,17 +41,17 @@ function Chat() {
    */
   useLayoutEffect(() => {
     if (auth?.isLoggedIn && auth.user) {
-      toast.loading(TOAST.LOGIN.LOADING, { id: TOAST.LOGIN.ID });
+      toast.loading(TOAST.CHAT.LOADING, { id: TOAST.CHAT.ID });
       getUserChats()
         .then((data) => {
           setChatMessages([...data.chats]);
-          toast.success(TOAST.LOGIN.SUCCESS, {
-            id: TOAST.LOGIN.ID,
+          toast.success(TOAST.CHAT.SUCCESS, {
+            id: TOAST.CHAT.ID,
           });
         })
         .catch((err) => {
           console.log(err);
-          toast.error(TOAST.LOGIN.ERROR, { id: TOAST.LOGIN.ID });
+          toast.error(TOAST.CHAT.ERROR, { id: TOAST.CHAT.ID });
         });
     }
   }, [auth]);

@@ -62,20 +62,15 @@ export async function loginUser(email: string, password: string) {
 
     return res.data;
   } catch (error: unknown) {
-    console.error('Login error:', error);
     if (axios.isAxiosError(error)) {
       if (error.response) {
-        console.error('API: Error response:', error.response.data);
         throw new Error(error.response.data.message || ERROR.USER.LOGIN);
       } else if (error.request) {
-        console.error('No response received:', error.request);
         throw new Error(ERROR.SERVER.NO_RESPONSE);
       } else {
-        console.error('Error setting up request:', error.message);
         throw new Error(ERROR.USER.LOGIN);
       }
     } else {
-      console.error('Non-Axios error:', error);
       throw new Error(ERROR.USER.LOGIN);
     }
   }

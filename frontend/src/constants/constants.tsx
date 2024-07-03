@@ -192,7 +192,7 @@ export const TOAST = {
     SUCCESS: 'Log in successfully!',
     ERROR: 'Log in failed! :(',
   },
-  CHATS: {
+  CHAT: {
     ID: 'loadchats',
     LOADING: 'Loading chats!',
     SUCCESS: 'Successfully loaded chats!',

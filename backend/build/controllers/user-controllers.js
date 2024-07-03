@@ -55,37 +55,56 @@ async function userSignup(req, res, next) {
 /**
  * Handles the user login process.
  */
+// export async function userLogin(req: Request, res: Response, next: NextFunction) {
+//   try {
+//     console.log('Login request received:', req.body);
+//     const { email, password } = req.body;
+//     const user = await checkUserExists(email, false, false);
+//     console.log('Login attempt for email:', email);
+//     console.log('User found:', !!user);
+//     if (!user) {
+//       console.log('User not found, sending error response.');
+//       return sendErrorResponse(res, new Error('User not found'), 404);
+//     }
+//     // Validate password once
+//     const passwordIsValid = await validatePassword(password, user.password);
+//     console.log('Password validation result:', passwordIsValid);
+//     if (!passwordIsValid) {
+//       console.log('Invalid password, sending error response.');
+//       return sendErrorResponse(res, new Error('Invalid password'), 401);
+//     }
+//     handleUserCookie(res, user);
+//     const successResponse = sendSuccessResponse(res, {
+//       message: SUCCESS.USER.LOGIN,
+//       name: user.name,
+//       email: user.email,
+//     });
+//     return successResponse;
+//   } catch (error) {
+//     console.log(error);
+//     const errorResponse = sendErrorResponse(res, error);
+//     return errorResponse;
+//   }
+// }
 async function userLogin(req, res, next) {
     try {
         console.log('Login request received:', req.body);
         const { email, password } = req.body;
-        const user = await (0, user_handler_js_1.checkUserExists)(email, res, false, false);
+        const user = await (0, user_handler_js_1.checkUserExists)(email, false, false);
         console.log('Login attempt for email:', email);
         console.log('User found:', !!user);
-        console.log('Password validation result:', await (0, user_handler_js_1.validatePassword)(password, user.password, res));
-        if (!user) {
-            console.log('User not found, sending error response.');
-            return (0, user_handler_js_1.sendErrorResponse)(res, new Error('User not found'), 404);
-        }
-        // Validate password once
-        const passwordIsValid = await (0, user_handler_js_1.validatePassword)(password, user.password, res);
-        console.log('Password validation result:', passwordIsValid);
-        if (!passwordIsValid) {
-            console.log('Invalid password, sending error response.');
-            return (0, user_handler_js_1.sendErrorResponse)(res, new Error('Invalid password'), 401);
-        }
+        await (0, user_handler_js_1.validatePassword)(password, user.password);
+        console.log('Password validated successfully');
         (0, cookie_manager_js_1.handleUserCookie)(res, user);
-        const successResponse = (0, user_handler_js_1.sendSuccessResponse)(res, {
+        return (0, user_handler_js_1.sendSuccessResponse)(res, {
             message: constants_js_1.SUCCESS.USER.LOGIN,
             name: user.name,
             email: user.email,
         });
-        return successResponse;
     }
     catch (error) {
         console.log(error);
-        const errorResponse = (0, user_handler_js_1.sendErrorResponse)(res, error);
-        return errorResponse;
+        return (0, user_handler_js_1.sendErrorResponse)(res, error, error.message === constants_js_1.ERROR.USER.UNAUTHORIZED ? 401 : 500);
     }
 }
 /**

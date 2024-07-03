@@ -58,24 +58,24 @@ export async function signupUser(name: string, email: string, password: string) 
  */
 export async function loginUser(email: string, password: string) {
   try {
-    console.log('Login URL:', `${axios.defaults.baseURL} ${URL.USER.LOGIN}`);
-    console.log('Login payload:', { email, password });
-    console.log('Login apiClient: ', apiClient);
     const res = await apiClient.post(URL.USER.LOGIN, { email, password });
-    console.log('Login response:', res.data);
 
     return res.data;
   } catch (error: unknown) {
+    console.error('Login error:', error);
     if (axios.isAxiosError(error)) {
       if (error.response) {
         console.error('API: Error response:', error.response.data);
         throw new Error(error.response.data.message || ERROR.USER.LOGIN);
       } else if (error.request) {
+        console.error('No response received:', error.request);
         throw new Error(ERROR.SERVER.NO_RESPONSE);
       } else {
+        console.error('Error setting up request:', error.message);
         throw new Error(ERROR.USER.LOGIN);
       }
     } else {
+      console.error('Non-Axios error:', error);
       throw new Error(ERROR.USER.LOGIN);
     }
   }

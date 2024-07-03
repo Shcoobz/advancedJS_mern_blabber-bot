@@ -92,9 +92,45 @@ export async function hashPassword(password: string) {
 /**
  * Checks if a user exists by email or ID, and handles the response based on the context.
  */
+// export async function checkUserExists(
+//   identifier: string,
+//   res: Response,
+//   isSignup: boolean,
+//   isByID: boolean = false
+// ) {
+//   let user;
+
+//   if (isByID) {
+//     user = await validateUserByID(identifier);
+
+//     if (!user) {
+//       sendErrorResponse(res, new Error(ERROR.USER.NOT_REGISTERED), 401);
+
+//       return null;
+//     }
+//   } else {
+//     user = await validateUserByEmail(identifier);
+
+//     if (isSignup) {
+//       if (user) {
+//         sendErrorResponse(res, new Error(ERROR.USER.ALREADY_REGISTERED), 409);
+
+//         return null;
+//       }
+//     } else {
+//       if (!user) {
+//         sendErrorResponse(res, new Error(ERROR.USER.NOT_REGISTERED), 401);
+
+//         return null;
+//       }
+//     }
+//   }
+
+//   return user;
+// }
+
 export async function checkUserExists(
   identifier: string,
-  res: Response,
   isSignup: boolean,
   isByID: boolean = false
 ) {
@@ -102,26 +138,18 @@ export async function checkUserExists(
 
   if (isByID) {
     user = await validateUserByID(identifier);
-
     if (!user) {
-      sendErrorResponse(res, new Error(ERROR.USER.NOT_REGISTERED), 401);
-
-      return null;
+      throw new Error(ERROR.USER.NOT_REGISTERED);
     }
   } else {
     user = await validateUserByEmail(identifier);
-
     if (isSignup) {
       if (user) {
-        sendErrorResponse(res, new Error(ERROR.USER.ALREADY_REGISTERED), 409);
-
-        return null;
+        throw new Error(ERROR.USER.ALREADY_REGISTERED);
       }
     } else {
       if (!user) {
-        sendErrorResponse(res, new Error(ERROR.USER.NOT_REGISTERED), 401);
-
-        return null;
+        throw new Error(ERROR.USER.NOT_REGISTERED);
       }
     }
   }
@@ -147,28 +175,29 @@ export function checkUserPermissions(user: any, jwtUserId: string, res: Response
 /**
  * Validates the provided password against the stored hashed password.
  */
-export async function validatePassword(
-  password: string,
-  hashedPassword: string,
-  res: Response
-) {
-  const isPasswordCorrect = await compare(password, hashedPassword);
-
-  if (!isPasswordCorrect) {
-    sendErrorResponse(res, new Error(ERROR.USER.UNAUTHORIZED), 401);
-
-    return false;
-  }
-
-  return true;
-}
-
 // export async function validatePassword(
 //   password: string,
-//   hashedPassword: string
-// ): Promise<boolean> {
-//   return await compare(password, hashedPassword);
+//   hashedPassword: string,
+//   res: Response
+// ) {
+//   const isPasswordCorrect = await compare(password, hashedPassword);
+
+//   if (!isPasswordCorrect) {
+//     sendErrorResponse(res, new Error(ERROR.USER.UNAUTHORIZED), 401);
+
+//     return false;
+//   }
+
+//   return true;
 // }
+
+export async function validatePassword(password: string, hashedPassword: string) {
+  const isPasswordCorrect = await compare(password, hashedPassword);
+  if (!isPasswordCorrect) {
+    throw new Error(ERROR.USER.UNAUTHORIZED);
+  }
+  return true;
+}
 
 /**
  * Hashes the given password, creates a new user with the provided details, and saves it to the database.

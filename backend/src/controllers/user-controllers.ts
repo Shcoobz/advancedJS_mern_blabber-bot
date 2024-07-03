@@ -70,49 +70,75 @@ export async function userSignup(req: Request, res: Response, next: NextFunction
 /**
  * Handles the user login process.
  */
+// export async function userLogin(req: Request, res: Response, next: NextFunction) {
+//   try {
+//     console.log('Login request received:', req.body);
+//     const { email, password } = req.body;
+
+//     const user = await checkUserExists(email, false, false);
+
+//     console.log('Login attempt for email:', email);
+//     console.log('User found:', !!user);
+
+//     if (!user) {
+//       console.log('User not found, sending error response.');
+//       return sendErrorResponse(res, new Error('User not found'), 404);
+//     }
+
+//     // Validate password once
+//     const passwordIsValid = await validatePassword(password, user.password);
+//     console.log('Password validation result:', passwordIsValid);
+
+//     if (!passwordIsValid) {
+//       console.log('Invalid password, sending error response.');
+//       return sendErrorResponse(res, new Error('Invalid password'), 401);
+//     }
+
+//     handleUserCookie(res, user);
+
+//     const successResponse = sendSuccessResponse(res, {
+//       message: SUCCESS.USER.LOGIN,
+//       name: user.name,
+//       email: user.email,
+//     });
+
+//     return successResponse;
+//   } catch (error) {
+//     console.log(error);
+
+//     const errorResponse = sendErrorResponse(res, error);
+
+//     return errorResponse;
+//   }
+// }
+
 export async function userLogin(req: Request, res: Response, next: NextFunction) {
   try {
     console.log('Login request received:', req.body);
     const { email, password } = req.body;
 
-    const user = await checkUserExists(email, res, false, false);
+    const user = await checkUserExists(email, false, false);
 
     console.log('Login attempt for email:', email);
     console.log('User found:', !!user);
-    console.log(
-      'Password validation result:',
-      await validatePassword(password, user.password, res)
-    );
 
-    if (!user) {
-      console.log('User not found, sending error response.');
-      return sendErrorResponse(res, new Error('User not found'), 404);
-    }
-
-    // Validate password once
-    const passwordIsValid = await validatePassword(password, user.password, res);
-    console.log('Password validation result:', passwordIsValid);
-
-    if (!passwordIsValid) {
-      console.log('Invalid password, sending error response.');
-      return sendErrorResponse(res, new Error('Invalid password'), 401);
-    }
+    await validatePassword(password, user.password);
+    console.log('Password validated successfully');
 
     handleUserCookie(res, user);
 
-    const successResponse = sendSuccessResponse(res, {
+    return sendSuccessResponse(res, {
       message: SUCCESS.USER.LOGIN,
       name: user.name,
       email: user.email,
     });
-
-    return successResponse;
   } catch (error) {
     console.log(error);
-
-    const errorResponse = sendErrorResponse(res, error);
-
-    return errorResponse;
+    return sendErrorResponse(
+      res,
+      error,
+      error.message === ERROR.USER.UNAUTHORIZED ? 401 : 500
+    );
   }
 }
 

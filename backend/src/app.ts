@@ -52,16 +52,16 @@ app.use(express.json());
 app.use(cookieParser(privateCookieKey));
 
 /**
- * Serve static files from the React app, assuming the build folder is in the correct relative path
- */
-const staticFilesPath = path.join(__dirname, '../../frontend/dist');
-app.use(express.static(staticFilesPath));
-
-/**
  * Main application router.
  * Mounts the primary router for the API under the 'ROUTE.API.VERSION,' base path, organizing the application's routing structure.
  */
 app.use(ROUTE.API.VERSION, appRouter);
+
+/**
+ * Serve static files from the React app, assuming the build folder is in the correct relative path
+ */
+const staticFilesPath = path.join(__dirname, '../../frontend/dist');
+app.use(express.static(staticFilesPath));
 
 /**
  * The "catchall" handler for any request that doesn't match one above, send back React's index.html file.

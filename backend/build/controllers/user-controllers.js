@@ -34,10 +34,6 @@ async function getAllUsers(req, res, next) {
 async function userSignup(req, res, next) {
     try {
         const { name, email, password } = req.body;
-        // const existingUser = await checkUserExists(email, true, false);
-        // if (existingUser) {
-        //   return sendErrorResponse(res, new Error(ERROR.USER.ALREADY_REGISTERED), 400);
-        // }
         const newUser = await (0, user_handler_js_1.createAndSaveUser)(name, email, password);
         (0, cookie_manager_js_1.handleUserCookie)(res, newUser);
         const successResponse = (0, user_handler_js_1.sendSuccessResponse)(res, {

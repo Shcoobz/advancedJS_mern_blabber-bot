@@ -39,9 +39,11 @@ export async function userSignup(req: Request, res: Response, next: NextFunction
   try {
     const { name, email, password } = req.body;
 
-    if (await checkUserExists(email, true, false)) {
-      return;
-    }
+    // const existingUser = await checkUserExists(email, true, false);
+
+    // if (existingUser) {
+    //   return sendErrorResponse(res, new Error(ERROR.USER.ALREADY_REGISTERED), 400);
+    // }
 
     const newUser = await createAndSaveUser(name, email, password);
 
@@ -60,6 +62,10 @@ export async function userSignup(req: Request, res: Response, next: NextFunction
     return successResponse;
   } catch (error) {
     console.log(error);
+
+    if (error.message === ERROR.USER.ALREADY_REGISTERED) {
+      return sendErrorResponse(res, error, 400);
+    }
 
     const errorResponse = sendErrorResponse(res, error);
 

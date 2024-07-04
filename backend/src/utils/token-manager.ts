@@ -24,8 +24,9 @@ export async function verifyToken(req: Request, res: Response, next: NextFunctio
   const token = req.signedCookies[`${COOKIE.NAME}`];
 
   if (!token || token.trim() === EMPTY_STRING) {
-    console.log('No token received, continuing as guest');
+    console.log(ERROR.SERVER.NO_TOKEN_RECEIVED);
     next();
+
     return;
   }
 

@@ -109,9 +109,7 @@ export async function checkUserExists(
     user = await validateUserByEmail(identifier);
 
     if (isSignup) {
-      if (user) {
-        throw new Error(ERROR.USER.ALREADY_REGISTERED);
-      }
+      return user;
     } else {
       if (!user) {
         throw new Error(ERROR.USER.NOT_REGISTERED);
@@ -154,6 +152,12 @@ export async function validatePassword(password: string, hashedPassword: string)
  * Hashes the given password, creates a new user with the provided details, and saves it to the database.
  */
 export async function createAndSaveUser(name: string, email: string, password: string) {
+  const existingUser = await validateUserByEmail(email);
+
+  if (existingUser) {
+    throw new Error(ERROR.USER.ALREADY_REGISTERED);
+  }
+
   const hashedPassword = await hashPassword(password);
   const newUser = new User({ name, email, password: hashedPassword });
 

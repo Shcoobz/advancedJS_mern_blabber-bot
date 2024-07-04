@@ -44,6 +44,7 @@ export const ERROR = {
   },
   SERVER: {
     FAILED_CONNECTION: 'Failed to connect to the database:',
+    NO_TOKEN_RECEIVED: 'No token received, continuing as guest',
   },
   SERVING: {
     FAIL: 'Error serving ',

@@ -98,7 +98,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsLoggedIn(true);
       }
     } catch (error) {
-      console.error(ERROR.USER.SIGNUP, error);
+      throw error;
     }
   }
 

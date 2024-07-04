@@ -95,9 +95,7 @@ async function checkUserExists(identifier, isSignup, isByID = false) {
     else {
         user = await validateUserByEmail(identifier);
         if (isSignup) {
-            if (user) {
-                throw new Error(constants_js_1.ERROR.USER.ALREADY_REGISTERED);
-            }
+            return user;
         }
         else {
             if (!user) {
@@ -134,6 +132,10 @@ async function validatePassword(password, hashedPassword) {
  * Hashes the given password, creates a new user with the provided details, and saves it to the database.
  */
 async function createAndSaveUser(name, email, password) {
+    const existingUser = await validateUserByEmail(email);
+    if (existingUser) {
+        throw new Error(constants_js_1.ERROR.USER.ALREADY_REGISTERED);
+    }
     const hashedPassword = await hashPassword(password);
     const newUser = new User_js_1.default({ name, email, password: hashedPassword });
     await newUser.save();

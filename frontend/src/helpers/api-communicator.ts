@@ -41,15 +41,19 @@ export async function signupUser(name: string, email: string, password: string) 
   try {
     const res = await apiClient.post(URL.USER.SIGNUP, { name, email, password });
 
-    if (res.status !== 201) {
-      throw new Error(ERROR.USER.SIGNUP + res.status);
+    return res.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        throw new Error(error.response.data.message || ERROR.USER.SIGNUP);
+      } else if (error.request) {
+        throw new Error(ERROR.SERVER.NO_RESPONSE);
+      } else {
+        throw new Error(ERROR.USER.SIGNUP);
+      }
+    } else {
+      throw new Error(ERROR.USER.SIGNUP);
     }
-
-    const data = await res.data;
-
-    return data;
-  } catch (error) {
-    console.error(ERROR.USER.SIGNUP, error);
   }
 }
 

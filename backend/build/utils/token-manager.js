@@ -24,7 +24,7 @@ async function verifyToken(req, res, next) {
     const privateKey = process.env.JWT_PRIVATE_KEY;
     const token = req.signedCookies[`${constants_js_1.COOKIE.NAME}`];
     if (!token || token.trim() === constants_js_1.EMPTY_STRING) {
-        console.log('No token received, continuing as guest');
+        console.log(constants_js_1.ERROR.SERVER.NO_TOKEN_RECEIVED);
         next();
         return;
     }

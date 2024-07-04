@@ -3,7 +3,7 @@ import { toast } from 'react-hot-toast';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { NAVIGATION, BUTTON, FORM_FIELD, TOAST } from '../constants/constants';
+import { NAVIGATION, BUTTON, FORM_FIELD, TOAST, ERROR } from '../constants/constants';
 import { SUBMIT_ICON, GREETING_ROBOT_IMG } from '../constants/assets';
 
 import CustomInput from '../components/shared/CustomInput';
@@ -38,13 +38,18 @@ function Signup() {
     const email = formData.get(FORM_FIELD.EMAIL) as string;
     const password = formData.get(FORM_FIELD.PASSWORD) as string;
 
+    toast.loading(TOAST.SIGNUP.LOADING, { id: TOAST.SIGNUP.ID });
+
     try {
-      toast.loading(TOAST.SIGNUP.LOADING, { id: TOAST.SIGNUP.ID });
       await auth?.signup(name, email, password);
-      toast.success(TOAST.SIGNUP.SUCCESS, { id: TOAST.SIGNUP.ID });
+
+      toast.dismiss(TOAST.SIGNUP.ID);
+      toast.success(TOAST.SIGNUP.SUCCESS);
     } catch (error) {
-      console.log(error);
-      toast.error(TOAST.SIGNUP.ERROR, { id: TOAST.SIGNUP.ID });
+      console.log(ERROR.USER.SIGNUP);
+      toast.dismiss(TOAST.SIGNUP.ID);
+
+      toast.error(TOAST.SIGNUP.ERROR || ERROR.USER.SIGNUP, { id: TOAST.SIGNUP.ID });
     }
   }
 

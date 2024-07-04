@@ -52,8 +52,7 @@ The application consists of two main parts:
 ### Bugfixing:
 
 - TODO:
-  - Fix wrong toast msg when non existing user tries to log in
-  - Fix wrong toast msg when existing user tries to sign up
+  - Nothing at the moment :)
 
 <br>
 
